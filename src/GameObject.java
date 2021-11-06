@@ -57,4 +57,13 @@ public abstract class GameObject {
     public void setSpeedy(int speedy) {
         this.speedy = speedy;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
 }
