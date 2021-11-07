@@ -1,7 +1,5 @@
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hellowworld");
-        System.out.println(1);
+        new LaunchPage();
     }
-
 }
