@@ -1,5 +1,5 @@
 import java.awt.*;
-//Subclass of Game Object responsible for the moving and drawwing the caracter of the game
+//Subclass of Game Object responsible for the moving and drawing the character of the game
 public class Player extends GameObject{
 
     public Player(int x,int y) {

@@ -1,10 +1,11 @@
 //superclass for all the object of the game
 import java.awt.Graphics;
 public abstract class GameObject {
-    //what all of the objects have in common
-    //x,y are the cordinates of the game objects
+    //what all the objects have in common
+    //x,y are the coordinates of the game objects
     //speedx,speedy is the speed of all the objects
     // id is the differentiator for player , obstacle etc.
+    public static int counter;
     private int x;
     private int y;
     private int id;
@@ -12,10 +13,11 @@ public abstract class GameObject {
     private int speedy;
 
     //generic constructor , spawns game objects at x ,y coordinates
-    public GameObject(int x, int y){
+    public GameObject(int x, int y) {
+        counter++;
         this.x=x;
         this.y=y;
-        this.id=id++;
+        this.id=counter;
     }
     //to be implemented in each specific class
     //what each object does
@@ -39,7 +41,7 @@ public abstract class GameObject {
     }
 
     public void setY(int y) {
-        this.y = y;
+            this.y = y;
     }
 
     public int getSpeedx() {

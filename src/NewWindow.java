@@ -14,7 +14,8 @@ public class NewWindow extends JFrame implements ActionListener {
     private final int WIDTH = 900;
     private final int HEIGHT = 650;
 
-    //making all of the buttons here and adding the language to them later , so that they are class objects that can be detected by ActionPerformed
+    //making all the buttons here and adding the language to them later
+    // so that they are class objects that can be detected by ActionPerformed
     JButton singButton;
     JButton multButton;
     JButton settButton;
@@ -42,7 +43,7 @@ public class NewWindow extends JFrame implements ActionListener {
         this.add(canvas);
 
         //making english menu
-        if (language == "English") {
+        if (language.equals("English")) {
             //making all of my buttons
             singButton = new JButton("Single Player");
             multButton = new JButton("Multiplayer");
@@ -50,7 +51,7 @@ public class NewWindow extends JFrame implements ActionListener {
             exitButton = new JButton("Exit");
 
             //configuring singleplayer button
-            singButton.setBounds(350,200,200,40);//postition of buttons
+            singButton.setBounds(350,200,200,40);//position of buttons
             singButton.setFocusable(false);
             singButton.addActionListener(this);//you can now press the button
             this.add(singButton);//adds button on the frame
@@ -78,7 +79,7 @@ public class NewWindow extends JFrame implements ActionListener {
             multButton = new JButton("Παίξε Με Παρέα");
             settButton = new JButton("Ρυθμίσεις");
             exitButton = new JButton("Εξοδος");
-            singButton.setBounds(350,200,200,40);//postition of buttons
+            singButton.setBounds(350,200,200,40);//position of buttons
             singButton.setFocusable(false);
             singButton.addActionListener(this);//you can now press the button
             this.add(singButton);//adds button on the frame
