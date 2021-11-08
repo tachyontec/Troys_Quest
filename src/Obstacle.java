@@ -14,7 +14,7 @@ public class Obstacle extends GameObject{
 
     @Override
     public void render(Graphics g) {
-    g.setColor(Color.GREEN);
     g.fillRect(this.getX() , this.getY() , 12 , 20);
+    g.setColor(Color.GREEN);
     }
 }
