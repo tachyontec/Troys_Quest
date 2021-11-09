@@ -7,8 +7,5 @@ public class Game {
         GameWindow window = new GameWindow(WIDTH,HEIGHT,"Troy's Quest");
     }
 
-    public static void main(String[] args)
-    {
-        new Game();
-    }
+    public static void main(String[] args) {new Game();}
 }

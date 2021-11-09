@@ -2,7 +2,7 @@ import java.awt.*;
 //Subclass of Game Object responsible for the moving and drawing the character of the game
 public class Player extends GameObject{
 
-    public Player(int x,int y) {
+    public Player(double x,double y) {
         super(x,y);
     }
 
@@ -14,7 +14,7 @@ public class Player extends GameObject{
 
     @Override
     public void render(Graphics g) {
-        g.fillRect(this.getX(),this.getY(),32,32);
+        g.fillRect((int) this.getX(),(int) this.getY(),32,32);
         g.setColor(Color.BLUE);
     }
 }

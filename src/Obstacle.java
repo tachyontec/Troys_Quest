@@ -3,7 +3,7 @@ import java.awt.*;
 //responsible for spawning obstacles in the game
 //handler.addObject(new Player(x , y)) in Game constructor to create a new player in the game
 public class Obstacle extends GameObject{
-    public Obstacle(int x, int y) {
+    public Obstacle(double x, double y) {
         super(x,y);
     }
 
@@ -14,7 +14,7 @@ public class Obstacle extends GameObject{
 
     @Override
     public void render(Graphics g) {
-    g.fillRect(this.getX() , this.getY() , 12 , 20);
+    g.fillRect((int)this.getX() , (int)this.getY() , 12 , 20);
     g.setColor(Color.GREEN);
     }
 }

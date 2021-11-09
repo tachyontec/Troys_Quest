@@ -6,14 +6,15 @@ public abstract class GameObject {
     //speedx,speedy is the speed of all the objects
     // id is the differentiator for player , obstacle etc.
     public static int counter;
-    private int x;
-    private int y;
+    private double x;
+    private double y;
     private int id;
-    private int speedx;
-    private int speedy;
+    private double speedx;
+    private double speedy;
+    private static double speed = 3;
 
     //generic constructor , spawns game objects at x ,y coordinates
-    public GameObject(int x, int y) {
+    public GameObject(double x, double y) {
         counter++;
         this.x=x;
         this.y=y;
@@ -28,35 +29,35 @@ public abstract class GameObject {
     public abstract void render(Graphics g);
 
     //getters and setters for each field
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public void setX(int x) {
+    public void setX(double x) {
         this.x = x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 
-    public void setY(int y) {
+    public void setY(double y) {
             this.y = y;
     }
 
-    public int getSpeedx() {
+    public double getSpeedx() {
         return speedx;
     }
 
-    public void setSpeedx(int speedx) {
+    public void setSpeedx(double speedx) {
         this.speedx = speedx;
     }
 
-    public int getSpeedy() {
+    public double getSpeedy() {
         return speedy;
     }
 
-    public void setSpeedy(int speedy) {
+    public void setSpeedy(double speedy) {
         this.speedy = speedy;
     }
 
@@ -68,4 +69,11 @@ public abstract class GameObject {
         return id;
     }
 
+    public static double getSpeed() {
+        return speed;
+    }
+
+    public static void setSpeed(double speed) {
+        GameObject.speed = speed;
+    }
 }
