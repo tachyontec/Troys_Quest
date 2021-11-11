@@ -2,7 +2,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 //This is class is called whenever we press a key
 //So it will EXTEND KeyAdapter
-public class In extends KeyAdapter {
+public class KeyboardInput extends KeyAdapter {
     //This class is referred only at a player
     //User will only be able to move its player
     Player p;
