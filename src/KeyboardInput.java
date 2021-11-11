@@ -6,8 +6,8 @@ public class KeyboardInput extends KeyAdapter {
     //This class is referred only at a player
     //User will only be able to move its player
     Player p;
-    public In(Player player) {
-        this.p = player;
+    public KeyboardInput(Player player) {
+        this.p =new Player(32 ,32 );
     }
 
     public void keyPressed(KeyEvent k) {
