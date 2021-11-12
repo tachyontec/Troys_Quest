@@ -21,7 +21,7 @@ public class GameWindow extends Canvas implements ActionListener {
 
     JFrame frame;
 
-    public GameWindow (int width , int height , String title) {
+    public GameWindow (int width , int height , String title , Game game) {
 
         frame=new JFrame("Troy's Quest");
         frame.pack();
@@ -36,8 +36,9 @@ public class GameWindow extends Canvas implements ActionListener {
         }
 
         frame.setLayout(null);
-        //frame.add(game);
-        //main.start();
+
+        frame.add(game);
+        game.start();
     }
     //configures the text of the buttons based on language
     public void configureButtons(JButton[] buttons,String language) {

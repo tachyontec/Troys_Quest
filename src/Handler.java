@@ -14,7 +14,7 @@ public class Handler {
     }
 
     //loops through all objects from the list and renders them
-    public void render (Graphics g){
+    public void render(Graphics g){
         for (int i = 0; i < object.size(); i++) {
             GameObject temp = object.get(i);
             temp.render(g);
