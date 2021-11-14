@@ -1,32 +1,48 @@
 //superclass for all the object of the game
-import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+
 public abstract class GameObject {
     //what all the objects have in common
-    //x,y are the coordinates of the game objects
-    //speedx,speedy is the speed of all the objects
+    //x,y are the coordinates of the game obje
     // id is the differentiator for player , obstacle etc.
-    public static int counter;
+    //counter helps each object have a ID
+    //we have a speed variable for each axis (x and y)
     private double x;
     private double y;
     private int id;
     private double speedx;
     private double speedy;
-    private static double speed = 3;
+    public static int counter;
+
+    //Buffered Images are the ones that contain our main character and how
+    //they look when they face up,down etc. The difference between 1 and 2 is
+    //which foot is in front, and which is back so that it creates an animation
+    private BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
+    private String direction;
+
+    //sprites are smaller rectangles that make up the whole window
+    //we hold the counter and the number for each of our sprites
+    public int spriteCounter = 0;
+    public int spriteNumber = 1;
+
+    public Rectangle area; //creating invisible rectangle to store data
+    public boolean collisionOn = false;
 
     //generic constructor , spawns game objects at x ,y coordinates
-    public GameObject(double x, double y) {
+    public GameObject(double x, double y ,double speedx, double speedy) {
         counter++;
         this.x=x;
         this.y=y;
+        this.speedx = speedx;
+        this.speedy = speedy;
         this.id=counter;
     }
-    //to be implemented in each specific class
-    //what each object does
-    public abstract void tick();
 
-    //this method pops in the screen the object
-    //is responsible for the graphic managment
-    public abstract void render(Graphics g);
+    //we use a default constructor in the Player class
+    public GameObject(){};
+
+
 
     //getters and setters for each field
     public double getX() {
@@ -42,7 +58,7 @@ public abstract class GameObject {
     }
 
     public void setY(double y) {
-            this.y = y;
+        this.y = y;
     }
 
     public double getSpeedx() {
@@ -67,13 +83,5 @@ public abstract class GameObject {
 
     public int getId() {
         return id;
-    }
-
-    public static double getSpeed() {
-        return speed;
-    }
-
-    public static void setSpeed(double speed) {
-        GameObject.speed = speed;
     }
 }
