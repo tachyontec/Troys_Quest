@@ -11,20 +11,21 @@ public class GamePanel extends JPanel implements Runnable{
     final int maxScreenRow = 12; //how many tiles will be vertically
     final int screenWidth = tileSize * maxScreenCol; // screen width 768
     final int screenHeight = tileSize * maxScreenRow; // screen height 576
+    final int fps=60;
 
-
-    KeyboardInput keyboardInput = new KeyboardInput();
-    public Player player = new Player(100,100,3,4,keyboardInput,this);
-
+    KeyHandler keyHandler = new KeyHandler();
     Thread gameThread;
+    public Player player = new Player(100,100,3,4,keyHandler,this);
+
+
 
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth,screenHeight));
         this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true);
-        this.addKeyListener(keyboardInput);
-
+        this.addKeyListener(keyHandler);
+        this.setFocusable(true);
 
     }
     public void startGameThread() {
@@ -38,38 +39,38 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     @Override
-    public void run(){
-        int fps = 100;
-        long msPerFrame = 1000 *100000 / fps;
-        long lastTime =0;
-        long elapsed;
-
-        int msSleep;
-        int nanoSleep;
-
-
-        while (gameThread != null) {
-
-            player.tick();
-            repaint();
-
-            elapsed = (lastTime + msPerFrame - System.nanoTime());
-            msSleep = (int) (elapsed / 1000000);
-            nanoSleep = (int) (elapsed % 11000000);
-
-            if(msSleep <= 0){
-                lastTime = System.nanoTime();
-                continue;
+    public void run() {
+        long lastTime = System.nanoTime();
+        double amountOfTicks = 60.0;
+        double ns = 1000000000 / amountOfTicks;
+        double delta = 0;
+        long timer = 0;
+        int frames = 0;
+        while(gameThread != null) { //do this if the thread is active
+            long now = System.nanoTime();
+            delta += (now - lastTime) / ns;
+            timer += (now - lastTime);
+            lastTime = now;
+            if  (delta >= 1) {
+                update();
+                repaint();
+                delta--;
+                frames++;
             }
-            try{
-                Thread.sleep(msSleep, nanoSleep);
-            } catch (InterruptedException e){
-                e.printStackTrace();
+            if (timer > 1000000000) {
+                System.out.println("FPS " + frames); //prints out our fps to check if it works
+                frames = 0;
+                timer = 0;
             }
-            lastTime = System.nanoTime();
         }
+
     }
 
+
+
+    public void update() {
+        player.tick();
+    }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -78,4 +79,3 @@ public class GamePanel extends JPanel implements Runnable{
         g2.dispose();
     }
 }
-

@@ -1,5 +1,5 @@
 //superclass for all the object of the game
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public abstract class GameObject {
@@ -14,17 +14,19 @@ public abstract class GameObject {
     private double speedx;
     private double speedy;
     public static int counter;
-
+    public BufferedImage [] run = new BufferedImage[12];
+    public BufferedImage [] jump = new BufferedImage[3];
+    public String direction;
     //Buffered Images are the ones that contain our main character and how
     //they look when they face up,down etc. The difference between 1 and 2 is
     //which foot is in front, and which is back so that it creates an animation
-    private BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
-    private String direction;
+
+
 
     //sprites are smaller rectangles that make up the whole window
     //we hold the counter and the number for each of our sprites
     public int spriteCounter = 0;
-    public int spriteNumber = 1;
+    public int spriteNumber = 0;
 
     public Rectangle area; //creating invisible rectangle to store data
     public boolean collisionOn = false;
@@ -43,6 +45,10 @@ public abstract class GameObject {
     public GameObject(){};
 
 
+
+    public void render(Graphics2D g) {}
+
+    public void tick() {}
 
     //getters and setters for each field
     public double getX() {

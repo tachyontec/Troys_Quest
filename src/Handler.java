@@ -1,4 +1,4 @@
-import java.awt.Graphics;
+/*import java.awt.Graphics;
 import java.util.LinkedList;
 
 public class Handler {
@@ -29,4 +29,4 @@ public class Handler {
     public void removeObject (GameObject object){
         this.object.remove(object);
     }
-}
+}*/

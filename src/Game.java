@@ -1,4 +1,4 @@
-import java.awt.*;
+/*import java.awt.*;
 import java.awt.image.BufferStrategy;
 
 public class Game extends Canvas implements Runnable {
@@ -93,3 +93,4 @@ public class Game extends Canvas implements Runnable {
     } //no need for more code in main , just creates an instance of our game, and it instantly runs
 
 }
+*/

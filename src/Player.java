@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -10,55 +11,76 @@ import javax.imageio.ImageIO;
 //Subclass of Game Object responsible for the moving and drawing the character of the game
 public class Player extends GameObject {
 
-    public KeyboardInput keyboardInput;
+    public KeyHandler keyHandler;
     public GamePanel gamePanel;
 
-    public final int axisX;
-    public final int axisY;
+    public final int axisX=400;
+    public final int axisY=400;
 
-    public Player(double x, double y, double speedx, double speedy, KeyboardInput keyboardInput, GamePanel gamePanel) {
+    public Player(double x, double y, double speedx, double speedy, KeyHandler keyHandler, GamePanel gamePanel) {
         super(x, y, speedx, speedy);
-        this.keyboardInput = keyboardInput;
+        this.keyHandler = keyHandler;
         this.gamePanel = gamePanel;
+        getPlayerImage();
+        super.direction="run";
     }
-
-    public Player(KeyboardInput keyboardInput, GamePanel gamePanel) {
-        this.keyboardInput = keyboardInput;
-        this.gamePanel = gamePanel;
-
-        axisX = gamePanel.screenWidth/2 -(gamePanel.tileSize/2); //To center player on the screen because we're gonna scroll the background as player moves
-        axisY = gamePanel.screenHeight/2-(gamePanel.tileSize/2);
-
-        super.area = new Rectangle(0, 0, gamePanel.tileSize-(int)(gamePanel.tileSize*0.3), gamePanel.tileSize-(int)(gamePanel.tileSize*0.3));
-        this.setDefaultValues();
-        this.getPlayerImage();
-
-    }
-
-    public void setDefaultValues() {
-
-        this.setX(gamePanel.tileSize * 23); //Players position on world map
-        this.setY(gamePanel.tileSize * 21);
-        this.setSpeedx(4);
-        this.setSpeedy(4);
-        direction ="down";
-
-    }
-
-
-    public void tick() {
-        if (keyboardInput.upPressed == true) {
-            this.setY(this.getY() - this.getSpeedy());
-        } else if (keyboardInput.leftPressed == true) {
-            this.setX(this.getX() - this.getSpeedx());
-        } else if (keyboardInput.rightPressed == true) {
-            this.setX(this.getX() + getSpeedx());
+    public void getPlayerImage() {
+        try {
+            File path1 = new File("C:/Users/Μαριοςς/IdeaProjects/Troys_Quest/res/Player/Run");
+            File [] allfiles1 = path1.listFiles();
+            File path2 = new File("C:/Users/Μαριοςς/IdeaProjects/Troys_Quest/res/Player/Jump");
+            File [] allfiles2 = path2.listFiles();
+            run = new BufferedImage[allfiles1.length];
+            jump = new BufferedImage[allfiles2.length];
+            for(int i=0 ; i<run.length;i++) {
+                run[i] = ImageIO.read(allfiles1[i]);
+                System.out.println("loaded");
+            }
+            for(int i=0 ; i<jump.length;i++) {
+                String str=i+".png";
+                jump[i] = ImageIO.read(allfiles2[i]);
+            }
+        }catch(IOException e) {
+            e.printStackTrace();
         }
     }
 
+    @Override
+    public void tick() {
+            if (keyHandler.upPressed == true) {
+                direction = "jump";
+                this.setY(this.getY() - this.getSpeedy());
+            } else if (keyHandler.leftPressed == true) {
+                direction = "run";
+                this.setX(this.getX() - this.getSpeedx());
+            } else if (keyHandler.rightPressed == true) {
+                direction= "run";
+                this.setX(this.getX() + getSpeedx());
+            }
+            spriteCounter=0;
+            while(spriteCounter<=60){
+                if(spriteCounter%5==0){
+                    spriteNumber++;
+                }
+                spriteCounter++;
+            }
+            if(spriteCounter==61){
+                spriteCounter = 0;
+                spriteNumber=0;
+            }
+        }
 
+
+    @Override
     public void render(Graphics2D g) {
-        g.fillRect((int) this.getX(),(int) this.getY(),32,32);
-        g.setColor(Color.WHITE);
+        BufferedImage  image =null;
+        switch(direction) {
+            case "jump":
+               image = jump[spriteNumber];
+               break;
+            case "run":
+                image = run[spriteNumber];
+        }
+        g.drawImage(image,(int) this.getX(), (int) this.getY() ,gamePanel.tileSize,gamePanel.tileSize,null);
     }
 }
