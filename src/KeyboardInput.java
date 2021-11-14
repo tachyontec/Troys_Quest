@@ -5,31 +5,33 @@ import java.awt.event.KeyEvent;
 public class KeyboardInput extends KeyAdapter {
     //This class is referred only at a player
     //User will only be able to move its player
-    Player p;
-    public KeyboardInput(Player player) {
-        this.p =new Player(32 ,32 );
-    }
+    public boolean upPressed,downPressed,leftPressed,rightPressed;
 
+    @Override
     public void keyPressed(KeyEvent k) {
-        double velocity = GameObject.getSpeed(); //The speed that we will be moving Player
+        //The speed that we will be moving Player
         //We need to check after every button click because it is increasing through time
         int key = k.getKeyCode(); //get the code of key presses
+
         if (key == KeyEvent.VK_RIGHT) {
-            p.setSpeedx(p.getSpeedx()+velocity);
+            rightPressed = true;
         } else if (key == KeyEvent.VK_LEFT) {
-            p.setSpeedx(p.getSpeedx()-velocity);
+            leftPressed = true;
         } else if (key == KeyEvent.VK_UP) {
-            p.setSpeedy(p.getSpeedy()-velocity);
-        } else if (key == KeyEvent.VK_DOWN) {
-            p.setSpeedy(p.getSpeedy()+velocity);
-        }//we are below y-axis
+            upPressed = true;
+        }
     }
 
+    @Override
     public void keyReleased(KeyEvent k) {
         int key = k.getKeyCode();
-        switch (key) {
-            case KeyEvent.VK_UP, KeyEvent.VK_DOWN -> p.setSpeedy(0);
-            case KeyEvent.VK_RIGHT, KeyEvent.VK_LEFT -> p.setSpeedx(0);
+        if (key == KeyEvent.VK_RIGHT) {
+            rightPressed = false;
+        } else if (key == KeyEvent.VK_LEFT) {
+            leftPressed = false;
+        } else if (key == KeyEvent.VK_UP ) {
+            upPressed = false;
         }
+
     }
 }

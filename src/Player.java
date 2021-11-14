@@ -18,4 +18,3 @@ public class Player extends GameObject{
         g.setColor(Color.BLUE);
     }
 }
-
