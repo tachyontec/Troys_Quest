@@ -1,5 +1,7 @@
 package main;
 
+import tiles.*;
+
 import javax.swing.JPanel;
 import javax.swing.plaf.basic.BasicTreeUI;
 import java.awt.*;
@@ -8,18 +10,18 @@ public class GamePanel extends JPanel implements Runnable{
     //Screen settings
     final int originalTileSize = 16; // size of tile
     final int scale = 3; // scaling size that will scale the tiles
-    final int tileSize = originalTileSize * scale; //tile size after scaling 48
+    public final int tileSize = originalTileSize * scale; //tile size after scaling 48
     final int maxScreenCol = 16; // how many tiles will be horizontaly
     final int maxScreenRow = 12; //how many tiles will be vertically
     final int screenWidth = tileSize * maxScreenCol; // screen width 768
     final int screenHeight = tileSize * maxScreenRow; // screen height 576
     final int fps=60;
 
+    TileManager tileM = new TileManager(this);
+
     KeyHandler keyHandler = new KeyHandler();
     Thread gameThread;
     public Player player = new Player(400,400,3,4,keyHandler,this);
-
-
 
 
     public GamePanel() {
@@ -77,6 +79,7 @@ public class GamePanel extends JPanel implements Runnable{
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
+        tileM.draw(g2);
         player.render(g2);
         g2.dispose();
     }
