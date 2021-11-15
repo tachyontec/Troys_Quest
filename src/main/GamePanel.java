@@ -8,14 +8,14 @@ import java.awt.*;
 
 public class GamePanel extends JPanel implements Runnable{
     //Screen settings
-    final int originalTileSize = 16; // size of tile
-    final int scale = 3; // scaling size that will scale the tiles
+    public final int originalTileSize = 16; // size of tile
+    public final int scale = 3; // scaling size that will scale the tiles
     public final int tileSize = originalTileSize * scale; //tile size after scaling 48
-    final int maxScreenCol = 16; // how many tiles will be horizontaly
-    final int maxScreenRow = 12; //how many tiles will be vertically
-    final int screenWidth = tileSize * maxScreenCol; // screen width 768
-    final int screenHeight = tileSize * maxScreenRow; // screen height 576
-    final int fps=60;
+    public final int maxScreenCol = 16; // how many tiles will be horizontaly
+    public final int maxScreenRow = 12; //how many tiles will be vertically
+    public final int screenWidth = tileSize * maxScreenCol; // screen width 768
+    public final int screenHeight = tileSize * maxScreenRow; // screen height 576
+    public final int fps=60;
 
     TileManager tileM = new TileManager(this);
 
@@ -30,6 +30,8 @@ public class GamePanel extends JPanel implements Runnable{
         this.setDoubleBuffered(true);
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
+
+
 
     }
     public void startGameThread() {
