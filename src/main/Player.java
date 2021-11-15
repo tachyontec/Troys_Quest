@@ -1,10 +1,10 @@
+package main;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
-
 
 //Subclass of Game Object responsible for the moving and drawing the character of the game
 public class Player extends GameObject {
@@ -14,12 +14,14 @@ public class Player extends GameObject {
 
     public final int axisX=400;
     public final int axisY=400;
+    Animation walkinganimation;
 
     public Player(double x, double y, double speedx, double speedy, KeyHandler keyHandler, GamePanel gamePanel) {
         super(x, y, speedx, speedy);
         this.keyHandler = keyHandler;
         this.gamePanel = gamePanel;
         getPlayerImage();
+        walkinganimation = new Animation(2,run);
         super.direction="run";
     }
     public void getPlayerImage() {
@@ -51,31 +53,30 @@ public class Player extends GameObject {
             } else if (keyHandler.leftPressed) {
                 direction = "run";
                 this.setX(this.getX() - this.getSpeedx());
+                walkinganimation.runAnimation();
             } else if (keyHandler.rightPressed) {
                 direction= "run";
                 this.setX(this.getX() + getSpeedx());
+                walkinganimation.runAnimation();
             }
-            spriteCounter=0;
-            while(spriteCounter<=60){
-                if(spriteCounter%5==0){
-                    spriteNumber++;
-                }
-                spriteCounter++;
-            }
-            if(spriteCounter==61){
-                spriteCounter = 0;
-                spriteNumber=0;
-            }
+
         }
 
 
     @Override
     public void render(Graphics2D g) {
-        BufferedImage  image = switch (direction) {
-            case "jump" -> jump[spriteNumber];
-            case "run" -> run[spriteNumber];
-            default -> null;
-        };
-        g.drawImage(image,(int) this.getX(), (int) this.getY() ,gamePanel.tileSize,gamePanel.tileSize,null);
+        switch (direction) {
+            case "jump" :
+                g.drawImage(jump[0],(int)getX(),(int)getY(),gamePanel.tileSize,gamePanel.tileSize,null);
+                break;
+            case "run" :
+                if(this.getX() != 400) {
+                    walkinganimation.drawAnimation(g, (int) getX(), (int) getY(), gamePanel.tileSize, gamePanel.tileSize);
+                    break;
+                }else {
+                    g.drawImage(run[0],(int)getX(),(int)getY(),gamePanel.tileSize,gamePanel.tileSize,null);
+                }
+
+        }
     }
 }

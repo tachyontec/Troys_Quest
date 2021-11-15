@@ -1,7 +1,5 @@
-package tiles;
-
+/*package tiles;
 import main.GamePanel;
-
 import javax.imageio.ImageIO;
 import java.io.IOException;
 
@@ -37,3 +35,4 @@ public class TileManager {
         }
     }
 }
+*/
