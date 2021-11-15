@@ -22,7 +22,6 @@ public class KeyHandler implements KeyListener {
 
         if (key == KeyEvent.VK_RIGHT) {
             rightPressed = true;
-            System.out.println("pressed");
         } else if (key == KeyEvent.VK_LEFT) {
             leftPressed = true;
         } else if (key == KeyEvent.VK_UP) {
