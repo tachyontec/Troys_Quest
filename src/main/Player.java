@@ -1,9 +1,3 @@
-package main;
-
-import main.GameObject;
-import main.GamePanel;
-import main.KeyHandler;
-
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -30,9 +24,9 @@ public class Player extends GameObject {
     }
     public void getPlayerImage() {
         try {
-            File path1 = new File("C:\\Users\\PC\\IdeaProjects\\Troys_Quest\\res\\main.Player\\Run");
+            File path1 = new File("C:/Users/Μαριοςς/IdeaProjects/Troys_Quest/res/Player/Run");
             File [] allfiles1 = path1.listFiles();
-            File path2 = new File("C:\\Users\\PC\\IdeaProjects\\Troys_Quest\\res\\main.Player\\Jump");
+            File path2 = new File("C:/Users/Μαριοςς/IdeaProjects/Troys_Quest/res/Player/Jump");
             File [] allfiles2 = path2.listFiles();
             run = new BufferedImage[allfiles1.length];
             jump = new BufferedImage[allfiles2.length];
@@ -51,13 +45,13 @@ public class Player extends GameObject {
 
     @Override
     public void tick() {
-            if (keyHandler.upPressed == true) {
+            if (keyHandler.upPressed) {
                 direction = "jump";
                 this.setY(this.getY() - this.getSpeedy());
-            } else if (keyHandler.leftPressed == true) {
+            } else if (keyHandler.leftPressed) {
                 direction = "run";
                 this.setX(this.getX() - this.getSpeedx());
-            } else if (keyHandler.rightPressed == true) {
+            } else if (keyHandler.rightPressed) {
                 direction= "run";
                 this.setX(this.getX() + getSpeedx());
             }
@@ -77,14 +71,11 @@ public class Player extends GameObject {
 
     @Override
     public void render(Graphics2D g) {
-        BufferedImage  image =null;
-        switch(direction) {
-            case "jump":
-               image = jump[spriteNumber];
-               break;
-            case "run":
-                image = run[spriteNumber];
-        }
+        BufferedImage  image = switch (direction) {
+            case "jump" -> jump[spriteNumber];
+            case "run" -> run[spriteNumber];
+            default -> null;
+        };
         g.drawImage(image,(int) this.getX(), (int) this.getY() ,gamePanel.tileSize,gamePanel.tileSize,null);
     }
 }
