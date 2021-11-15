@@ -1,6 +1,4 @@
-import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -47,13 +45,13 @@ public class Player extends GameObject {
 
     @Override
     public void tick() {
-            if (keyHandler.upPressed == true) {
+            if (keyHandler.upPressed) {
                 direction = "jump";
                 this.setY(this.getY() - this.getSpeedy());
-            } else if (keyHandler.leftPressed == true) {
+            } else if (keyHandler.leftPressed) {
                 direction = "run";
                 this.setX(this.getX() - this.getSpeedx());
-            } else if (keyHandler.rightPressed == true) {
+            } else if (keyHandler.rightPressed) {
                 direction= "run";
                 this.setX(this.getX() + getSpeedx());
             }
@@ -73,14 +71,11 @@ public class Player extends GameObject {
 
     @Override
     public void render(Graphics2D g) {
-        BufferedImage  image =null;
-        switch(direction) {
-            case "jump":
-               image = jump[spriteNumber];
-               break;
-            case "run":
-                image = run[spriteNumber];
-        }
+        BufferedImage  image = switch (direction) {
+            case "jump" -> jump[spriteNumber];
+            case "run" -> run[spriteNumber];
+            default -> null;
+        };
         g.drawImage(image,(int) this.getX(), (int) this.getY() ,gamePanel.tileSize,gamePanel.tileSize,null);
     }
 }
