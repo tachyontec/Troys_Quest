@@ -9,12 +9,14 @@ import javax.imageio.ImageIO;
 //Subclass of Game Object responsible for the moving and drawing the character of the game
 public class Player extends GameObject {
 
+    public float jumpingTime = 100;
     public KeyHandler keyHandler;
     public GamePanel gamePanel;
 
     public final int axisX=400;
     public final int axisY=400;
     Animation walkinganimation;
+    Animation jumpinganimation;
 
     public Player(double x, double y, double speedx, double speedy, KeyHandler keyHandler, GamePanel gamePanel) {
         super(x, y, speedx, speedy);
@@ -22,13 +24,14 @@ public class Player extends GameObject {
         this.gamePanel = gamePanel;
         getPlayerImage();
         walkinganimation = new Animation(2,run);
+        jumpinganimation = new Animation(2,jump);
         super.direction="run";
     }
     public void getPlayerImage() {
         try {
-            File path1 = new File("C:\\Users\\PC\\IdeaProjects\\Troys_Quest\\res\\Player\\Run");
+            File path1 = new File("/Users/michael/Desktop/Troys_Quest-test1/res/Player/Run");
             File [] allfiles1 = path1.listFiles();
-            File path2 = new File("C:\\Users\\PC\\IdeaProjects\\Troys_Quest\\res\\Player\\Jump");
+            File path2 = new File("/Users/michael/Desktop/Troys_Quest-test1/res/Player/Jump");
             File [] allfiles2 = path2.listFiles();
             run = new BufferedImage[allfiles1.length];
             jump = new BufferedImage[allfiles2.length];
@@ -49,7 +52,9 @@ public class Player extends GameObject {
     public void tick() {
             if (keyHandler.upPressed) {
                 direction = "jump";
-                this.setY(this.getY() - this.getSpeedy());
+                new Thread(new thread()).start();
+                this.setY(this.getY() - 10);
+                jumpinganimation.jumpAnimation();
             } else if (keyHandler.leftPressed) {
                 direction = "run";
                 this.setX(this.getX() - this.getSpeedx());
@@ -80,4 +85,19 @@ public class Player extends GameObject {
         }
     }
 
+    public class thread implements Runnable{
+
+        @Override
+        public void run() {
+            try{
+                Thread.sleep((long) jumpingTime);
+                setY(getY() + 10);
+                direction = "run";
+            } catch(Exception e){
+                e.printStackTrace();
+                new Thread(this).start();
+                System.exit(0);
+            }
+        }
+    }
 }
