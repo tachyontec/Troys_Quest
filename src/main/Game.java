@@ -15,7 +15,7 @@ public class Game extends Canvas implements Runnable {
         this.addKeyListener(new KeyboardInput()); // to be discussed . propably needs a handler instance as a parameter , as we manage (create , remove etc)all of our objects through handler
 
         new GameWindow(WIDTH, HEIGHT, "Troy's Quest" , this ); //Game window init
-        //handler.addObject(new Player(100 , 100));
+        //handler.addObject(new main.Player(100 , 100));
     }
     //starting up our thread
     public synchronized void start() {
@@ -75,7 +75,7 @@ public class Game extends Canvas implements Runnable {
     handler.tick();
     }
 
-    private void render(){ //Main render method
+    private void render(){ //main.Main render method
         BufferStrategy bs = this.getBufferStrategy(); // BufferStrategy means how many ready made panels we buffer (load) before showing them in the screen
         if(bs == null) { //the first time that render is called , a new buffer strategy is created for our main game instance
             this.createBufferStrategy(3); // 2 buffers loading behind our main panel (3 including current one)

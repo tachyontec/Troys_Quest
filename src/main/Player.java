@@ -1,6 +1,10 @@
-import java.awt.Color;
+package main;
+
+import main.GameObject;
+import main.GamePanel;
+import main.KeyHandler;
+
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -26,9 +30,9 @@ public class Player extends GameObject {
     }
     public void getPlayerImage() {
         try {
-            File path1 = new File("C:/Users/Μαριοςς/IdeaProjects/Troys_Quest/res/Player/Run");
+            File path1 = new File("C:\\Users\\PC\\IdeaProjects\\Troys_Quest\\res\\main.Player\\Run");
             File [] allfiles1 = path1.listFiles();
-            File path2 = new File("C:/Users/Μαριοςς/IdeaProjects/Troys_Quest/res/Player/Jump");
+            File path2 = new File("C:\\Users\\PC\\IdeaProjects\\Troys_Quest\\res\\main.Player\\Jump");
             File [] allfiles2 = path2.listFiles();
             run = new BufferedImage[allfiles1.length];
             jump = new BufferedImage[allfiles2.length];

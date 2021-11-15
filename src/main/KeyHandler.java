@@ -1,3 +1,5 @@
+package main;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -14,7 +16,7 @@ public class KeyHandler implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent k) {
-        //The speed that we will be moving Player
+        //The speed that we will be moving main.Player
         //We need to check after every button click because it is increasing through time
         int key = k.getKeyCode(); //get the code of key presses
 

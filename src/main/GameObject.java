@@ -1,4 +1,4 @@
-//superclass for all the object of the game
+package main;//superclass for all the object of the game
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -41,7 +41,7 @@ public abstract class GameObject {
         this.id=counter;
     }
 
-    //we use a default constructor in the Player class
+    //we use a default constructor in the main.Player class
     public GameObject(){};
 
 

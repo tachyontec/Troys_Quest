@@ -1,4 +1,4 @@
-import javax.swing.JFrame;
+/*import javax.swing.JFrame;
 import javax.swing.JButton;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -87,4 +87,4 @@ public class GameWindow extends Canvas implements ActionListener {
     }
 
 
-}
+}*/
