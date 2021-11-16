@@ -72,7 +72,7 @@ public class Player extends GameObject {
     public void render(Graphics2D g) {
         switch (direction) {
             case "jump" :
-                g.drawImage(jump[0],(int)getX(),(int)getY(),gamePanel.tileSize,gamePanel.tileSize,null);
+                jumpinganimation.drawAnimation(g,(int) getX(),(int) getY(),gamePanel.tileSize, gamePanel.tileSize);
                 break;
             case "run" :
                 if(this.getX() != 400) {
