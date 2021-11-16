@@ -29,9 +29,9 @@ public class Player extends GameObject {
     }
     public void getPlayerImage() {
         try {
-            File path1 = new File("/Users/michael/Desktop/Troys_Quest-test1/res/Player/Run");
+            File path1 = new File("C:\\Users\\Μαριοςς\\IdeaProjects\\Troys_Quest3\\res\\Player\\Run");
             File [] allfiles1 = path1.listFiles();
-            File path2 = new File("/Users/michael/Desktop/Troys_Quest-test1/res/Player/Jump");
+            File path2 = new File("C:\\Users\\Μαριοςς\\IdeaProjects\\Troys_Quest3\\res\\Player\\Jump");
             File [] allfiles2 = path2.listFiles();
             run = new BufferedImage[allfiles1.length];
             jump = new BufferedImage[allfiles2.length];
@@ -54,7 +54,7 @@ public class Player extends GameObject {
                 direction = "jump";
                 new Thread(new thread()).start();
                 this.setY(this.getY() - 10);
-                jumpinganimation.jumpAnimation();
+                jumpinganimation.runAnimation();
             } else if (keyHandler.leftPressed) {
                 direction = "run";
                 this.setX(this.getX() - this.getSpeedx());
