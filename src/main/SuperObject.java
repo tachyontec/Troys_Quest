@@ -8,11 +8,11 @@ public class SuperObject {
     private BufferedImage image;
     private String name;
     private boolean collision = false;
-    private int x,y;
+    private int x, y;
 
     public void draw(Graphics2D graphics2D, GamePanel gamePanel) {
 
-        graphics2D.drawImage(image , x ,y , gamePanel.tileSize , gamePanel.tileSize , null);
+        graphics2D.drawImage(image, x, y, gamePanel.tileSize, gamePanel.tileSize, null);
     }
 
     public BufferedImage getImage() {
@@ -54,3 +54,4 @@ public class SuperObject {
     public void setY(int y) {
         this.y = y;
     }
+}

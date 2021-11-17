@@ -23,6 +23,8 @@ public class GamePanel extends JPanel implements Runnable{
     KeyHandler keyHandler = new KeyHandler();
     Thread gameThread;
     public Player player = new Player(400,400,3,4,keyHandler,this);
+    public SuperObject objects[] = new SuperObject[10];
+    public ObjectSetter objectSetter = new ObjectSetter(this);
     Image background = Toolkit.getDefaultToolkit().createImage("backgroundSun.png");
 
 
@@ -35,6 +37,12 @@ public class GamePanel extends JPanel implements Runnable{
 
 
     }
+
+    public void setupGame() {
+
+        objectSetter.setObject();
+    }
+
     public void startGameThread() {
 
         gameThread = new Thread(this);
