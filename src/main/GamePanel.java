@@ -76,6 +76,10 @@ public class GamePanel extends JPanel implements Runnable{
                 System.out.println("FPS " + frames); //prints out our fps to check if it works
                 frames = 0;
                 timer = 0;
+            }{
+                System.out.println("FPS " + frames); //prints out our fps to check if it works
+                frames = 0;
+                timer = 0;
             }
         }
 
@@ -92,6 +96,11 @@ public class GamePanel extends JPanel implements Runnable{
         Graphics2D g2 = (Graphics2D)g;
         g2.drawImage(background, 0, 0, null);
         tileM.draw(g2);
+        for (int i=0;i<objects.length;i++) {
+            if (objects[i] != null) {
+                objects[i].draw(g2,this);
+            }
+        }
         player.render(g2);
         g2.dispose();
     }

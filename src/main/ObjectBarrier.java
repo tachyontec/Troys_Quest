@@ -3,6 +3,7 @@ package main;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
+import java.util.Objects;
 
 public class ObjectBarrier extends SuperObject {
 
@@ -10,7 +11,7 @@ public class ObjectBarrier extends SuperObject {
 
         this.setName("Barrier");
         try {
-            this.setImage(ImageIO.read(getClass().getResourceAsStream("C:\\Users\\hmdis\\IdeaProjects\\Troys_Quest\\res\\tiles\\blockEdge.png")));
+            this.setImage(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/objects/arrow.png"))));
         } catch (IOException e) {
             e.printStackTrace();
         }

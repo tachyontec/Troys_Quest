@@ -1,7 +1,10 @@
 package main;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.Objects;
 
 public class SuperObject {
 
@@ -15,7 +18,13 @@ public class SuperObject {
         graphics2D.drawImage(image, x, y, gamePanel.tileSize, gamePanel.tileSize, null);
     }
 
-    public BufferedImage getImage() {
+    public BufferedImage getImage(String path) {
+
+        try {
+            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/objects/arrow.png")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return image;
     }
 
