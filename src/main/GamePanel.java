@@ -1,10 +1,11 @@
 package main;
 
 import tiles.*;
-
 import javax.swing.JPanel;
 import javax.swing.plaf.basic.BasicTreeUI;
 import java.awt.*;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
 
 public class GamePanel extends JPanel implements Runnable{
     //Screen settings
@@ -22,11 +23,11 @@ public class GamePanel extends JPanel implements Runnable{
     KeyHandler keyHandler = new KeyHandler();
     Thread gameThread;
     public Player player = new Player(400,400,3,4,keyHandler,this);
+    Image background = Toolkit.getDefaultToolkit().createImage("backgroundSun.png");
 
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth,screenHeight));
-        this.setBackground(Color.GREEN);
         this.setDoubleBuffered(true);
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
@@ -77,10 +78,11 @@ public class GamePanel extends JPanel implements Runnable{
     public void update() {
         player.tick();
     }
-
+    @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
+        g2.drawImage(background, 0, 0, null);
         tileM.draw(g2);
         player.render(g2);
         g2.dispose();

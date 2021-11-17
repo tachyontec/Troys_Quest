@@ -20,17 +20,20 @@ public class TileManager {
         tile=new Tile[10];
         mapTileNumber = new int[gp.maxScreenCol][gp.maxScreenRow];
         getTileImage();
-        loadMap("/maps/map1.txt");//poly shmantiko na mpei swsto path edw . /maps/file.txt
+        loadMap("/maps/mapLayout.txt");//poly shmantiko na mpei swsto path edw . /maps/file.txt
     }
     //arranges so that every cell of array tile[] contains an image
     //e.g. tile[0] erdogan,tile[1] grass etc
     public void getTileImage()  {
         try{
 
-            tile[0] = new Tile();
-            tile[0].image = ImageIO.read(getClass().getResourceAsStream("EQBZ5UzXkAADfaU.jpg"));
+            tile[0] = new Tile();//when we want the backround to show at a tile , enter 0 at the maplayout
             tile[1] = new Tile();
-            tile[1].image = ImageIO.read(getClass().getResourceAsStream("slopeDown.png"));
+            tile[1].image = ImageIO.read(getClass().getResourceAsStream("sandRocksTop.png"));
+            tile[2] = new Tile();
+            tile[2].image = ImageIO.read(getClass().getResourceAsStream("seaFull.png"));
+            tile[3] = new Tile();
+            tile[3].image = ImageIO.read(getClass().getResourceAsStream("seaDown.png"));
 
         }catch(IOException e){
 
