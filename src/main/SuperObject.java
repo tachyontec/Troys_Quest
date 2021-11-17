@@ -8,28 +8,24 @@ import java.util.Objects;
 
 public class SuperObject {
 
-    private BufferedImage image;
+    BufferedImage image;
     private String name;
     private boolean collision = false;
     private int x, y;
+    //We create any object ONLY with it's name as a parameter
+    public SuperObject(String name) {
+        this.name=name;
+        try {
+            //And we have an image in /objects/  folder with the same name, which represents the object
+            this.image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/objects/"+this.name+".png")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void draw(Graphics2D graphics2D, GamePanel gamePanel) {
 
         graphics2D.drawImage(image, x, y, gamePanel.tileSize, gamePanel.tileSize, null);
-    }
-
-    public BufferedImage getImage(String path) {
-
-        try {
-            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/objects/arrow.png")));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return image;
-    }
-
-    public void setImage(BufferedImage image) {
-        this.image = image;
     }
 
     public String getName() {
