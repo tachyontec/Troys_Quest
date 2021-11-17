@@ -29,9 +29,10 @@ public class Player extends GameObject {
     }
     public void getPlayerImage() {
         try {
-            File path1 = new File("C:\\Users\\Μαριοςς\\IdeaProjects\\Troys_Quest3\\res\\Player\\Run");
+            File path1 = new File("res/Player/Run");
+            System.out.println(path1.getAbsolutePath());
             File [] allfiles1 = path1.listFiles();
-            File path2 = new File("C:\\Users\\Μαριοςς\\IdeaProjects\\Troys_Quest3\\res\\Player\\Jump");
+            File path2 = new File("res/Player/Jump");
             File [] allfiles2 = path2.listFiles();
             run = new BufferedImage[allfiles1.length];
             jump = new BufferedImage[allfiles2.length];
