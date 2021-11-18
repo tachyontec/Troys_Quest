@@ -17,7 +17,7 @@ public class Player extends GameObject {
     public final int axisY=400;
     Animation walkinganimation;
     Animation jumpinganimation;
-
+    Animation idleanimation;
     public Player(double x, double y, double speedx, double speedy, KeyHandler keyHandler, GamePanel gamePanel) {
         super(x, y, speedx, speedy);
         this.keyHandler = keyHandler;
@@ -25,24 +25,28 @@ public class Player extends GameObject {
         getPlayerImage();
         walkinganimation = new Animation(2,run);
         jumpinganimation = new Animation(2,jump);
+        idleanimation = new Animation(1,idle);
         super.direction="run";
     }
     public void getPlayerImage() {
         try {
             File path1 = new File("res/Player/Run");
-            System.out.println(path1.getAbsolutePath());
             File [] allfiles1 = path1.listFiles();
             File path2 = new File("res/Player/Jump");
             File [] allfiles2 = path2.listFiles();
+            File path3 = new File("res/Player/Idle");
+            File [] allfiles3 = path3.listFiles();
             run = new BufferedImage[allfiles1.length];
             jump = new BufferedImage[allfiles2.length];
+            idle = new BufferedImage[allfiles3.length];
             for(int i=0 ; i<run.length;i++) {
                 run[i] = ImageIO.read(allfiles1[i]);
-                System.out.println("loaded");
             }
             for(int i=0 ; i<jump.length;i++) {
-                String str=i+".png";
                 jump[i] = ImageIO.read(allfiles2[i]);
+            }
+            for(int i=0 ; i<idle.length;i++) {
+                idle[i] = ImageIO.read(allfiles3[i]);
             }
         }catch(IOException e) {
             e.printStackTrace();
@@ -51,6 +55,10 @@ public class Player extends GameObject {
 
     @Override
     public void tick() {
+            if(!(keyHandler.rightPressed&keyHandler.leftPressed&keyHandler.upPressed)) {
+                idleanimation.runAnimation();
+                direction = "idle";
+            }
             if (keyHandler.upPressed) {
                 direction = "jump";
                 new Thread(new thread()).start();
@@ -71,18 +79,19 @@ public class Player extends GameObject {
 
     @Override
     public void render(Graphics2D g) {
+        if(direction.equals("idle")) {
+            idleanimation.drawAnimation(g, (int) getX(), (int) getY(), gamePanel.tileSize, gamePanel.tileSize);
+        }
         switch (direction) {
+
             case "jump" :
                 jumpinganimation.drawAnimation(g,(int) getX(),(int) getY(),gamePanel.tileSize, gamePanel.tileSize);
                 break;
             case "run" :
-                if(this.getX() != 400) {
-                    walkinganimation.drawAnimation(g, (int) getX(), (int) getY(), gamePanel.tileSize, gamePanel.tileSize);
-                    break;
-                }else {
-                    g.drawImage(run[0],(int)getX(),(int)getY(),gamePanel.tileSize,gamePanel.tileSize,null);
-                }
-
+                walkinganimation.drawAnimation(g, (int) getX(), (int) getY(), gamePanel.tileSize, gamePanel.tileSize);
+                break;
+            default :
+                break;
         }
     }
 

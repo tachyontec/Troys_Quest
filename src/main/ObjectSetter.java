@@ -1,4 +1,4 @@
-package main;
+/*package main;
 
 public class ObjectSetter {
 
@@ -21,4 +21,4 @@ public class ObjectSetter {
         gamePanel.objects[1].setY(9 * gamePanel.tileSize);
 
     }
-}
+}*/
