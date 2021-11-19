@@ -24,7 +24,7 @@ public class Player extends GameObject {
     Animation idleanimation;
 
     public Player(double worldX, double worldY, double speedx, double speedy, KeyHandler keyHandler, GamePanel gamePanel) {
-        super(gamePanel.tileSize * 7, gamePanel.tileSize * 9, speedx, speedy);
+        super(gamePanel.tileSize * 7 , gamePanel.tileSize * 9 , speedx, speedy);
         this.keyHandler = keyHandler;
         this.gamePanel = gamePanel;
         screenX = gamePanel.tileSize * 7;
@@ -87,15 +87,15 @@ public class Player extends GameObject {
     @Override
     public void render(Graphics2D g) {
         if(direction.equals("idle")) {
-            idleanimation.drawAnimation(g, (int) getX(), (int) getY(), gamePanel.tileSize, gamePanel.tileSize);
+            idleanimation.drawAnimation(g, (int) screenX, (int) screenY, gamePanel.tileSize, gamePanel.tileSize);
         }
         switch (direction) {
 
             case "jump" :
-                jumpinganimation.drawAnimation(g,(int) getX(),(int) getY(),gamePanel.tileSize, gamePanel.tileSize);
+                jumpinganimation.drawAnimation(g,(int) screenX,(int) screenY,gamePanel.tileSize, gamePanel.tileSize);
                 break;
             case "run" :
-                walkinganimation.drawAnimation(g, (int) getX(), (int) getY(), gamePanel.tileSize, gamePanel.tileSize);
+                walkinganimation.drawAnimation(g, (int) screenX, (int) screenY, gamePanel.tileSize, gamePanel.tileSize);
                 break;
             default :
                 break;
