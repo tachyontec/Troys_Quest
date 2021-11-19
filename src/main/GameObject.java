@@ -8,8 +8,8 @@ public abstract class GameObject {
     // id is the differentiator for player , obstacle etc.
     //counter helps each object have a ID
     //we have a speed variable for each axis (x and y)
-    private double x;
-    private double y;
+    private double worldx;
+    private double worldy;
     private int id;
     private double speedx;
     private double speedy;
@@ -35,8 +35,8 @@ public abstract class GameObject {
     //generic constructor , spawns game objects at x ,y coordinates
     public GameObject(double x, double y ,double speedx, double speedy) {
         counter++;
-        this.x=x;
-        this.y=y;
+        this.worldx=x;
+        this.worldy=y;
         this.speedx = speedx;
         this.speedy = speedy;
         this.id=counter;
@@ -53,19 +53,19 @@ public abstract class GameObject {
 
     //getters and setters for each field
     public double getX() {
-        return x;
+        return worldx;
     }
 
     public void setX(double x) {
-        this.x = x;
+        this.worldx = x;
     }
 
     public double getY() {
-        return y;
+        return worldy;
     }
 
     public void setY(double y) {
-        this.y = y;
+        this.worldy = y;
     }
 
     public double getSpeedx() {

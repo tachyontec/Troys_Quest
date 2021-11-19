@@ -15,13 +15,20 @@ public class Player extends GameObject {
 
     public final int axisX=400;
     public final int axisY=400;
+
+    public final int screenX;
+    public final int screenY;
+
     Animation walkinganimation;
     Animation jumpinganimation;
     Animation idleanimation;
-    public Player(double x, double y, double speedx, double speedy, KeyHandler keyHandler, GamePanel gamePanel) {
-        super(x, y, speedx, speedy);
+
+    public Player(double worldX, double worldY, double speedx, double speedy, KeyHandler keyHandler, GamePanel gamePanel) {
+        super(gamePanel.tileSize * 7, gamePanel.tileSize * 9, speedx, speedy);
         this.keyHandler = keyHandler;
         this.gamePanel = gamePanel;
+        screenX = gamePanel.tileSize * 7;
+        screenY = gamePanel.tileSize * 9;
         getPlayerImage();
         walkinganimation = new Animation(2,run);
         jumpinganimation = new Animation(2,jump);
