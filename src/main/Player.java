@@ -12,7 +12,9 @@ public class Player extends GameObject {
     public float jumpingTime = 100;
     public KeyHandler keyHandler;
     public GamePanel gamePanel;
-
+    public BufferedImage [] run;
+    public BufferedImage [] jump;
+    public BufferedImage [] idle;
     public final int axisX=400;
     public final int axisY=400;
 
@@ -31,7 +33,7 @@ public class Player extends GameObject {
         screenY = gamePanel.tileSize * 9;
         getPlayerImage();
         walkinganimation = new Animation(2,run);
-        jumpinganimation = new Animation(2,jump);
+        jumpinganimation = new Animation(10,jump);
         idleanimation = new Animation(1,idle);
         super.direction="run";
     }
@@ -86,11 +88,8 @@ public class Player extends GameObject {
 
     @Override
     public void render(Graphics2D g) {
-        if(direction.equals("idle")) {
-            idleanimation.drawAnimation(g, (int) screenX, (int) screenY, gamePanel.tileSize, gamePanel.tileSize);
-        }
-        switch (direction) {
 
+        switch (direction) {
             case "jump" :
                 jumpinganimation.drawAnimation(g,(int) screenX,(int) screenY,gamePanel.tileSize, gamePanel.tileSize);
                 break;
@@ -98,7 +97,7 @@ public class Player extends GameObject {
                 walkinganimation.drawAnimation(g, (int) screenX, (int) screenY, gamePanel.tileSize, gamePanel.tileSize);
                 break;
             default :
-                break;
+                idleanimation.drawAnimation(g, (int) screenX, (int) screenY, gamePanel.tileSize, gamePanel.tileSize);
         }
     }
 

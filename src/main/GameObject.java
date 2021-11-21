@@ -17,9 +17,6 @@ public abstract class GameObject {
     private double speedx;
     private double speedy;
     public static int counter;
-    public BufferedImage [] run;
-    public BufferedImage [] jump;
-    public BufferedImage [] idle;
     public String direction;
     //Buffered Images are the ones that contain our main character and how
     //they look when they face up,down etc. The difference between 1 and 2 is
