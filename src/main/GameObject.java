@@ -4,7 +4,8 @@ import java.awt.image.BufferedImage;
 
 public abstract class GameObject {
     //what all the objects have in common
-    //x,y are the coordinates of the game obje
+    //worldx,worldy are the coordinates of the game object relative to the map as pictured in mapLayout.txt,represented in tiles 
+    //screenx,screeny are the coordinates of the game object relative to the screen (frame)
     // id is the differentiator for player , obstacle etc.
     //counter helps each object have a ID
     //we have a speed variable for each axis (x and y)
@@ -30,7 +31,7 @@ public abstract class GameObject {
     public Rectangle area; //creating invisible rectangle to store data
     public boolean collisionOn = false;
 
-    //generic constructor , spawns game objects at x ,y coordinates
+    //generic constructor , spawns game objects at x ,y coordinates , sets the speed in x,y axis 
     public GameObject(double worldx, double worldy ,double speedx, double speedy) {
         counter++;
         this.worldx = worldx;
