@@ -69,7 +69,7 @@ public class Player extends GameObject {
             e.printStackTrace();
         }
     }
-
+    //moves the player by altering the x,y coordinates with keyboard arrows
     @Override
     public void tick() {
             if(!(keyHandler.rightPressed&keyHandler.leftPressed&keyHandler.upPressed)) {
@@ -78,22 +78,22 @@ public class Player extends GameObject {
             }
             if (keyHandler.upPressed) {
                 direction = "jump";
-                new Thread(new thread()).start();
-                this.setY(this.getY() - 10);
+                new Thread(new thread()).start();//initiating a new thread to perform the jump act
+                this.setY(this.getY() - 10);//moves the player upwards along the y axis
                 jumpinganimation.runAnimation();
             } else if (keyHandler.leftPressed) {
                 direction = "run";
-                this.setX(this.getX() - this.getSpeedx());
+                this.setX(this.getX() - this.getSpeedx());//moves the player along the x axis to the left
                 walkinganimation.runAnimation();
             } else if (keyHandler.rightPressed) {
                 direction= "run";
-                this.setX(this.getX() + getSpeedx());
+                this.setX(this.getX() + getSpeedx());//moves the player along the x axis to the right
                 walkinganimation.runAnimation();
             }
 
         }
 
-
+    // the direction variable indicates which images are to be drawn for each animation of the player
     @Override
     public void render(Graphics2D g) {
 
@@ -115,8 +115,8 @@ public class Player extends GameObject {
         public void run() {
             try{
                 Thread.sleep((long) jumpingTime);
-                setY(getY() + 10);
-                direction = "run";
+                setY(getY() + 10);//moves the player downwards along the y axis
+                direction = "run";//changes the direction to run in order to continue the run animation
             } catch(Exception e){
                 e.printStackTrace();
                 new Thread(this).start();
