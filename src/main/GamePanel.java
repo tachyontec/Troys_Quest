@@ -38,6 +38,7 @@ public class GamePanel extends JPanel implements Runnable{
 
 
     }
+    //this method starts the thread and automaticly calls method run
     public void startGameThread() {
 
         gameThread = new Thread(this);
@@ -49,6 +50,7 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     @Override
+    //implementing game loop algorithm
     public void run() {
         long lastTime = System.nanoTime();
         double amountOfTicks = 60.0;
@@ -77,11 +79,11 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
 
-
+    //in this method we update all GameObject objects
     public void update() {
         player.tick();
     }
-
+    ////in this method we paint all GameObject objects
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;

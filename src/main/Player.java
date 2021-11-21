@@ -10,8 +10,13 @@ import javax.imageio.ImageIO;
 public class Player extends GameObject {
 
     public float jumpingTime = 100;
+    //player gets keyhandler to iimplement keyboard input
     public KeyHandler keyHandler;
+    //player needs Game Panel to spawn on it
     public GamePanel gamePanel;
+    //Buffered Images are the ones that contain our main character
+    //they look when they move left,right and jump etc.
+    //the three bufferedImage tables run,jump,idle contain the photos that are needed in animations
     public BufferedImage [] run;
     public BufferedImage [] jump;
     public BufferedImage [] idle;
@@ -21,10 +26,11 @@ public class Player extends GameObject {
     public final int screenX;
     public final int screenY;
 
+    //creating for each animation needed for the player an object of Animation class
     Animation walkinganimation;
     Animation jumpinganimation;
     Animation idleanimation;
-
+    //Constructor using fields and initializing the animations objects
     public Player(double worldX, double worldY, double speedx, double speedy, KeyHandler keyHandler, GamePanel gamePanel) {
         super(gamePanel.tileSize * 7 , gamePanel.tileSize * 9 , speedx, speedy);
         this.keyHandler = keyHandler;
@@ -37,6 +43,8 @@ public class Player extends GameObject {
         idleanimation = new Animation(1,idle);
         super.direction="run";
     }
+    // in this method we are loading the images for each animation from resources folder res
+    //this needs to be implemented in another class named Resources later
     public void getPlayerImage() {
         try {
             File path1 = new File("res/Player/Run");

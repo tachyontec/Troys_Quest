@@ -18,9 +18,7 @@ public abstract class GameObject {
     private double speedy;
     public static int counter;
     public String direction;
-    //Buffered Images are the ones that contain our main character and how
-    //they look when they face up,down etc. The difference between 1 and 2 is
-    //which foot is in front, and which is back so that it creates an animation
+
 
 
 
