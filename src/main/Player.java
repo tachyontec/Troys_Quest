@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 //Subclass of Game Object responsible for the moving and drawing the character of the game
 public class Player extends GameObject {
 
+    public boolean jumped = true;
     public float jumpingTime = 100;
     //player gets keyhandler to iimplement keyboard input
     public KeyHandler keyHandler;
@@ -77,10 +78,20 @@ public class Player extends GameObject {
                 direction = "idle";
             }
             if (keyHandler.upPressed) {
-                direction = "jump";
-                new Thread(new thread()).start();//initiating a new thread to perform the jump act
-                this.setY(this.getY() - 10);//moves the player upwards along the y axis
-                jumpinganimation.runAnimation();
+                if(jumped) {
+                    direction = "jump";
+                    new Thread(new thread()).start();//initiating a new thread to perform the jump act
+                    this.setY(this.getY() - 10);//moves the player upwards along the y axis
+                    jumpinganimation.runAnimation();
+                }else if (keyHandler.leftPressed) {
+                        direction = "run";
+                        this.setX(this.getX() - this.getSpeedx());
+                        walkinganimation.runAnimation();
+                    } else if (keyHandler.rightPressed) {
+                        direction = "run";
+                        this.setX(this.getX() + getSpeedx());
+                        walkinganimation.runAnimation();
+                    }
             } else if (keyHandler.leftPressed) {
                 direction = "run";
                 this.setX(this.getX() - this.getSpeedx());//moves the player along the x axis to the left
@@ -90,7 +101,9 @@ public class Player extends GameObject {
                 this.setX(this.getX() + getSpeedx());//moves the player along the x axis to the right
                 walkinganimation.runAnimation();
             }
-
+             if(!keyHandler.upPressed){
+                 jumped = true;
+             }
         }
 
     // the direction variable indicates which images are to be drawn for each animation of the player
@@ -117,6 +130,7 @@ public class Player extends GameObject {
                 Thread.sleep((long) jumpingTime);
                 setY(getY() + 10);//moves the player downwards along the y axis
                 direction = "run";//changes the direction to run in order to continue the run animation
+                jumped = false;
             } catch(Exception e){
                 e.printStackTrace();
                 new Thread(this).start();
