@@ -1,9 +1,10 @@
 package main;
 
+import objects.Player;
+import objects.Obstacle;
 import tiles.*;
 
 import javax.swing.JPanel;
-import javax.swing.plaf.basic.BasicTreeUI;
 import java.awt.*;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -26,7 +27,7 @@ public class GamePanel extends JPanel implements Runnable{
     KeyHandler keyHandler = new KeyHandler();
     Thread gameThread;
     public Player player = new Player(400,400,3,4,keyHandler,this);
-    public SuperObject objects[] = new SuperObject[10];
+    public Obstacle objects[] = new Obstacle[10];
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth,screenHeight));

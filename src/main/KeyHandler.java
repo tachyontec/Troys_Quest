@@ -16,7 +16,7 @@ public class KeyHandler implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent k) {
-        //The speed that we will be moving main.Player
+        //The speed that we will be moving objects.Player
         //We need to check after every button click because it is increasing through time
         int key = k.getKeyCode(); //get the code of key presses
 

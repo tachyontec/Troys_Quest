@@ -1,7 +1,9 @@
-package main;//superclass for all the object of the game
+package objects;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+//superclass for all the object of the game
 public abstract class GameObject {
     //what all the objects have in common
     //worldx,worldy are the coordinates of the game object relative to the map as pictured in mapLayout.txt,represented in tiles 
@@ -41,8 +43,8 @@ public abstract class GameObject {
         this.id=counter;
     }
 
-    //we use a default constructor in the main.Player class
-    public GameObject(){};
+    //we use a default constructor in the objects.Player class
+    public GameObject(){}
 
 
 

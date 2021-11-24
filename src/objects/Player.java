@@ -1,4 +1,9 @@
-package main;
+package objects;
+
+import main.Animation;
+import main.GamePanel;
+import main.KeyHandler;
+import objects.GameObject;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;

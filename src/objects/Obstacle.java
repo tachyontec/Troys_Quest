@@ -1,4 +1,6 @@
-package main;
+package objects;
+
+import main.GamePanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -6,14 +8,14 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class SuperObject {
+public class Obstacle {
 
     BufferedImage image;
     private String name;
     private boolean collision = false;
     private int x, y;
     //We create any object ONLY with it's name as a parameter
-    public SuperObject(String name) {
+    public Obstacle(String name) {
         this.name=name;
         try {
             //And we have an image in /objects/  folder with the same name, which represents the object

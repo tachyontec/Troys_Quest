@@ -1,10 +1,12 @@
-package main;
+package objects;
 
-public class ObjectSetter {
+import main.GamePanel;
+
+public class ObstacleSetter {
 
     GamePanel gamePanel;
 
-    public ObjectSetter(GamePanel gamePanel) {
+    public ObstacleSetter(GamePanel gamePanel) {
 
         this.gamePanel = gamePanel;
     }
@@ -12,11 +14,11 @@ public class ObjectSetter {
     //floor is Y=8
     public void setObject() {
 
-        gamePanel.objects[0] = new SuperObject("Arrow");
+        gamePanel.objects[0] = new Obstacle("Arrow");
         gamePanel.objects[0].setX(8 * gamePanel.tileSize);
         gamePanel.objects[0].setY(9 * gamePanel.tileSize);
 
-        gamePanel.objects[1] = new SuperObject("Arrow");
+        gamePanel.objects[1] = new Obstacle("Arrow");
         gamePanel.objects[1].setX(5 * gamePanel.tileSize);
         gamePanel.objects[1].setY(9 * gamePanel.tileSize);
 
