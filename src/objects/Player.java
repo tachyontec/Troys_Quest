@@ -30,7 +30,7 @@ public class Player extends GameObject {
     public final int axisY=400;
 
     public final int screenX;
-    public final int screenY;
+    public int screenY;
 
     //creating for each animation needed for the player an object of Animation class
     Animation walkinganimation;
@@ -77,7 +77,7 @@ public class Player extends GameObject {
     }
     //moves the player by altering the x,y coordinates with keyboard arrows
     @Override
-    public void tick() {
+    public synchronized void tick() { //synchronized because we involve another thread for jumping and we don't want it to collide with our main game thread
             if(!(keyHandler.rightPressed&keyHandler.leftPressed&keyHandler.upPressed)) {
                 idleanimation.runAnimation();
                 direction = "idle";
@@ -86,7 +86,8 @@ public class Player extends GameObject {
                 if(jumped) {
                     direction = "jump";
                     new Thread(new thread()).start();//initiating a new thread to perform the jump act
-                    this.setY(this.getY() - 10);//moves the player upwards along the y axis
+                    screenY -= 20;
+                    this.setY(this.getY() - 20);//moves the player upwards along the y axis
                     jumpinganimation.runAnimation();
                 }else if (keyHandler.leftPressed) {
                         direction = "run";
@@ -133,7 +134,8 @@ public class Player extends GameObject {
         public void run() {
             try{
                 Thread.sleep((long) jumpingTime);
-                setY(getY() + 10);//moves the player downwards along the y axis
+                screenY += 20;
+                setY(getY() + 20);//moves the player downwards along the y axis
                 direction = "run";//changes the direction to run in order to continue the run animation
                 jumped = false;
             } catch(Exception e){
