@@ -42,6 +42,8 @@ public class TileManager {
             tile[4].image = ImageIO.read(getClass().getResourceAsStream("cloud1.png"));
             tile[5] = new Tile();
             tile[5].image = ImageIO.read(getClass().getResourceAsStream("sky.png"));
+            tile[6] = new Tile();
+            tile[6].image = ImageIO.read(getClass().getResourceAsStream("bush.png"));
 
 
         }catch(IOException e){

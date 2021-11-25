@@ -2,6 +2,7 @@ package main;
 
 import objects.Player;
 import objects.Obstacle;
+import objects.Bird;
 import tiles.*;
 
 import javax.swing.JPanel;
@@ -27,6 +28,7 @@ public class GamePanel extends JPanel implements Runnable{
     KeyHandler keyHandler = new KeyHandler();
     Thread gameThread;
     public Player player = new Player(400,400,3,4,keyHandler,this);
+    public Bird bird = new Bird(30,3,3,4,this);
     public Obstacle objects[] = new Obstacle[10];
 
     public GamePanel() {
@@ -35,8 +37,6 @@ public class GamePanel extends JPanel implements Runnable{
         this.setDoubleBuffered(true);
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
-
-
 
     }
     //this method starts the thread and automaticly calls method run
@@ -83,6 +83,8 @@ public class GamePanel extends JPanel implements Runnable{
     //in this method we update all GameObject objects
     public void update() {
         player.tick();
+        bird.tick();
+
     }
     ////in this method we paint all GameObject objects
     public void paintComponent(Graphics g) {
@@ -90,6 +92,7 @@ public class GamePanel extends JPanel implements Runnable{
         Graphics2D g2 = (Graphics2D)g;
         tileM.draw(g2);
         player.render(g2);
+        bird.render(g2);
         g2.dispose();
     }
 }
