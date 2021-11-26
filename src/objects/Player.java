@@ -16,7 +16,7 @@ public class Player extends GameObject {
 
     public boolean jumped = true;
     public float jumpingTime = 100;
-    //player gets keyhandler to iimplement keyboard input
+    //player gets keyhandler to implement keyboard input
     public KeyHandler keyHandler;
     //player needs Game Panel to spawn on it
     public GamePanel gamePanel;

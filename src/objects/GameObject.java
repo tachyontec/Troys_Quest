@@ -1,5 +1,7 @@
 package objects;
 
+import main.GamePanel;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -12,15 +14,16 @@ public abstract class GameObject {
     //counter helps each object have a ID
     //we have a speed variable for each axis (x and y)
 
-    private double worldx;
-    private double worldy;
+    private double worldX;
+    private double worldY;
     //private final double screenx;
     //private final double screeny;
     private int id;
-    private double speedx;
-    private double speedy;
+    private double speedX;
+    private double speedY;
     public static int counter;
     public String direction;
+    public boolean collision = false;
 
 
 
@@ -34,12 +37,12 @@ public abstract class GameObject {
     public boolean collisionOn = false;
 
     //generic constructor , spawns game objects at x ,y coordinates , sets the speed in x,y axis 
-    public GameObject(double worldx, double worldy ,double speedx, double speedy) {
+    public GameObject(double worldX, double worldY ,double speedX, double speedY) {
         counter++;
-        this.worldx = worldx;
-        this.worldy = worldy;
-        this.speedx = speedx;
-        this.speedy = speedy;
+        this.worldX = worldX;
+        this.worldY = worldY;
+        this.speedX = speedX;
+        this.speedY = speedY;
         this.id=counter;
     }
 
@@ -48,41 +51,42 @@ public abstract class GameObject {
 
 
 
-    public void render(Graphics2D g) {}
+    public void render(Graphics2D g2) {
+    }
 
     public void tick() {}
 
     //getters and setters for each field
     public double getX() {
-        return worldx;
+        return worldX;
     }
 
     public void setX(double worldx) {
-        this.worldx = worldx;
+        this.worldX = worldx;
     }
 
     public double getY() {
-        return worldy;
+        return worldY;
     }
 
     public void setY(double worldy) {
-        this.worldy = worldy;
+        this.worldY = worldy;
     }
 
     public double getSpeedx() {
-        return speedx;
+        return speedX;
     }
 
     public void setSpeedx(double speedx) {
-        this.speedx = speedx;
+        this.speedX = speedx;
     }
 
     public double getSpeedy() {
-        return speedy;
+        return speedY;
     }
 
     public void setSpeedy(double speedy) {
-        this.speedy = speedy;
+        this.speedY = speedy;
     }
 
     public void setId(int id) {
