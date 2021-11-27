@@ -17,7 +17,7 @@ public class Bird extends GameObject {
     Animation flyinganimation;
 
     public Bird(double worldX, double worldY, double speedx, double speedy, GamePanel gamePanel) {
-        super(gamePanel.tileSize * worldX, gamePanel.tileSize * worldY, speedx, speedy);
+        super(gamePanel.tileSize * worldX, gamePanel.tileSize * worldY, speedx, speedy, gamePanel.tileSize, gamePanel.tileSize);
         this.gamePanel = gamePanel;
         getBirdImage();
         flyinganimation = new Animation(2, fly);
