@@ -6,7 +6,7 @@ import main.KeyHandler;
 import main.Resource;
 import objects.GameObject;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -40,7 +40,7 @@ public class Player extends GameObject {
 
     //Constructor using fields and initializing the animations objects
     public Player(double worldX, double worldY, double speedx, double speedy, KeyHandler keyHandler, GamePanel gamePanel) {
-        super(gamePanel.tileSize * 7, gamePanel.tileSize * 9, speedx, speedy);
+        super(gamePanel.tileSize * 7, gamePanel.tileSize * 9, speedx, speedy, (int) 30, gamePanel.tileSize);
         this.keyHandler = keyHandler;
         this.gamePanel = gamePanel;
         screenX = gamePanel.tileSize * 7;
@@ -101,7 +101,8 @@ public class Player extends GameObject {
     // the direction variable indicates which images are to be drawn for each animation of the player
     @Override
     public void render(Graphics2D g) {
-
+        //g.setColor(Color.RED);
+        //g.drawRect(x,y,width,height);
         switch (direction) {
             case "jump" -> jumpinganimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
             case "run" -> walkinganimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);

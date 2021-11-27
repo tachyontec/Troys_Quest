@@ -101,7 +101,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void update() {
         player.tick();
         bird.tick();
-
+        checkcollition();
     }
 
     ////in this method we paint all GameObject objects
@@ -115,6 +115,11 @@ public class GamePanel extends JPanel implements Runnable {
         //PLAYER RENDERING
         player.render(g2);
         bird.render(g2);
+        if (checkcollition()) {
+           g2.setColor(Color.RED);
+           g2.setFont(new Font("MV Boli",Font.PLAIN,45));
+           g2.drawString("You lost ",300,300);
+        }
         g2.dispose();
     }
 }

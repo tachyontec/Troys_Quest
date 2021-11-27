@@ -6,7 +6,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 //superclass for all the object of the game
-public abstract class GameObject {
+public abstract class GameObject extends Rectangle {
+    //this method extends Rectangle class from java.awt to implement collision
     //what all the objects have in common
     //worldx,worldy are the coordinates of the game object relative to the map as pictured in mapLayout.txt,represented in tiles 
     //screenx,screeny are the coordinates of the game object relative to the screen (frame)
@@ -37,7 +38,8 @@ public abstract class GameObject {
     public boolean collisionOn = false;
 
     //generic constructor , spawns game objects at x ,y coordinates , sets the speed in x,y axis 
-    public GameObject(double worldX, double worldY ,double speedX, double speedY) {
+    public GameObject(double worldX, double worldY ,double speedX, double speedY,int width,int height) {
+        super((int) worldX,(int) worldY, width, height);
         counter++;
         this.worldX = worldX;
         this.worldY = worldY;
@@ -63,6 +65,7 @@ public abstract class GameObject {
 
     public void setX(double worldx) {
         this.worldX = worldx;
+         x = (int)  worldx;
     }
 
     public double getY() {
@@ -71,6 +74,7 @@ public abstract class GameObject {
 
     public void setY(double worldy) {
         this.worldY = worldy;
+         y = (int)  worldy;
     }
 
     public double getSpeedx() {
