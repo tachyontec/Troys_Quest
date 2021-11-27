@@ -86,6 +86,16 @@ public class GamePanel extends JPanel implements Runnable {
 
     }
 
+    //method to determine if two objects of the game have collided
+    //returns a boolean statement true if collided false if not
+    public boolean checkcollition() {
+        boolean b = false;
+        if(player.intersects(obstacles[0])) {
+            System.out.println("collided");
+            b = true;
+        }
+        return b;
+    }
 
     //in this method we update all GameObject objects
     public void update() {
