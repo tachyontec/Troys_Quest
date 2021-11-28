@@ -4,13 +4,9 @@ import main.Animation;
 import main.GamePanel;
 import main.KeyHandler;
 import main.Resource;
-import objects.GameObject;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 
 //Subclass of Game Object responsible for the moving and drawing the character of the game
 public class Player extends GameObject {
@@ -40,7 +36,7 @@ public class Player extends GameObject {
 
     //Constructor using fields and initializing the animations objects
     public Player(double worldX, double worldY, double speedx, double speedy, KeyHandler keyHandler, GamePanel gamePanel) {
-        super(gamePanel.tileSize * 7, gamePanel.tileSize * 9, speedx, speedy, (int) 30, gamePanel.tileSize);
+        super(gamePanel.tileSize * 7, gamePanel.tileSize * 9, speedx, speedy, 30, gamePanel.tileSize);
         this.keyHandler = keyHandler;
         this.gamePanel = gamePanel;
         screenX = gamePanel.tileSize * 7;

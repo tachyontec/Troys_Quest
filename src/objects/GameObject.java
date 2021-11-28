@@ -1,9 +1,7 @@
 package objects;
 
-import main.GamePanel;
-
 import java.awt.*;
-import java.awt.image.BufferedImage;
+import java.util.LinkedList;
 
 //superclass for all the object of the game
 public abstract class GameObject extends Rectangle {
@@ -25,8 +23,7 @@ public abstract class GameObject extends Rectangle {
     public static int counter;
     public String direction;
     public boolean collision = false;
-
-
+    public static LinkedList<GameObject> l = new LinkedList<>(); //list with all objects
 
 
     //sprites are smaller rectangles that make up the whole window
@@ -38,25 +35,29 @@ public abstract class GameObject extends Rectangle {
     public boolean collisionOn = false;
 
     //generic constructor , spawns game objects at x ,y coordinates , sets the speed in x,y axis 
-    public GameObject(double worldX, double worldY ,double speedX, double speedY,int width,int height) {
-        super((int) worldX,(int) worldY, width, height);
+    public GameObject(double worldX, double worldY, double speedX, double speedY, int width, int height) {
+        super((int) worldX, (int) worldY, width, height);
         counter++;
         this.worldX = worldX;
         this.worldY = worldY;
         this.speedX = speedX;
         this.speedY = speedY;
-        this.id=counter;
+        this.id = counter;
+        if (this.getClass().equals(Player.class) || this.getClass().equals(MovingObject.class)) {
+            l.add(this); //add all objects that we will need to tick and render
+        }
     }
 
     //we use a default constructor in the objects.Player class
-    public GameObject(){}
-
+    public GameObject() {
+    }
 
 
     public void render(Graphics2D g2) {
     }
 
-    public void tick() {}
+    public void tick() {
+    }
 
     //getters and setters for each field
     public double getX() {
@@ -65,7 +66,7 @@ public abstract class GameObject extends Rectangle {
 
     public void setX(double worldx) {
         this.worldX = worldx;
-         x = (int)  worldx;
+        x = (int) worldx;
     }
 
     public double getY() {
@@ -74,7 +75,7 @@ public abstract class GameObject extends Rectangle {
 
     public void setY(double worldy) {
         this.worldY = worldy;
-         y = (int)  worldy;
+        y = (int) worldy;
     }
 
     public double getSpeedx() {

@@ -1,9 +1,6 @@
 package main;
 
-import objects.ObstacleSetter;
-import objects.Player;
-import objects.Obstacle;
-import objects.Bird;
+import objects.*;
 import tiles.*;
 
 import javax.swing.JPanel;
@@ -29,7 +26,7 @@ public class GamePanel extends JPanel implements Runnable {
     KeyHandler keyHandler = new KeyHandler();
     Thread gameThread;
     public Player player = new Player(400, 400, 3, 4, keyHandler, this);
-    public Bird bird = new Bird(30, 3, 3, 4, this);
+    public MovingObject bird = new MovingObject(30, 3, 3, 4, this, "Bird", 2, 3);
     public ObstacleSetter obstacleSetter = new ObstacleSetter(this);
     public Obstacle[] obstacles = new Obstacle[15];
 
@@ -90,7 +87,7 @@ public class GamePanel extends JPanel implements Runnable {
     //returns a boolean statement true if collided false if not
     public boolean checkcollition() {
         boolean b = false;
-        if(player.intersects(obstacles[0])) {
+        if (player.intersects(obstacles[0])) {
             System.out.println("collided");
             b = true;
         }
@@ -99,8 +96,11 @@ public class GamePanel extends JPanel implements Runnable {
 
     //in this method we update all GameObject objects
     public void update() {
-        player.tick();
-        bird.tick();
+        /*player.tick();
+        bird.tick();*/
+        for (GameObject object : GameObject.l) {
+            object.tick();
+        }
         checkcollition();
     }
 
@@ -113,12 +113,15 @@ public class GamePanel extends JPanel implements Runnable {
         //OBJECT RENDERING
         obstacles[0].draw(g2, this);
         //PLAYER RENDERING
-        player.render(g2);
-        bird.render(g2);
+        /*player.render(g2);
+        bird.render(g2);*/
+        for (GameObject object : GameObject.l) {
+            object.render(g2);
+        }
         if (checkcollition()) {
-           g2.setColor(Color.RED);
-           g2.setFont(new Font("MV Boli",Font.PLAIN,45));
-           g2.drawString("You lost ",300,300);
+            g2.setColor(Color.RED);
+            g2.setFont(new Font("MV Boli", Font.PLAIN, 45));
+            g2.drawString("You lost ", 300, 300);
         }
         g2.dispose();
     }

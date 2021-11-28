@@ -29,7 +29,7 @@ public class TileManager {
     This method initialises our tile[] array so that every cell contains a single png
     we do that because the map is constructed with a .txt file (e.g. mapLayout) which contains a bunch of integers 1-10
     we want to take that .txt file and replace all ints with a tile of our choice
-    every int i in the .txt file is going to be replaced with tile[i] on our gamescreen
+    every int i in the .txt file is going to be replaced with tile[i] on our gamesmenu
     */
     public void getTileImage() {
         try {
@@ -64,9 +64,9 @@ public class TileManager {
             int col = 0;
             int row = 0;
 
-            while (col < gp.maxWorldCol && row < gp.maxWorldRow) { //loop through all of the file's rows and columns one by one
+            while (col < gp.maxWorldCol && row < gp.maxWorldRow) { //loop through all the file's rows and columns one by one
 
-                String line = br.readLine(); //read each line seperately and create a String variable for each one
+                String line = br.readLine(); //read each line separately and create a String variable for each one
                 while (col < gp.maxWorldCol) { // loop through all columns of the current line
 
                     String[] numbers = line.split(" "); // make a 1D array witch contains all the numbers of the specific line

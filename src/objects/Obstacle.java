@@ -13,11 +13,12 @@ public class Obstacle extends GameObject {
 
 
     //Constructor to initiate x,y,speed of the x and y axis and the sprites width,height
-    public Obstacle(double worldX, double worldY, double speedX, double speedY,int width, int height, String name) {
+    public Obstacle(double worldX, double worldY, double speedX, double speedY, int width, int height, String name) {
         super(worldX, worldY, speedX, speedY, width, height);
         this.name = name;
         this.image = Resource.getResourceImage("objects", name);
     }
+
     //We create any object ONLY with its name as a parameter in ObstacleSetter.setObject
     public Obstacle(String name) {
         this.name = name;
