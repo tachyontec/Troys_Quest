@@ -5,6 +5,7 @@ import tiles.*;
 
 import javax.swing.JPanel;
 import java.awt.*;
+import java.util.LinkedList;
 
 public class GamePanel extends JPanel implements Runnable {
     //Screen settings
@@ -27,8 +28,9 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameThread;
     public Player player = new Player(400, 400, 3, 4, keyHandler, this);
     public MovingObject bird = new MovingObject(30, 3, 3, 4, this, "Bird", 2, 3);
+    public MovingObject arrow = new MovingObject(30, 8, 3, 4, this, "Arrow", 2, 3);
     public ObstacleSetter obstacleSetter = new ObstacleSetter(this);
-    public Obstacle[] obstacles = new Obstacle[15];
+    public LinkedList<Obstacle> obstacles = new LinkedList<>();
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -87,7 +89,7 @@ public class GamePanel extends JPanel implements Runnable {
     //returns a boolean statement true if collided false if not
     public boolean checkcollition() {
         boolean b = false;
-        if (player.intersects(obstacles[0])) {
+        if (player.intersects(obstacles.get(0))) {
             System.out.println("collided");
             b = true;
         }
@@ -111,7 +113,7 @@ public class GamePanel extends JPanel implements Runnable {
         //TILE RENDERING
         tileM.draw(g2);
         //OBJECT RENDERING
-        obstacles[0].draw(g2, this);
+        obstacles.get(0).draw(g2, this);
         //PLAYER RENDERING
         /*player.render(g2);
         bird.render(g2);*/

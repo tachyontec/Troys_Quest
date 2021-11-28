@@ -16,15 +16,9 @@ public class Obstacle extends GameObject {
     public Obstacle(double worldX, double worldY, double speedX, double speedY, int width, int height, String name) {
         super(worldX, worldY, speedX, speedY, width, height);
         this.name = name;
+        //Image is taken automatically from the folder with same name with the object
         this.image = Resource.getResourceImage("objects", name);
     }
-
-    //We create any object ONLY with its name as a parameter in ObstacleSetter.setObject
-    public Obstacle(String name) {
-        this.name = name;
-        this.image = Resource.getResourceImage("objects", name);
-    }
-
 
     public void draw(Graphics2D graphics2D, GamePanel gamePanel) {
         //graphics2D.setColor(Color.CYAN);
