@@ -29,6 +29,7 @@ public class GamePanel extends JPanel implements Runnable {
     public Player player = new Player(400, 400, 3, 4, keyHandler, this);
     public MovingObject bird = new MovingObject(30, 3, 3, 4, this, "Bird", 2, 3);
     public MovingObject arrow = new MovingObject(30, 8, 3, 4, this, "Arrow", 2, 3);
+    public MovingObject spikesRoller = new MovingObject(40, 8, 3, 4, this, "spikesRoller", 3, 3);
     public ObstacleSetter obstacleSetter = new ObstacleSetter(this);
     public LinkedList<Obstacle> obstacles = new LinkedList<>();
 
