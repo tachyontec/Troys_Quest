@@ -25,7 +25,7 @@ public class Player extends GameObject {
     public BufferedImage[] idle;
     public final int axisX = 400;
     public final int axisY = 400;
-
+    public int livesLeft = 3;
     public final int screenX;
     public int screenY;
 
