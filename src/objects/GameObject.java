@@ -23,7 +23,8 @@ public abstract class GameObject extends Rectangle {
     public static int counter;
     public String direction;
     public boolean collision = false;
-    public static LinkedList<GameObject> l = new LinkedList<>(); //list with all objects
+    //List of objects that we will need to tick and render
+    public static LinkedList<GameObject> gameObjects = new LinkedList<>();
 
 
     //sprites are smaller rectangles that make up the whole window
@@ -43,8 +44,8 @@ public abstract class GameObject extends Rectangle {
         this.speedX = speedX;
         this.speedY = speedY;
         this.id = counter;
-        if (this.getClass().equals(Player.class) || this.getClass().equals(MovingObject.class)) {
-            l.add(this); //add all objects that we will need to tick and render
+        if (this.getClass().equals(Player.class) || this.getClass().equals(MovingObstacle.class)) {
+            gameObjects.add(this); //add all objects that we will need to tick and render
         }
     }
 
