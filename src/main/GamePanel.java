@@ -31,6 +31,7 @@ public class GamePanel extends JPanel implements Runnable {
     public MovingObject arrow = new MovingObject(30, 8, 3, 4, this, "Arrow", 2, 3);
     public MovingObject spikesRoller = new MovingObject(40, 8, 3, 4, this, "spikesRoller", 3, 3);
     public ObstacleSetter obstacleSetter = new ObstacleSetter(this);
+    public HUD hud = new HUD(this);
     public LinkedList<Obstacle> obstacles = new LinkedList<>();
 
     public GamePanel() {
@@ -92,6 +93,7 @@ public class GamePanel extends JPanel implements Runnable {
         boolean b = false;
         if (player.intersects(obstacles.get(0))) {
             System.out.println("collided");
+            player.livesLeft--;
             b = true;
         }
         return b;
@@ -118,6 +120,7 @@ public class GamePanel extends JPanel implements Runnable {
         //PLAYER RENDERING
         /*player.render(g2);
         bird.render(g2);*/
+
         for (GameObject object : GameObject.l) {
             object.render(g2);
         }
@@ -126,6 +129,8 @@ public class GamePanel extends JPanel implements Runnable {
             g2.setFont(new Font("MV Boli", Font.PLAIN, 45));
             g2.drawString("You lost ", 300, 300);
         }
+
+        hud.draw(g2);
         g2.dispose();
     }
 }
