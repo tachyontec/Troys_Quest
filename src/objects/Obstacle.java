@@ -33,7 +33,7 @@ public class Obstacle extends GameObject {
         if(movement.length == 1) {
             graphics2D.drawImage(movement[0], (int) screenX, (int) screenY, gamePanel.tileSize, gamePanel.tileSize, null); //draws the object in the specified screenX and screenY
         }else {
-            animation.drawAnimation(graphics2D, (int) this.getX(), (int) this.getY(), gamePanel.tileSize, gamePanel.tileSize);
+            animation.drawAnimation(graphics2D, (int) screenX, (int) screenY, gamePanel.tileSize, gamePanel.tileSize);
             System.out.println("i am in" );
         }
     }

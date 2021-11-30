@@ -27,7 +27,7 @@ public class HUD {
         g2.setFont(gameFont);
         g2.setColor(Color.BLACK);
         g2.drawImage(heartImage , gamepanel.tileSize / 2 , gamepanel.tileSize / 2 - 10, gamepanel.tileSize , gamepanel.tileSize , null );
-        g2.drawString("x " + gamepanel.player.livesLeft , 74 ,50);
+        g2.drawString("x " + gamepanel.player.getLivesLeft() , 74 ,50);
     }
 
 }

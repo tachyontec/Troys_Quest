@@ -91,7 +91,6 @@ public class GamePanel extends JPanel implements Runnable {
         boolean b = false;
         if (player.intersects(obstacles.get(0))) {
             System.out.println("collided");
-            player.livesLeft--;
             b = true;
         }
         return b;
@@ -105,7 +104,9 @@ public class GamePanel extends JPanel implements Runnable {
             object.tick();
         }
         handler.tick();
-        handler.checkcollision();
+        if(handler.checkcollision()){
+            player.setLivesLeft(player.getLivesLeft());
+        };
     }
 
     ////in this method we paint all GameObject objects

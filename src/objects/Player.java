@@ -25,7 +25,7 @@ public class Player extends GameObject {
     public BufferedImage[] idle;
     public final int axisX = 400;
     public final int axisY = 400;
-    public int livesLeft = 3;
+    private int livesLeft = 3;
     public final int screenX;
     public int screenY;
 
@@ -122,5 +122,13 @@ public class Player extends GameObject {
                 System.exit(0);
             }
         }
+    }
+
+    public int getLivesLeft() {
+        return livesLeft;
+    }
+
+    public void setLivesLeft(int livesLeft) {
+        this.livesLeft = livesLeft;
     }
 }
