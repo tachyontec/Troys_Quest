@@ -85,28 +85,15 @@ public class GamePanel extends JPanel implements Runnable {
 
     }
 
-    //method to determine if two objects of the game have collided
-    //returns a boolean statement true if collided false if not
-    public boolean checkcollition() {
-        boolean b = false;
-        if (player.intersects(obstacles.get(0))) {
-            System.out.println("collided");
-            b = true;
-        }
-        return b;
-    }
-
     //in this method we update all GameObject objects
     public void update() {
-        /*player.tick();
-        bird.tick();*/
         for (GameObject object : GameObject.gameObjects) {
             object.tick();
         }
         handler.tick();
         if(handler.checkcollision()){
             player.setLivesLeft(player.getLivesLeft());
-        };
+        }
     }
 
     ////in this method we paint all GameObject objects
@@ -117,9 +104,7 @@ public class GamePanel extends JPanel implements Runnable {
         tileM.draw(g2);
         //OBJECT RENDERING
         handler.render(g2);
-        //PLAYER RENDERING
-        /*player.render(g2);
-        bird.render(g2);*/
+
 
         for (GameObject object : GameObject.gameObjects) {
             object.render(g2);

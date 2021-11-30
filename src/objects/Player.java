@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 
 //Subclass of Game Object responsible for the moving and drawing the character of the game
 public class Player extends GameObject {
-
+    public double floor; //floor of every platform
     public boolean jumped = true;
     public float jumpingTime = 100;
     //player gets keyhandler to implement keyboard input
@@ -59,7 +59,8 @@ public class Player extends GameObject {
     //moves the player by altering the x,y coordinates with keyboard arrows
     @Override
     public synchronized void tick() { //synchronized because we involve another thread for jumping and we don't want it to collide with our main game thread
-        if (!(keyHandler.rightPressed & keyHandler.leftPressed & keyHandler.upPressed)) {
+        floor = getY();//sets the floor on which player is for every platform he stands on
+        if ((!keyHandler.rightPressed) && (!keyHandler.leftPressed) && (!keyHandler.upPressed)) {
             idleanimation.runAnimation();
             direction = "idle";
         }
@@ -70,17 +71,9 @@ public class Player extends GameObject {
                 screenY -= 20;
                 this.setY(this.getY() - 20);//moves the player upwards along the y axis
                 jumpinganimation.runAnimation();
-                if (keyHandler.leftPressed) {
-                    direction = "run";
-                    this.setX((this.getX() - this.getSpeedx()) - 15);
-                    walkinganimation.runAnimation();
-                } else if (keyHandler.rightPressed) {
-                    direction = "run";
-                    this.setX((this.getX() + getSpeedx()) + 15);
-                    walkinganimation.runAnimation();
-                }
             }
-        } else if (keyHandler.leftPressed) {
+        }
+          if (keyHandler.leftPressed) {
             direction = "run";
             this.setX(this.getX() - this.getSpeedx());//moves the player along the x axis to the left
             walkinganimation.runAnimation();
@@ -89,7 +82,7 @@ public class Player extends GameObject {
             this.setX(this.getX() + getSpeedx());//moves the player along the x axis to the right
             walkinganimation.runAnimation();
         }
-        if (!keyHandler.upPressed) {
+        if ((!keyHandler.upPressed)||(floor == getY())) {
             jumped = true;
         }
     }
@@ -107,7 +100,6 @@ public class Player extends GameObject {
     }
 
     public class thread implements Runnable {
-
         @Override
         public void run() {
             try {
@@ -118,7 +110,6 @@ public class Player extends GameObject {
                 jumped = false;
             } catch (Exception e) {
                 e.printStackTrace();
-                new Thread(this).start();
                 System.exit(0);
             }
         }
