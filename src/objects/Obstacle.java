@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 
 public class Obstacle extends GameObject {
 
-    BufferedImage image;
+    BufferedImage [] movement;
     private String name;
     Animation animation;
     GamePanel gamePanel;
@@ -24,8 +24,8 @@ public class Obstacle extends GameObject {
         animation = new Animation(animationspeed, movement);
         this.gamePanel = gamePanel;
     }
-
-    public void draw(Graphics2D graphics2D, GamePanel gamePanel) {
+    @Override
+    public void render(Graphics2D graphics2D) {
         //graphics2D.setColor(Color.CYAN);
         //graphics2D.drawRect(x,y,width,height);
         double screenX = this.getX() - gamePanel.player.getX() + gamePanel.player.screenX; //centers the player in relation to the screen in x axis,gp.player.screenX is used to offset the difference
@@ -36,6 +36,11 @@ public class Obstacle extends GameObject {
             animation.drawAnimation(graphics2D, (int) this.getX(), (int) this.getY(), gamePanel.tileSize, gamePanel.tileSize);
             System.out.println("i am in" );
         }
+    }
+
+    @Override
+    public void tick() {
+        animation.runAnimation();
     }
 
     public String getName() {

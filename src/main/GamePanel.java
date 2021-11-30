@@ -30,6 +30,7 @@ public class GamePanel extends JPanel implements Runnable {
     public ObstacleSetter obstacleSetter = new ObstacleSetter(this);
     public HUD hud = new HUD(this);
     public LinkedList<Obstacle> obstacles = new LinkedList<>();
+    public Handler handler = new Handler(obstacles,player);
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -100,10 +101,11 @@ public class GamePanel extends JPanel implements Runnable {
     public void update() {
         /*player.tick();
         bird.tick();*/
-        for (GameObject object : GameObject.l) {
+        for (GameObject object : GameObject.gameObjects) {
             object.tick();
         }
-        checkcollition();
+        handler.tick();
+        handler.checkcollision();
     }
 
     ////in this method we paint all GameObject objects
@@ -113,15 +115,15 @@ public class GamePanel extends JPanel implements Runnable {
         //TILE RENDERING
         tileM.draw(g2);
         //OBJECT RENDERING
-        obstacles.get(0).draw(g2, this);
+        handler.render(g2);
         //PLAYER RENDERING
         /*player.render(g2);
         bird.render(g2);*/
 
-        for (GameObject object : GameObject.l) {
+        for (GameObject object : GameObject.gameObjects) {
             object.render(g2);
         }
-        if (checkcollition()) {
+        if (handler.checkcollision()) {
             g2.setColor(Color.RED);
             g2.setFont(new Font("MV Boli", Font.PLAIN, 45));
             g2.drawString("You lost ", 300, 300);
