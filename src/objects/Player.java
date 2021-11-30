@@ -70,15 +70,15 @@ public class Player extends GameObject {
                 screenY -= 20;
                 this.setY(this.getY() - 20);//moves the player upwards along the y axis
                 jumpinganimation.runAnimation();
-            }
-            if (keyHandler.leftPressed) {
-                direction = "run";
-                this.setX((this.getX() - this.getSpeedx())-15);
-                walkinganimation.runAnimation();
-            } else if (keyHandler.rightPressed) {
-                direction = "run";
-                this.setX((this.getX() + getSpeedx())+15);
-                walkinganimation.runAnimation();
+                if (keyHandler.leftPressed) {
+                    direction = "run";
+                    this.setX((this.getX() - this.getSpeedx()) - 15);
+                    walkinganimation.runAnimation();
+                } else if (keyHandler.rightPressed) {
+                    direction = "run";
+                    this.setX((this.getX() + getSpeedx()) + 15);
+                    walkinganimation.runAnimation();
+                }
             }
         } else if (keyHandler.leftPressed) {
             direction = "run";
