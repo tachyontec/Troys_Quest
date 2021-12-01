@@ -9,7 +9,13 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener {
     //This class is referred only at a player
     //User will only be able to move its player
-    public boolean upPressed, leftPressed, rightPressed;
+    public boolean upPressed, leftPressed, rightPressed, pausePressed;
+
+    GamePanel gp;
+
+    public KeyHandler(GamePanel gp) {
+        this.gp = gp;
+    }
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -27,6 +33,12 @@ public class KeyHandler implements KeyListener {
             leftPressed = true;
         } else if (key == KeyEvent.VK_UP) {
             upPressed = true;
+        } else if (key == KeyEvent.VK_P) {
+            gp.gameState = GamePanel.PAUSE_STATE;
+            pausePressed = true;
+        } else if (key == KeyEvent.VK_U) {
+            gp.gameState = GamePanel.PLAY_STATE;
+            pausePressed = false;
         }
     }
 

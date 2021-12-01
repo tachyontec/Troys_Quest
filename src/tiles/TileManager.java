@@ -78,7 +78,6 @@ public class TileManager {
 
                 }
                 if (col == gp.maxWorldCol) {
-                    System.out.println("col2 " + col); //if we have reached the end of the column , we change row and do the process all over again
                     col = 0;
                     row++;
                 }
