@@ -102,7 +102,8 @@ public class GamePanel extends JPanel implements Runnable {
     //in this method we update all GameObject objects
     public void update() {
           if(gameState == PLAY_STATE) {
-              for (GameObject object : GameObject.gameObjects) {
+              player.tick();
+              for (GameObject object : obstacles) {
                   object.tick();
               }
               handler.tick();
@@ -117,13 +118,12 @@ public class GamePanel extends JPanel implements Runnable {
         if (gameState == PLAY_STATE) {
             super.paintComponent(g);
             Graphics2D g2 = (Graphics2D) g;
-            //OBJECT RENDERING
             handler.render(g2);
             if (this.gameState != MENU_STATE) {
                 tileM.draw(g2);
+                player.render(g2);
             }
-
-            for (GameObject object : GameObject.gameObjects) {
+            for (GameObject object : obstacles) {
                 object.render(g2);
             }
             if (handler.checkcollision()) {
