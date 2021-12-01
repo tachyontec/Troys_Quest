@@ -23,6 +23,7 @@ public class Player extends GameObject {
     public BufferedImage[] run;
     public BufferedImage[] jump;
     public BufferedImage[] idle;
+    public BufferedImage[] death;
     public final int axisX = 400;
     public final int axisY = 400;
     private int livesLeft = 3;
@@ -33,6 +34,11 @@ public class Player extends GameObject {
     Animation walkinganimation;
     Animation jumpinganimation;
     Animation idleanimation;
+    Animation deathanimation;
+
+    //creating enumarition for player state
+    enum State {ALIVE,DEAD,JUMP,RUN};
+    State state;//state stores current player state
 
     //Constructor using fields and initializing the animations objects
     public Player(double worldX, double worldY, double speedx, double speedy, KeyHandler keyHandler, GamePanel gamePanel) {
@@ -45,6 +51,7 @@ public class Player extends GameObject {
         walkinganimation = new Animation(2, run);
         jumpinganimation = new Animation(10, jump);
         idleanimation = new Animation(1, idle);
+        deathanimation = new Animation(2,death);
         super.direction = "run";
     }
 
@@ -54,6 +61,7 @@ public class Player extends GameObject {
         run = Resource.getFilesInDir("res/Player/Run");
         jump = Resource.getFilesInDir("res/Player/Jump");
         idle = Resource.getFilesInDir("res/Player/Idle");
+        death = Resource.getFilesInDir("res/Player/Die");
     }
 
     //moves the player by altering the x,y coordinates with keyboard arrows
@@ -62,11 +70,11 @@ public class Player extends GameObject {
         floor = getY();//sets the floor on which player is for every platform he stands on
         if ((!keyHandler.rightPressed) && (!keyHandler.leftPressed) && (!keyHandler.upPressed)) {
             idleanimation.runAnimation();
-            direction = "idle";
+            state = State.ALIVE;
         }
         if (keyHandler.upPressed) {
             if (jumped) {
-                direction = "jump";
+                state = State.JUMP;
                 new Thread(new thread()).start();//initiating a new thread to perform the jump act
                 screenY -= 20;
                 this.setY(this.getY() - 20);//moves the player upwards along the y axis
@@ -74,16 +82,20 @@ public class Player extends GameObject {
             }
         }
           if (keyHandler.leftPressed) {
-            direction = "run";
+            state = State.RUN;
             this.setX(this.getX() - this.getSpeedx());//moves the player along the x axis to the left
             walkinganimation.runAnimation();
         } else if (keyHandler.rightPressed) {
-            direction = "run";
+            state = State.RUN;
             this.setX(this.getX() + getSpeedx());//moves the player along the x axis to the right
             walkinganimation.runAnimation();
         }
         if ((!keyHandler.upPressed)||(floor == getY())) {
             jumped = true;
+        }
+        if (getLivesLeft()<=0) {
+           state = State.DEAD;
+           deathanimation.runAnimation();
         }
     }
 
@@ -92,10 +104,11 @@ public class Player extends GameObject {
     public void render(Graphics2D g) {
         //g.setColor(Color.RED);
         //g.drawRect(x,y,width,height);
-        switch (direction) {
-            case "jump" -> jumpinganimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
-            case "run" -> walkinganimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
-            default -> idleanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
+        switch (state) {
+            case JUMP -> jumpinganimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
+            case DEAD -> deathanimation.drawAnimation(g,screenX,screenY,gamePanel.tileSize*3,gamePanel.tileSize*3);
+            case RUN -> walkinganimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
+            case ALIVE -> idleanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
         }
     }
 

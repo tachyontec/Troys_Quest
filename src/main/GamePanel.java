@@ -108,7 +108,7 @@ public class GamePanel extends JPanel implements Runnable {
               }
               handler.tick();
               if (handler.checkcollision()) {
-                  player.setLivesLeft(player.getLivesLeft());
+                  player.setLivesLeft(player.getLivesLeft()-1);
               }
           }
     }
