@@ -33,7 +33,11 @@ public class HUD {
         g2.drawString("x " + gamepanel.player.getLivesLeft() , 74 ,50);
 
         levelTimer += (double) 1/60;
-        g2.drawString("Time:" + decFormat.format(levelTimer) , gamepanel.tileSize * 10 , 50);
+        if (gamepanel.player.getLivesLeft() == 0){
+            g2.drawString("Time:0.00", gamepanel.tileSize * 10 , 50);
+        } else {
+            g2.drawString("Time:" + decFormat.format(levelTimer), gamepanel.tileSize * 10, 50);
+        }
     }
 
 }
