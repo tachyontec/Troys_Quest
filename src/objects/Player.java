@@ -24,6 +24,7 @@ public class Player extends GameObject {
     public BufferedImage[] jump;
     public BufferedImage[] idle;
     public BufferedImage[] death;
+    public BufferedImage[] attack;
     public final int axisX = 400;
     public final int axisY = 400;
     private int livesLeft = 3;
@@ -35,9 +36,10 @@ public class Player extends GameObject {
     Animation jumpinganimation;
     Animation idleanimation;
     Animation deathanimation;
+    Animation attackanimation;
 
     //creating enumarition for player state
-    enum State {ALIVE,DEAD,JUMP,RUN};
+    enum State {ALIVE,DEAD,JUMP,RUN,ATTACK};
     State state;//state stores current player state
 
     //Constructor using fields and initializing the animations objects
@@ -52,6 +54,8 @@ public class Player extends GameObject {
         jumpinganimation = new Animation(10, jump);
         idleanimation = new Animation(1, idle);
         deathanimation = new Animation(2,death);
+        attackanimation = new Animation(2,attack);
+        super.direction = "run";
     }
 
     // in this method we are loading the images for each animation from resources folder res
@@ -61,13 +65,14 @@ public class Player extends GameObject {
         jump = Resource.getFilesInDir("res/Player/Jump");
         idle = Resource.getFilesInDir("res/Player/Idle");
         death = Resource.getFilesInDir("res/Player/Die");
+        attack = Resource.getFilesInDir("res/Player/Attack");
     }
 
     //moves the player by altering the x,y coordinates with keyboard arrows
     @Override
     public synchronized void tick() { //synchronized because we involve another thread for jumping and we don't want it to collide with our main game thread
         floor = getY();//sets the floor on which player is for every platform he stands on
-        if ((!keyHandler.rightPressed) && (!keyHandler.leftPressed) && (!keyHandler.upPressed)) {
+        if ((!keyHandler.rightPressed) && (!keyHandler.leftPressed) && (!keyHandler.upPressed) && (!keyHandler.attackPressed)) {
             idleanimation.runAnimation();
             state = State.ALIVE;
         }
@@ -77,11 +82,14 @@ public class Player extends GameObject {
                 new Thread(new thread()).start();//initiating a new thread to perform the jump act
                 screenY -= 20;
                 this.setY(this.getY() - 20);//moves the player upwards along the y axis
-
                 jumpinganimation.runAnimation();
             }
         }
-          if (keyHandler.leftPressed) {
+        if(keyHandler.attackPressed) {
+            state = State.ATTACK;
+            attackanimation.runAnimation();
+        }
+        if (keyHandler.leftPressed) {
             state = State.RUN;
             this.setX(this.getX() - this.getSpeedx());//moves the player along the x axis to the left
             walkinganimation.runAnimation();
@@ -93,7 +101,7 @@ public class Player extends GameObject {
         if ((!keyHandler.upPressed)||(floor == getY())) {
             jumped = true;
         }
-        if (getLivesLeft() == 0) {
+        if (getLivesLeft()<=0) {
            state = State.DEAD;
            deathanimation.runAnimation();
         }
@@ -102,13 +110,14 @@ public class Player extends GameObject {
     // the direction variable indicates which images are to be drawn for each animation of the player
     @Override
     public void render(Graphics2D g) {
-        g.setColor(Color.RED);
-        g.drawRect(x,y,width,height);
+        //g.setColor(Color.RED);
+        //g.drawRect(x,y,width,height);
         switch (state) {
             case JUMP -> jumpinganimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
             case DEAD -> deathanimation.drawAnimation(g,screenX,screenY,gamePanel.tileSize*3,gamePanel.tileSize*3);
             case RUN -> walkinganimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
             case ALIVE -> idleanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
+            case ATTACK -> attackanimation.drawAnimation(g,screenX,screenY,gamePanel.tileSize,gamePanel.tileSize);
         }
     }
 
