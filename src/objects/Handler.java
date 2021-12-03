@@ -20,8 +20,11 @@ public class Handler {
     }
 
     public void render(Graphics2D g2) {
+        g2.setColor(Color.RED);
         for (int i = 0; i < obstacleLinkedList.size(); i++) {
+            //g2.drawRect(obstacleLinkedList.get(i).x,obstacleLinkedList.get(i).y,obstacleLinkedList.get(i).width,obstacleLinkedList.get(i).height);
             obstacleLinkedList.get(i).render(g2);
+
         }
     }
 
@@ -30,8 +33,10 @@ public class Handler {
         for(int i =0;i < obstacleLinkedList.size(); i++) {
             if(obstacleLinkedList.get(i).intersects(player)){
                 b = true;
+                player.setX(player.getX()-40);
+                break;
             }
-            break;
+
         }
         return b;
     }

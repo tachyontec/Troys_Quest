@@ -52,7 +52,6 @@ public class Player extends GameObject {
         jumpinganimation = new Animation(10, jump);
         idleanimation = new Animation(1, idle);
         deathanimation = new Animation(2,death);
-        super.direction = "run";
     }
 
     // in this method we are loading the images for each animation from resources folder res
@@ -78,6 +77,7 @@ public class Player extends GameObject {
                 new Thread(new thread()).start();//initiating a new thread to perform the jump act
                 screenY -= 20;
                 this.setY(this.getY() - 20);//moves the player upwards along the y axis
+
                 jumpinganimation.runAnimation();
             }
         }
@@ -93,7 +93,7 @@ public class Player extends GameObject {
         if ((!keyHandler.upPressed)||(floor == getY())) {
             jumped = true;
         }
-        if (getLivesLeft()<=0) {
+        if (getLivesLeft() == 0) {
            state = State.DEAD;
            deathanimation.runAnimation();
         }
@@ -102,8 +102,8 @@ public class Player extends GameObject {
     // the direction variable indicates which images are to be drawn for each animation of the player
     @Override
     public void render(Graphics2D g) {
-        //g.setColor(Color.RED);
-        //g.drawRect(x,y,width,height);
+        g.setColor(Color.RED);
+        g.drawRect(x,y,width,height);
         switch (state) {
             case JUMP -> jumpinganimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
             case DEAD -> deathanimation.drawAnimation(g,screenX,screenY,gamePanel.tileSize*3,gamePanel.tileSize*3);
