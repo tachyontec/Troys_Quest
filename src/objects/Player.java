@@ -40,7 +40,7 @@ public class Player extends GameObject {
 
     //creating enumarition for player state
     enum State {ALIVE,DEAD,JUMP,RUN,ATTACK};
-    State state;//state stores current player state
+    State state = State.RUN;//state stores current player state
 
     //Constructor using fields and initializing the animations objects
     public Player(double worldX, double worldY, double speedx, double speedy, KeyHandler keyHandler, GamePanel gamePanel) {
@@ -101,7 +101,7 @@ public class Player extends GameObject {
         if ((!keyHandler.upPressed)||(floor == getY())) {
             jumped = true;
         }
-        if (getLivesLeft()<=0) {
+        if (this.getLivesLeft() == 0) {
            state = State.DEAD;
            deathanimation.runAnimation();
         }
@@ -114,7 +114,7 @@ public class Player extends GameObject {
         //g.drawRect(x,y,width,height);
         switch (state) {
             case JUMP -> jumpinganimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
-            case DEAD -> deathanimation.drawAnimation(g,screenX,screenY,gamePanel.tileSize*3,gamePanel.tileSize*3);
+            case DEAD -> deathanimation.drawAnimation(g,screenX,screenY - 35,gamePanel.tileSize + 10 ,gamePanel.tileSize * 2);
             case RUN -> walkinganimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
             case ALIVE -> idleanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
             case ATTACK -> attackanimation.drawAnimation(g,screenX,screenY,gamePanel.tileSize,gamePanel.tileSize);
