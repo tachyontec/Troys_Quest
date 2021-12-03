@@ -24,6 +24,7 @@ public class Player extends GameObject {
     public BufferedImage[] jump;
     public BufferedImage[] idle;
     public BufferedImage[] death;
+    public BufferedImage[] attack;
     public final int axisX = 400;
     public final int axisY = 400;
     private int livesLeft = 3;
@@ -35,9 +36,10 @@ public class Player extends GameObject {
     Animation jumpinganimation;
     Animation idleanimation;
     Animation deathanimation;
+    Animation attackanimation;
 
     //creating enumarition for player state
-    enum State {ALIVE,DEAD,JUMP,RUN};
+    enum State {ALIVE,DEAD,JUMP,RUN,ATTACK};
     State state;//state stores current player state
 
     //Constructor using fields and initializing the animations objects
@@ -52,6 +54,7 @@ public class Player extends GameObject {
         jumpinganimation = new Animation(10, jump);
         idleanimation = new Animation(1, idle);
         deathanimation = new Animation(2,death);
+        attackanimation = new Animation(2,attack);
         super.direction = "run";
     }
 
@@ -62,13 +65,14 @@ public class Player extends GameObject {
         jump = Resource.getFilesInDir("res/Player/Jump");
         idle = Resource.getFilesInDir("res/Player/Idle");
         death = Resource.getFilesInDir("res/Player/Die");
+        attack = Resource.getFilesInDir("res/Player/Attack");
     }
 
     //moves the player by altering the x,y coordinates with keyboard arrows
     @Override
     public synchronized void tick() { //synchronized because we involve another thread for jumping and we don't want it to collide with our main game thread
         floor = getY();//sets the floor on which player is for every platform he stands on
-        if ((!keyHandler.rightPressed) && (!keyHandler.leftPressed) && (!keyHandler.upPressed)) {
+        if ((!keyHandler.rightPressed) && (!keyHandler.leftPressed) && (!keyHandler.upPressed) && (!keyHandler.attackPressed)) {
             idleanimation.runAnimation();
             state = State.ALIVE;
         }
@@ -81,7 +85,11 @@ public class Player extends GameObject {
                 jumpinganimation.runAnimation();
             }
         }
-          if (keyHandler.leftPressed) {
+        if(keyHandler.attackPressed) {
+            state = State.ATTACK;
+            attackanimation.runAnimation();
+        }
+        if (keyHandler.leftPressed) {
             state = State.RUN;
             this.setX(this.getX() - this.getSpeedx());//moves the player along the x axis to the left
             walkinganimation.runAnimation();
@@ -109,6 +117,7 @@ public class Player extends GameObject {
             case DEAD -> deathanimation.drawAnimation(g,screenX,screenY,gamePanel.tileSize*3,gamePanel.tileSize*3);
             case RUN -> walkinganimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
             case ALIVE -> idleanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
+            case ATTACK -> attackanimation.drawAnimation(g,screenX,screenY,gamePanel.tileSize,gamePanel.tileSize);
         }
     }
 
