@@ -1,21 +1,12 @@
 package main;
 
 import objects.*;
+import sounds.Sound;
 import tiles.*;
 
 import javax.swing.JPanel;
 import java.awt.*;
-import java.awt.font.FontRenderContext;
-import java.awt.font.GlyphVector;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
-import java.awt.image.BufferedImageOp;
-import java.awt.image.ImageObserver;
-import java.awt.image.RenderedImage;
-import java.awt.image.renderable.RenderableImage;
-import java.text.AttributedCharacterIterator;
 import java.util.LinkedList;
-import java.util.Map;
 
 public class GamePanel extends JPanel implements Runnable {
     //Screen settings
@@ -41,7 +32,11 @@ public class GamePanel extends JPanel implements Runnable {
     TileManager tileM;
 
     KeyHandler keyHandler = new KeyHandler(this);
+    Sound music = new Sound();
+    Sound se = new Sound();
     Thread gameThread;
+
+
     public Player player = new Player(400, 400, 3, 4, keyHandler, this);
     public ObstacleSetter obstacleSetter = new ObstacleSetter(this);
     public HUD hud = new HUD(this);
@@ -59,7 +54,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void setUpGame() {
         obstacleSetter.setObject();
         tileM = new TileManager(this);
-
+        playMusic(0);
     }
 
     //this method starts the thread and automaticly calls method run
@@ -137,7 +132,29 @@ public class GamePanel extends JPanel implements Runnable {
             hud.draw(g2);
             g2.dispose();
         }
+
+
     }
+
+    public void playMusic(int i) {
+
+        music.setFile(i);
+        music.play();
+        music.loop();
+    }
+
+    public void stopMusic() {
+
+        music.stop();
+    }
+
+    public void playSE(int i) {
+
+        music.setFile(i);
+        music.play();
+        music.stop();
+    }
+
 }
 
 
