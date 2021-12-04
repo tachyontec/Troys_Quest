@@ -54,7 +54,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void setUpGame() {
         obstacleSetter.setObject();
         tileM = new TileManager(this);
-        playMusic(0);
+        //playMusic(0);
     }
 
     //this method starts the thread and automaticly calls method run
