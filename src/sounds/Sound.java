@@ -7,51 +7,59 @@ import javax.sound.sampled.*;
 import java.io.IOException;
 import java.net.URL;
 
+//class that provides us with sounds that are located in res/Sound
 public class Sound {
 
 
-        Clip clip; //used to open sound file
-        URL musicURL[] = new URL[10];     //we store the sound file path
+    Clip clip; //used to open sound file
+    URL musicURL[] = new URL[10];     //we store the sound file path
 
-        public Sound() {
+    public Sound() {
+        //in each url of the array we store each sound, we will have to remember the index of each sound, it does not bother us for this many sounds
+        musicURL[0] = getClass().getResource("/Sound/looperman-l-4155306-0255701-young-thug-gunna-wheezy-harp-greek-part-1.wav");
+        musicURL[1] = getClass().getResource("/Sound/BOOM.wav");
+        musicURL[2] = getClass().getResource("/Sound/HIT.wav");
+        musicURL[3] = getClass().getResource("/Sound/JUMP.wav");
+        musicURL[4] = getClass().getResource("/Sound/Coin.wav");
+    }
 
-            musicURL[0] = getClass().getResource("/Sound/looperman-l-4155306-0255701-young-thug-gunna-wheezy-harp-greek-part-1.wav");
-            musicURL[1] = getClass().getResource("/Sound/BOOM.wav");
-            musicURL[2] = getClass().getResource("/Sound/HIT.wav");
-            musicURL[3] = getClass().getResource("/Sound/JUMP.wav");
-            musicURL[4] = getClass().getResource("/Sound/Coin.wav");
+    //setFile is used to signal which sound is going to be played, that's why we have an index as an argument
+    public void setFile(int i) {
+
+        try {
+
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(musicURL[i]);
+            clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+    }
 
-        public void setFile(int i) {
+    // in order to play the background music we need to select the file, start the clip, and loop it continuously
+    public void playMusic(int i) {
 
-            try {
+        this.setFile(i);
+        clip.start();
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
+    }
 
-                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(musicURL[i]);
-                clip = AudioSystem.getClip();
-                clip.open(audioInputStream);
+    //we shut it up
+    public void stopMusic() {
 
-            } catch (UnsupportedAudioFileException e) {
-                e.printStackTrace();
-            } catch (LineUnavailableException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        clip.stop();
+    }
 
-        public void play() {
+    //the only difference with playMusic is that we do not loop it
+    public void playSE(int i) {
 
-            clip.start();
-        }
-
-        public void loop() {
-
-            clip.loop(Clip.LOOP_CONTINUOUSLY);
-        }
-
-        public void stop() {
-
-            clip.stop();
-        }
-
+        this.setFile(i);
+        clip.start();
+    }
 }
+

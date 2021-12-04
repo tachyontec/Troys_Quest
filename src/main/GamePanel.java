@@ -32,8 +32,8 @@ public class GamePanel extends JPanel implements Runnable {
     TileManager tileM;
 
     KeyHandler keyHandler = new KeyHandler(this);
-    Sound music = new Sound();
-    Sound se = new Sound();
+    Sound music = new Sound();// used for background music
+    Sound se = new Sound();// created to have sound effects and at the same time music
     Thread gameThread;
 
 
@@ -54,7 +54,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void setUpGame() {
         obstacleSetter.setObject();
         tileM = new TileManager(this);
-        //playMusic(0);
+        music.playMusic(0);// we play the first sound file which is the background music
     }
 
     //this method starts the thread and automaticly calls method run
@@ -136,24 +136,6 @@ public class GamePanel extends JPanel implements Runnable {
 
     }
 
-    public void playMusic(int i) {
-
-        music.setFile(i);
-        music.play();
-        music.loop();
-    }
-
-    public void stopMusic() {
-
-        music.stop();
-    }
-
-    public void playSE(int i) {
-
-        music.setFile(i);
-        music.play();
-        music.stop();
-    }
 
 }
 

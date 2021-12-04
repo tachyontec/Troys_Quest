@@ -4,6 +4,7 @@ import main.Animation;
 import main.GamePanel;
 import main.KeyHandler;
 import main.Resource;
+import sounds.Sound;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -20,6 +21,7 @@ public class Player extends GameObject {
     //Buffered Images are the ones that contain our main character
     //they look when they move left,right and jump etc.
     //the three bufferedImage tables run,jump,idle contain the photos that are needed in animations
+    public Sound soundEffect = new Sound();
     public BufferedImage[] run;
     public BufferedImage[] jump;
     public BufferedImage[] idle;
@@ -30,6 +32,8 @@ public class Player extends GameObject {
     private int livesLeft = 3;
     public final int screenX;
     public int screenY;
+    //used so that we do not have the death sound used recursively when the player dies and the state is dead
+    public boolean deathSoundIsDone;
 
     //creating for each animation needed for the player an object of Animation class
     Animation walkinganimation;
@@ -80,9 +84,10 @@ public class Player extends GameObject {
             if (jumped) {
                 state = State.JUMP;
                 new Thread(new thread()).start();//initiating a new thread to perform the jump act
-                screenY -= 20;
-                this.setY(this.getY() - 20);//moves the player upwards along the y axis
+                screenY -= 10;
+                this.setY(this.getY() - 10);//moves the player upwards along the y axis
                 jumpinganimation.runAnimation();
+                soundEffect.playSE(3);
             }
         }
         if(keyHandler.attackPressed) {
@@ -103,7 +108,11 @@ public class Player extends GameObject {
         }
         if (this.getLivesLeft() == 0) {
            state = State.DEAD;
-           deathanimation.runAnimation();
+               deathanimation.runAnimation();
+           if (deathSoundIsDone == false) {
+               soundEffect.playSE(1);
+               deathSoundIsDone = true;// so that we stop the death sound
+           }
         }
     }
 
@@ -126,8 +135,8 @@ public class Player extends GameObject {
         public void run() {
             try {
                 Thread.sleep((long) jumpingTime);
-                screenY += 20;
-                setY(getY() + 20);//moves the player downwards along the y axis
+                screenY += 10;
+                setY(getY() + 10);//moves the player downwards along the y axis
                 direction = "run";//changes the direction to run in order to continue the run animation
                 jumped = false;
             } catch (Exception e) {
