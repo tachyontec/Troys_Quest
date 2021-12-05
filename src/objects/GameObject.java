@@ -66,8 +66,7 @@ public abstract class GameObject extends Rectangle {
     }
 
     public void setX(double worldx) {
-        this.worldX = worldx;
-        x = (int) worldx;
+        this.worldX = (int) worldx;
     }
 
     public double getY() {
@@ -75,8 +74,7 @@ public abstract class GameObject extends Rectangle {
     }
 
     public void setY(double worldy) {
-        this.worldY = worldy;
-        y = (int) worldy;
+        this.worldY = (int) worldy;
     }
 
     public double getSpeedx() {

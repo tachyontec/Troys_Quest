@@ -17,5 +17,6 @@ public class Main {
         gamePanel.gameState = GamePanel.MENU_STATE;
         gamePanel.setUpGame();
         gamePanel.startGameThread();
+
     }
 }

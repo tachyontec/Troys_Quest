@@ -40,8 +40,9 @@ public class GamePanel extends JPanel implements Runnable {
     public Player player = new Player(400, 400, 3, 4, keyHandler, this);
     public ObstacleSetter obstacleSetter = new ObstacleSetter(this);
     public HUD hud = new HUD(this);
-    public LinkedList<Obstacle> obstacles = new LinkedList<>();
-    public Handler handler = new Handler(obstacles,player);
+    public LinkedList<GameObject> obstacles = new LinkedList<>();
+    public LinkedList<Enemy> enemies = new LinkedList<>();
+    public Handler handler = new Handler(obstacles,player,enemies);
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -98,9 +99,6 @@ public class GamePanel extends JPanel implements Runnable {
     public void update() {
           if(gameState == PLAY_STATE) {
               player.tick();
-              for (GameObject object : obstacles) {
-                  object.tick();
-              }
               handler.tick();
               if (handler.checkcollision()) {
                   if(player.getLivesLeft()>0){
@@ -116,13 +114,10 @@ public class GamePanel extends JPanel implements Runnable {
         if (gameState == PLAY_STATE) {
             super.paintComponent(g);
             Graphics2D g2 = (Graphics2D) g;
-            handler.render(g2);
             if (this.gameState != MENU_STATE) {
                 tileM.draw(g2);
                 player.render(g2);
-            }
-            for (GameObject object : obstacles) {
-                object.render(g2);
+                handler.render(g2);
             }
             if (handler.checkcollision()) {
                 g2.setColor(Color.RED);
