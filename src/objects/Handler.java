@@ -5,17 +5,22 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Handler {
-    LinkedList<Obstacle> obstacleLinkedList;
+    LinkedList<GameObject> obstacleLinkedList;
+    LinkedList<Enemy> enemies;
     Player player;
 
-    public Handler(LinkedList obstacleLinkedList,Player player) {
+    public Handler(LinkedList<GameObject> obstacleLinkedList, Player player, LinkedList<Enemy> enemies) {
         this.obstacleLinkedList = obstacleLinkedList;
         this.player = player;
+        this.enemies = enemies;
     }
 
     public void tick() {
         for (GameObject object : obstacleLinkedList) {
             object.tick();
+        }
+        for (Enemy enemy : enemies) {
+            enemy.tick();
         }
     }
 
@@ -25,6 +30,10 @@ public class Handler {
             //g2.drawRect(obstacleLinkedList.get(i).x,obstacleLinkedList.get(i).y,obstacleLinkedList.get(i).width,obstacleLinkedList.get(i).height);
             object.render(g2);
 
+        }
+
+        for (Enemy enemy : enemies) {
+            enemy.render(g2);
         }
     }
 
@@ -36,7 +45,12 @@ public class Handler {
                 //player.setX(player.getX()-40);
                 break;
             }
-
+        }
+        for (Enemy enemy : enemies) {
+            if (enemy.intersects(player)) {
+                b = true;
+                break;
+            }
         }
         return b;
     }

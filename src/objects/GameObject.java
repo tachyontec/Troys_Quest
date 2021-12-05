@@ -26,7 +26,6 @@ public abstract class GameObject extends Rectangle {
     //List of objects that we will need to tick and render
     public static LinkedList<GameObject> gameObjects = new LinkedList<>();
 
-
     //sprites are smaller rectangles that make up the whole window
     //we hold the counter and the number for each of our sprites
     public int spriteCounter = 0;
