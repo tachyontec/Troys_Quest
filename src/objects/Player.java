@@ -13,7 +13,7 @@ import java.awt.image.BufferedImage;
 public class Player extends GameObject {
     public double floor; //floor of every platform
     public boolean jumped = true;
-    public float jumpingTime = 100;
+    public float jumpingTime = 80;
     //player gets keyhandler to implement keyboard input
     public KeyHandler keyHandler;
     //player needs Game Panel to spawn on it
@@ -80,20 +80,22 @@ public class Player extends GameObject {
             idleanimation.runAnimation();
             state = State.ALIVE;
         }
-        if (keyHandler.upPressed) {
-            if (jumped) {
-                state = State.JUMP;
-                new Thread(new thread()).start();//initiating a new thread to perform the jump act
-                screenY -= 10;
-                this.setY(this.getY() - 10);//moves the player upwards along the y axis
-                jumpinganimation.runAnimation();
-                soundEffect.playSE(3);
-            }
-        }
         if(keyHandler.attackPressed) {
             state = State.ATTACK;
             attackanimation.runAnimation();
         }
+
+        if (keyHandler.upPressed) {
+            if (jumped) { //if statement to ensure that jumped is envoked once every time
+                state = State.JUMP;
+                screenY -= 15;
+                this.setY(this.getY() - 15);//moves the player upwards along the y axis
+                new Thread(new thread()).start();//initiating a new thread to perform the jump act
+                jumpinganimation.runAnimation();
+                soundEffect.playSE(3);
+            }
+        }
+
         if (keyHandler.leftPressed) {
             state = State.RUN;
             this.setX(this.getX() - this.getSpeedx());//moves the player along the x axis to the left
@@ -103,7 +105,7 @@ public class Player extends GameObject {
             this.setX(this.getX() + getSpeedx());//moves the player along the x axis to the right
             walkinganimation.runAnimation();
         }
-        if ((!keyHandler.upPressed)||(floor == getY())) {
+        if ((!keyHandler.upPressed)&&(floor == getY())) {
             jumped = true;
         }
         if (this.getLivesLeft() == 0) {
@@ -135,13 +137,29 @@ public class Player extends GameObject {
         public void run() {
             try {
                 Thread.sleep((long) jumpingTime);
-                screenY += 10;
-                setY(getY() + 10);//moves the player downwards along the y axis
+                stalldx();//performing movement along the x axis gradually
+                screenY += 15;
+                setY(getY() + 15);//moves the player downwards along the y axis
                 direction = "run";//changes the direction to run in order to continue the run animation
                 jumped = false;
             } catch (Exception e) {
                 e.printStackTrace();
                 System.exit(0);
+            }
+        }
+        public void stalldx(){
+            try {
+                if (keyHandler.leftPressed) {
+                    for(int i=0; i<15; i++)
+                        setX(getX() - 1);//moves the player along the x axis to the left gradually
+                        Thread.sleep((long) (jumpingTime+50)); //smooths the jump act
+                } else if (keyHandler.rightPressed) {
+                    for(int i=0; i<15; i++)
+                        setX(getX() + 1);//moves the player along the x axis to the right gradually
+                        Thread.sleep((long) (jumpingTime+50)); //smooths the jump act
+                }
+            }catch(Exception e){
+                e.printStackTrace();
             }
         }
     }
