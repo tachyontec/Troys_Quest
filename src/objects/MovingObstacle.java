@@ -24,6 +24,7 @@ public class MovingObstacle extends Obstacle {
 
     @Override
     public void render(Graphics2D g) {
+        super.render(g);
         animation.drawAnimation(g, (int) this.getX(), (int) this.getY(), gamePanel.tileSize, gamePanel.tileSize);
     }
 

@@ -52,9 +52,10 @@ public class Enemy extends GameObject {
     //renders the animations of the enemy
     @Override
     public void render(Graphics2D g) {
+        super.render(g);
         double screenX = this.getX() - gamePanel.player.getX() + gamePanel.player.screenX; //centers the player in relation to the screen in x axis,gp.player.screenX is used to offset the difference
         double screenY = this.getY() - gamePanel.player.getY() + gamePanel.player.screenY; //centers the player in relation to the screen in y axis,gp.player.screenY is used to offset the difference
-        g.drawRect((int)screenX + 40,(int)screenY + 40,width,height);
+
         switch (state) {
             case DEAD -> deathAnimation.drawAnimation(g,(int)screenX,(int) screenY , gamePanel.tileSize * 3,gamePanel.tileSize * 3 );
             case RUN -> walkingAnimation.drawAnimation(g,(int)screenX,(int) screenY ,gamePanel.tileSize * 3 ,gamePanel.tileSize * 3 );

@@ -24,7 +24,7 @@ public class Obstacle extends GameObject {
     }
     @Override
     public void render(Graphics2D graphics2D) {
-        graphics2D.setColor(Color.CYAN);
+        super.render(graphics2D);
         double screenX = this.getX() - gamePanel.player.getX() + gamePanel.player.screenX; //centers the player in relation to the screen in x axis,gp.player.screenX is used to offset the difference
         double screenY = this.getY() - gamePanel.player.getY() + gamePanel.player.screenY; //centers the player in relation to the screen in y axis,gp.player.screenY is used to offset the difference
         if(movement.length == 1) {
