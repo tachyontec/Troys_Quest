@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import java.awt.*;
 import java.util.LinkedList;
 
+import static java.lang.Thread.sleep;
+
 public class GamePanel extends JPanel implements Runnable {
     //Screen settings
     public final int originalTileSize = 16; // size of tile
@@ -37,7 +39,7 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameThread;
 
 
-    public Player player = new Player(400, 400, 3, 4, keyHandler, this);
+    public Player player = new Player(7*tileSize, 9*tileSize, 3, 4, keyHandler, this);
     public ObstacleSetter obstacleSetter = new ObstacleSetter(this);
     public HUD hud = new HUD(this);
     public LinkedList<GameObject> obstacles = new LinkedList<>();
@@ -104,6 +106,9 @@ public class GamePanel extends JPanel implements Runnable {
                   if(player.getLivesLeft()>0){
                       player.setLivesLeft(player.getLivesLeft()-1);
                       se.playSE(2);
+                  }else if (player.getLivesLeft() <= 0) {
+                      player.state = Player.State.DEAD;
+                      gameState = PAUSE_STATE;
                   }
               }
           }
@@ -119,10 +124,11 @@ public class GamePanel extends JPanel implements Runnable {
                 player.render(g2);
                 handler.render(g2);
             }
-            if (handler.checkcollision()) {
+            if (handler.checkcollision() && player.getLivesLeft() <= 0) {
                 g2.setColor(Color.RED);
                 g2.setFont(new Font("MV Boli", Font.PLAIN, 45));
                 g2.drawString("You lost ", 300, 300);
+
             }
 
             hud.draw(g2);

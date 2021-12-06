@@ -34,6 +34,7 @@ public class Player extends GameObject {
     public int screenY;
     //used so that we do not have the death sound used recursively when the player dies and the state is dead
     public boolean deathSoundIsDone;
+    private boolean collision;
 
     //creating for each animation needed for the player an object of Animation class
     Animation walkinganimation;
@@ -43,12 +44,21 @@ public class Player extends GameObject {
     Animation attackanimation;
 
     //creating enumarition for player state
-    enum State {ALIVE,DEAD,JUMP,RUN,ATTACK};
-    State state = State.RUN;//state stores current player state
+    public enum State {ALIVE,DEAD,JUMP,RUN,ATTACK};
+    public State state = State.RUN;//state stores current player state
+
+
+    public boolean isCollision() {
+        return collision;
+    }
+
+    public void setCollision(boolean collision) {
+        this.collision = collision;
+    }
 
     //Constructor using fields and initializing the animations objects
     public Player(double worldX, double worldY, double speedx, double speedy, KeyHandler keyHandler, GamePanel gamePanel) {
-        super(gamePanel.tileSize * 7, gamePanel.tileSize * 9, speedx, speedy, 30, gamePanel.tileSize);
+        super(worldX, worldY, speedx, speedy, 30, gamePanel.tileSize);
         this.keyHandler = keyHandler;
         this.gamePanel = gamePanel;
         screenX = gamePanel.tileSize * 7;
@@ -60,6 +70,7 @@ public class Player extends GameObject {
         deathanimation = new Animation(2,death);
         attackanimation = new Animation(2,attack);
         super.direction = "run";
+        this.collision = true;
     }
 
     // in this method we are loading the images for each animation from resources folder res
@@ -122,12 +133,25 @@ public class Player extends GameObject {
     @Override
     public void render(Graphics2D g) {
         super.render(g);
-        switch (state) {
-            case JUMP -> jumpinganimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
-            case DEAD -> deathanimation.drawAnimation(g,screenX,screenY - 35,gamePanel.tileSize + 10 ,gamePanel.tileSize * 2);
-            case RUN -> walkinganimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
-            case ALIVE -> idleanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
-            case ATTACK -> attackanimation.drawAnimation(g,screenX,screenY,gamePanel.tileSize,gamePanel.tileSize);
+        //this if is in place so that when the player is hit , he is invulnerable and his body is shown blinking to indicate that state
+        if(this.isCollision() || this.state == State.DEAD) {
+            switch (state) {
+                case JUMP -> jumpinganimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
+                case DEAD -> deathanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
+                case RUN -> walkinganimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
+                case ALIVE -> idleanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
+                case ATTACK -> attackanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
+            }
+        } else {
+            if((int) this.gamePanel.handler.collisionTimer % 2 ==0) {
+                switch (state) {
+                    case JUMP -> jumpinganimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
+                    case DEAD -> deathanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
+                    case RUN -> walkinganimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
+                    case ALIVE -> idleanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
+                    case ATTACK -> attackanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
+                }
+            }
         }
     }
 

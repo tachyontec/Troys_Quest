@@ -13,8 +13,8 @@ public abstract class GameObject extends Rectangle {
     //counter helps each object have a ID
     //we have a speed variable for each axis (x and y)
 
-    private double worldX;
-    private double worldY;
+    public double worldX;
+    public double worldY;
     //private final double screenx;
     //private final double screeny;
     private int id;

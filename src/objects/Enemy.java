@@ -44,10 +44,10 @@ public class Enemy extends GameObject {
         idle = Resource.getFilesInDir("res/Enemies/"+this.name+"/Idle");
         death = Resource.getFilesInDir("res/Enemies/"+this.name+"/Death");
         //Create the animations
-        walkingAnimation = new Animation(2,run);
-        idleAnimation = new Animation(2,idle);
-        attackAnimation = new Animation(2,attack);
-        deathAnimation = new Animation(2,death);
+        walkingAnimation = new Animation(5,run);
+        idleAnimation = new Animation(5,idle);
+        attackAnimation = new Animation(5,attack);
+        deathAnimation = new Animation(5,death);
     }
     //renders the animations of the enemy
     @Override
