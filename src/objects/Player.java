@@ -121,8 +121,7 @@ public class Player extends GameObject {
     // the direction variable indicates which images are to be drawn for each animation of the player
     @Override
     public void render(Graphics2D g) {
-        //g.setColor(Color.RED);
-        //g.drawRect(x,y,width,height);
+        super.render(g);
         switch (state) {
             case JUMP -> jumpinganimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
             case DEAD -> deathanimation.drawAnimation(g,screenX,screenY - 35,gamePanel.tileSize + 10 ,gamePanel.tileSize * 2);
