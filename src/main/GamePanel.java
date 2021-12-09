@@ -42,13 +42,14 @@ public class GamePanel extends JPanel implements Runnable {
     public Player player = new Player(7*tileSize, 9*tileSize, 3, 4, keyHandler, this);
     public ObstacleSetter obstacleSetter = new ObstacleSetter(this);
     public HUD hud = new HUD(this);
+    public Menu menu = new Menu(this);
     public LinkedList<GameObject> obstacles = new LinkedList<>();
     public LinkedList<Enemy> enemies = new LinkedList<>();
     public Handler handler = new Handler(obstacles,player,enemies);
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
-        this.setBackground(Color.CYAN);
+        this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true);
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
@@ -57,7 +58,8 @@ public class GamePanel extends JPanel implements Runnable {
     public void setUpGame() {
         obstacleSetter.setObject();
         tileM = new TileManager(this);
-        music.playMusic(0);// we play the first sound file which is the background music
+        gameState = MENU_STATE;
+        music.playMusic(5);// we play the 5th sound file which is the starting menu music
     }
 
     //this method starts the thread and automaticly calls method run
@@ -108,7 +110,7 @@ public class GamePanel extends JPanel implements Runnable {
                       se.playSE(2);
                   }else if (player.getLivesLeft() <= 0) {
                       player.state = Player.State.DEAD;
-                      gameState = PAUSE_STATE;
+                      gameState = MENU_STATE;
                   }
               }
           }
@@ -116,28 +118,28 @@ public class GamePanel extends JPanel implements Runnable {
 
     ////in this method we paint all GameObject objects
     public void paintComponent(Graphics g) {
-        if (gameState == PLAY_STATE) {
-            super.paintComponent(g);
-            Graphics2D g2 = (Graphics2D) g;
-            if (this.gameState != MENU_STATE) {
-                tileM.draw(g2);
-                player.render(g2);
-                handler.render(g2);
-            }
+        super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D) g;
+
+        if (gameState == MENU_STATE) {
+            menu.drawMainMenu(g2);
+        } else if(gameState == PAUSE_STATE){
+            menu.drawPauseMenu(g2);
+        } else {
+            tileM.draw(g2);
+            player.render(g2);
+            handler.render(g2);
+
             if (handler.checkcollision() && player.getLivesLeft() <= 0) {
                 g2.setColor(Color.RED);
                 g2.setFont(new Font("MV Boli", Font.PLAIN, 45));
                 g2.drawString("You lost ", 300, 300);
 
             }
-
             hud.draw(g2);
-            g2.dispose();
         }
-
-
+            g2.dispose();
     }
-
 
 }
 

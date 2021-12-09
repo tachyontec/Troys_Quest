@@ -21,6 +21,7 @@ public class Sound {
         musicURL[2] = getClass().getResource("/Sound/HIT.wav");
         musicURL[3] = getClass().getResource("/Sound/JUMP.wav");
         musicURL[4] = getClass().getResource("/Sound/Coin.wav");
+        musicURL[5] = getClass().getResource("/Sound/bensound-anewbeginning.wav");
     }
 
     //setFile is used to signal which sound is going to be played, that's why we have an index as an argument
