@@ -59,7 +59,7 @@ public class Menu {
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 80));
         g2.setColor(new Color(200 , 179 , 92));
         String title = "Pause";
-        g2.drawString(title , gamepanel.screenWidth /2 - 150 , gamepanel.screenHeight / 2 + -200);
+        g2.drawString(title , gamepanel.screenWidth / 2 - 150 , gamepanel.screenHeight / 2 + -200);
 
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50));
         String option;
@@ -79,6 +79,32 @@ public class Menu {
             g2.drawString(">", 200 - 30 , 370);
         }
     }
+
+    public void drawWinLoseMenu(Graphics2D g2) {
+        if (gamepanel.player.getLivesLeft() > 0 ) {
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 80));
+            g2.setColor(new Color(200 , 179 , 92));
+            String title = "YOU WIN!";
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50));
+            String option;
+            option = "REPLAY LEVEL";
+            g2.drawString(option , 200 , 250);
+            if (choice == 0){
+                g2.drawString(">", 200 -30 , 250);
+            }
+            option = "BACK TO MAIN MENU";
+            g2.drawString(option , 200 , 310);
+            if (choice == 1){
+                g2.drawString(">", 200 -30 , 310);
+            }
+            option = "EXIT";
+            g2.drawString(option , 200 , 370 );
+            if (choice == 2) {
+                g2.drawString(">", 200 - 30 , 370);
+            }
+        }
+    }
+
 
 
 

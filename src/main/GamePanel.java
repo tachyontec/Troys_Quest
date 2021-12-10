@@ -29,6 +29,7 @@ public class GamePanel extends JPanel implements Runnable {
     public static final int PLAY_STATE = 0;//When game is running
     public static final int PAUSE_STATE = 1;//when game is paused
     public static final int MENU_STATE = 2;//when we are in the menu
+    public static final int WIN_LOSE_STATE = 3;
     public int gameState;
 
     TileManager tileM;
@@ -125,10 +126,13 @@ public class GamePanel extends JPanel implements Runnable {
             menu.drawMainMenu(g2);
         } else if(gameState == PAUSE_STATE){
             menu.drawPauseMenu(g2);
+        } else if (gameState == WIN_LOSE_STATE) {
+            menu.drawWinLoseMenu(g2);
         } else {
             tileM.draw(g2);
             player.render(g2);
             handler.render(g2);
+            bound.render(g2);
 
             if (handler.checkcollision() && player.getLivesLeft() <= 0) {
                 g2.setColor(Color.RED);

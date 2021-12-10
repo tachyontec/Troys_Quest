@@ -27,7 +27,7 @@ public class KeyHandler implements KeyListener {
 
         //MENU_STATE and PAUSE_STATE KEY INPUT
         //Each key has a different function in each game state
-        if(gp.gameState == gp.MENU_STATE || gp.gameState == gp.PAUSE_STATE){
+        if(gp.gameState == gp.MENU_STATE || gp.gameState == gp.PAUSE_STATE || gp.gameState == gp.WIN_LOSE_STATE){
             //Since there are 3 choices in each menu we handle them similarly
             if (key == KeyEvent.VK_UP) {
                 gp.menu.choice--;

@@ -30,7 +30,7 @@ public class Player extends GameObject {
     public final int axisX = 400;
     public final int axisY = 400;
     private int livesLeft = 3;
-    public final int screenX;
+    public int screenX;
     public int screenY;
     //used so that we do not have the death sound used recursively when the player dies and the state is dead
     public boolean deathSoundIsDone;
@@ -152,6 +152,27 @@ public class Player extends GameObject {
                     case ATTACK -> attackanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
                 }
             }
+        }
+
+        int x = screenX;
+        int y = screenY;
+
+        if(screenX > getX()){
+            x = (int) getX();
+        }
+
+        if (screenY > getY()){
+            y = (int) getY();
+        }
+
+        int rightDiff = gamePanel.screenWidth - screenX;
+        if(rightDiff > gamePanel.worldWidth - getX()){
+            screenX = gamePanel.screenWidth - (gamePanel.worldWidth - (int) getX()); //and we subtract the difference from the current tile from the edge of the screen
+        }
+        //Then we calculate the length between player screenY and the right edge of the frame
+        int bottomDiff = gamePanel.screenHeight - (gamePanel.worldHeight - (int) getY());
+        if(bottomDiff >gamePanel.worldHeight - getY()){
+            screenY = gamePanel.screenHeight - (gamePanel.worldHeight - (int)getY()); //and we subtract the difference from the current tile from the bottom edge of the screen
         }
     }
 
