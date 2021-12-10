@@ -53,6 +53,7 @@ public class Handler {
         }
         for (GameObject object : obstacleLinkedList) {
             if (object.intersects(player) && player.isCollision()) {
+
                 b = true;
                 player.setCollision(false);
                 collisionTime = collisionTimer;
