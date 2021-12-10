@@ -47,7 +47,7 @@ public class GamePanel extends JPanel implements Runnable {
     public LinkedList<GameObject> obstacles = new LinkedList<>();
     public LinkedList<Enemy> enemies = new LinkedList<>();
     public Handler handler = new Handler(obstacles,player,enemies);
-
+    public Bound bound = new Bound(player,this);
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.BLACK);
@@ -103,6 +103,7 @@ public class GamePanel extends JPanel implements Runnable {
     //in this method we update all GameObject objects
     public void update() {
           if(gameState == PLAY_STATE) {
+              bound.update();
               player.tick();
               handler.tick();
               if (handler.checkcollision()) {
@@ -134,7 +135,7 @@ public class GamePanel extends JPanel implements Runnable {
             handler.render(g2);
             bound.render(g2);
 
-            if (handler.checkcollision() && player.getLivesLeft() <= 0) {
+            if ( player.getLivesLeft() <= 0) {
                 g2.setColor(Color.RED);
                 g2.setFont(new Font("MV Boli", Font.PLAIN, 45));
                 g2.drawString("You lost ", 300, 300);
