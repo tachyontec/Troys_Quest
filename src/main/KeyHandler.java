@@ -54,11 +54,15 @@ public class KeyHandler implements KeyListener {
                         break;
                     case 1:
                         //2nd option varies so we check the current game state
-                        if(gp.gameState == gp.PAUSE_STATE){
+                        if(gp.gameState == gp.PAUSE_STATE ){
                             gp.gameState = gp.MENU_STATE;
                             gp.music.playMusic(5);
                             break;
-                        } else {
+                        } else if (gp.gameState == gp.WIN_LOSE_STATE){
+                            gp.music.stopMusic();
+                            gp.gameState = gp.MENU_STATE;
+                            gp.music.playMusic(5);
+
                             break; //Level Selection To be implemented
                         }
                     case 2 :

@@ -22,7 +22,6 @@ public class ObstacleSetter {
         // !Array ,containing obstacle .png names for rand to pick randomly from , to be implemented as new obstacles get added!
         int startingpoint = 9 * gamePanel.tileSize; //starting point in map is where the player spawns
 
-
         for(int i = 1;i <= 13;i++) { //
             int randomvariable = rand.nextInt(3);// a random number that will help to spawn player randomly
             int spawnX = startingpoint + randomvariable * gamePanel.tileSize; //the X cordinate that obstacle will spawn

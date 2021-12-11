@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 
 public class Menu {
     //Implementing start and pause menu navigation
@@ -12,7 +13,7 @@ public class Menu {
     Font menuFont;
     BufferedImage helmetImage;
     public int choice = 0;
-
+    DecimalFormat decFormat = new DecimalFormat("#0.00");
     public Menu(GamePanel gamePanel){
         this.gamepanel = gamePanel;
         this.menuFont = new Font("MV Boli", Font.PLAIN, 35);
@@ -85,22 +86,25 @@ public class Menu {
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 80));
             g2.setColor(new Color(200 , 179 , 92));
             String title = "YOU WIN!";
+            g2.drawString(title , gamepanel.screenWidth / 2 - 180 , gamepanel.screenHeight / 2 -200);
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40));
+            g2.drawString("YOUR TIME WAS: "+ decFormat.format(gamepanel.hud.levelTimer) + "sec" , gamepanel.screenWidth / 2 - 240 ,  150 );
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50));
             String option;
             option = "REPLAY LEVEL";
-            g2.drawString(option , 200 , 250);
+            g2.drawString(option , 180 , 260);
             if (choice == 0){
-                g2.drawString(">", 200 -30 , 250);
+                g2.drawString(">", 150 , 260);
             }
             option = "BACK TO MAIN MENU";
-            g2.drawString(option , 200 , 310);
+            g2.drawString(option , 180 , 320);
             if (choice == 1){
-                g2.drawString(">", 200 -30 , 310);
+                g2.drawString(">", 150 , 320);
             }
             option = "EXIT";
-            g2.drawString(option , 200 , 370 );
+            g2.drawString(option , 180 , 380 );
             if (choice == 2) {
-                g2.drawString(">", 200 - 30 , 370);
+                g2.drawString(">", 150 , 380);
             }
         }
     }
