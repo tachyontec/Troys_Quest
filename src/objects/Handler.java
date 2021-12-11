@@ -33,9 +33,7 @@ public class Handler {
         for (GameObject object : obstacleLinkedList) {
             //g2.drawRect(object.x,object.y,object.width,object  .height);
             object.render(g2);
-
         }
-
         for (Enemy enemy : enemies) {
             enemy.render(g2);
         }
@@ -48,17 +46,18 @@ public class Handler {
         decFormat.format(collisionTimer);
         collisionTimer += (double) 1/60;
         boolean b = false;
-        if(collisionTimer - collisionTime > 10.00) {
+        if(collisionTimer - collisionTime > 2.00) {
             player.setCollision(true);
         }
         for (GameObject object : obstacleLinkedList) {
             if (object.intersects(player) && player.isCollision()) {
-
                 b = true;
                 player.setCollision(false);
                 collisionTime = collisionTimer;
                 break;
             }
+            if(object.intersects(player))
+                player.setX(player.getX()-20);//so as not to go "into" obstacles
         }
         for (Enemy enemy : enemies) {
             if (enemy.intersects(player) && player.isCollision()) {

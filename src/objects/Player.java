@@ -95,7 +95,6 @@ public class Player extends GameObject {
             state = State.ATTACK;
             attackanimation.runAnimation();
         }
-
         if (keyHandler.upPressed) {
             if (jumped) { //if statement to ensure that jumped is envoked once every time
                 state = State.JUMP;
@@ -120,8 +119,8 @@ public class Player extends GameObject {
             jumped = true;
         }
         if (this.getLivesLeft() == 0) {
-           state = State.DEAD;
-               deathanimation.runAnimation();
+           this.state = State.DEAD;
+           deathanimation.runAnimation();
            if (deathSoundIsDone == false) {
                soundEffect.playSE(1);
                deathSoundIsDone = true;// so that we stop the death sound
@@ -134,7 +133,7 @@ public class Player extends GameObject {
     public void render(Graphics2D g) {
         super.render(g);
         //this if is in place so that when the player is hit , he is invulnerable and his body is shown blinking to indicate that state
-        if(this.isCollision() || this.state == State.DEAD) {
+        if(this.isCollision() || this.state == State.DEAD) {//when a player is hit collision is turned off for some seconds so this.isCollision comes out false
             switch (state) {
                 case JUMP -> jumpinganimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
                 case DEAD -> deathanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);

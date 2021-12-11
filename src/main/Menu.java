@@ -82,29 +82,53 @@ public class Menu {
     }
 
     public void drawWinLoseMenu(Graphics2D g2) {
-        if (gamepanel.player.getLivesLeft() > 0 ) {
+        if (gamepanel.player.getLivesLeft() > 0) {
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 80));
-            g2.setColor(new Color(200 , 179 , 92));
+            g2.setColor(new Color(200, 179, 92));
             String title = "YOU WIN!";
-            g2.drawString(title , gamepanel.screenWidth / 2 - 180 , gamepanel.screenHeight / 2 -200);
+            g2.drawString(title, gamepanel.screenWidth / 2 - 180, gamepanel.screenHeight / 2 - 200);
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40));
-            g2.drawString("YOUR TIME WAS: "+ decFormat.format(gamepanel.hud.levelTimer) + "sec" , gamepanel.screenWidth / 2 - 240 ,  150 );
+            g2.drawString("YOUR TIME WAS: " + decFormat.format(gamepanel.hud.levelTimer) + "sec", gamepanel.screenWidth / 2 - 240, 150);
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50));
             String option;
             option = "REPLAY LEVEL";
-            g2.drawString(option , 180 , 260);
-            if (choice == 0){
-                g2.drawString(">", 150 , 260);
+            g2.drawString(option, 180, 260);
+            if (choice == 0) {
+                g2.drawString(">", 150, 260);
             }
             option = "BACK TO MAIN MENU";
-            g2.drawString(option , 180 , 320);
-            if (choice == 1){
-                g2.drawString(">", 150 , 320);
+            g2.drawString(option, 180, 320);
+            if (choice == 1) {
+                g2.drawString(">", 150, 320);
             }
             option = "EXIT";
-            g2.drawString(option , 180 , 380 );
+            g2.drawString(option, 180, 380);
             if (choice == 2) {
-                g2.drawString(">", 150 , 380);
+                g2.drawString(">", 150, 380);
+            }
+        } else {
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 80));
+            g2.setColor(new Color(200, 179, 92));
+            String title = "YOU LOSE!";
+            g2.drawString(title, gamepanel.screenWidth / 2 - 180, gamepanel.screenHeight / 2 - 200);
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40));
+            g2.drawString("YOUR TIME WAS: " + decFormat.format(gamepanel.hud.deathTime) + "sec", gamepanel.screenWidth / 2 - 240, 150);
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50));
+            String option;
+            option = "REPLAY LEVEL";
+            g2.drawString(option, 180, 260);
+            if (choice == 0) {
+                g2.drawString(">", 150, 260);
+            }
+            option = "BACK TO MAIN MENU";
+            g2.drawString(option, 180, 320);
+            if (choice == 1) {
+                g2.drawString(">", 150, 320);
+            }
+            option = "EXIT";
+            g2.drawString(option, 180, 380);
+            if (choice == 2) {
+                g2.drawString(">", 150, 380);
             }
         }
     }

@@ -16,6 +16,9 @@ public class HUD {
     BufferedImage heartImage;
     DecimalFormat decFormat = new DecimalFormat("#0.00");
     double levelTimer;
+    double deathTime;//the time the player died
+    int i =0;
+
     public HUD(GamePanel gamepanel ){
         this.gamepanel = gamepanel;
         this.gameFont = new Font("MV Boli", Font.PLAIN, 35);
@@ -31,10 +34,14 @@ public class HUD {
         g2.setColor(Color.BLACK);
         g2.drawImage(heartImage , gamepanel.tileSize / 2 , gamepanel.tileSize / 2 - 10, gamepanel.tileSize , gamepanel.tileSize , null );
         g2.drawString("x " + gamepanel.player.getLivesLeft() , 74 ,50);
-
+        //System.out.println(levelTimer);
         levelTimer += (double) 1/60;
         if (gamepanel.player.getLivesLeft() == 0){
-            g2.drawString("Time:0.00", gamepanel.tileSize * 10 , 50);
+            if(i==0) {
+                deathTime = levelTimer;
+                i+=1;
+            }
+            g2.drawString("Time:"+decFormat.format(deathTime), gamepanel.tileSize * 10 , 50);
         } else {
             g2.drawString("Time:" + decFormat.format(levelTimer), gamepanel.tileSize * 10, 50);
         }

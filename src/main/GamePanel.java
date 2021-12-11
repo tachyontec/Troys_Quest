@@ -29,7 +29,8 @@ public class GamePanel extends JPanel implements Runnable {
     public static final int PLAY_STATE = 0;//When game is running
     public static final int PAUSE_STATE = 1;//when game is paused
     public static final int MENU_STATE = 2;//when we are in the menu
-    public static final int WIN_LOSE_STATE = 3;
+    public static final int WIN_LOSE_STATE = 3;//when level is concluded , either in win or defeat
+
     public int gameState;
 
     TileManager tileM;
@@ -48,6 +49,7 @@ public class GamePanel extends JPanel implements Runnable {
     public LinkedList<Enemy> enemies = new LinkedList<>();
     public Handler handler = new Handler(obstacles,player,enemies);
     public Bound bound = new Bound(player,this);
+
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.BLACK);
@@ -110,9 +112,12 @@ public class GamePanel extends JPanel implements Runnable {
                   if(player.getLivesLeft()>0){
                       player.setLivesLeft(player.getLivesLeft()-1);
                       se.playSE(2);
-                  }else if (player.getLivesLeft() <= 0) {
-                      player.state = Player.State.DEAD;
-                      gameState = MENU_STATE;
+                  }else if (player.getLivesLeft() == 0) {
+                      if(hud.levelTimer - hud.deathTime > 0.5) {
+                          player.state = Player.State.DEAD;
+                          this.gameState = WIN_LOSE_STATE;
+                          System.out.println(gameState);
+                      }
                   }
               }
           }
@@ -135,7 +140,7 @@ public class GamePanel extends JPanel implements Runnable {
             handler.render(g2);
             bound.render(g2);
 
-            if ( player.getLivesLeft() <= 0) {
+            if (player.getLivesLeft() <= 0) {
                 g2.setColor(Color.RED);
                 g2.setFont(new Font("MV Boli", Font.PLAIN, 45));
                 g2.drawString("You lost ", 300, 300);
