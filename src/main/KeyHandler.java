@@ -44,13 +44,13 @@ public class KeyHandler implements KeyListener {
                 }
             }
 
-            if (key == KeyEvent.VK_ENTER){
+            if (key == KeyEvent.VK_ENTER){ //if enter is pressed to select a choice
                 switch (gp.menu.choice){
                     case 0:
                         //first option RESUME (PAUSE_STATE) or NEW GAME (MENU_STATE) always changes the gameState to PLAY_STATE so no need for differentiation
                         gp.gameState = gp.PLAY_STATE;
                         gp.music.stopMusic();
-                        gp.music.playMusic(0); //And PLAY_STATE music is the first track
+                        gp.music.playMusic(0); //And PLAY_STATE music is the first track in the array
                         break;
                     case 1:
                         //2nd option varies so we check the current game state

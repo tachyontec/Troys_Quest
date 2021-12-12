@@ -12,7 +12,7 @@ public class Menu {
     GamePanel gamepanel;
     Font menuFont;
     BufferedImage helmetImage;
-    public int choice = 0;
+    public int choice = 0; //option selection default
     DecimalFormat decFormat = new DecimalFormat("#0.00");
     public Menu(GamePanel gamePanel){
         this.gamepanel = gamePanel;
@@ -58,7 +58,7 @@ public class Menu {
     public void drawPauseMenu(Graphics2D g2){
         //Graphic drawing of pause menu
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 80));
-        g2.setColor(new Color(200 , 179 , 92));
+        g2.setColor(new Color(200 , 179 , 92)); //rgb values for olive green
         String title = "Pause";
         g2.drawString(title , gamepanel.screenWidth / 2 - 150 , gamepanel.screenHeight / 2 + -200);
 
@@ -82,6 +82,9 @@ public class Menu {
     }
 
     public void drawWinLoseMenu(Graphics2D g2) {
+        //check if player is alive to decide if he has won or lost when the game state switches to WIN_LOSE_STATE
+        //if he has lives left we draw the win menu
+        //to be optimized for less lines of code
         if (gamepanel.player.getLivesLeft() > 0) {
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 80));
             g2.setColor(new Color(200, 179, 92));
@@ -106,13 +109,13 @@ public class Menu {
             if (choice == 2) {
                 g2.drawString(">", 150, 380);
             }
-        } else {
+        } else { //if he has not any lives left we draw the lose menu
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 80));
             g2.setColor(new Color(200, 179, 92));
             String title = "YOU LOSE!";
             g2.drawString(title, gamepanel.screenWidth / 2 - 180, gamepanel.screenHeight / 2 - 200);
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40));
-            g2.drawString("YOUR TIME WAS: " + decFormat.format(gamepanel.hud.deathTime) + "sec", gamepanel.screenWidth / 2 - 240, 150);
+            //g2.drawString("YOUR TIME WAS: " + decFormat.format(gamepanel.hud.deathTime) + "sec", gamepanel.screenWidth / 2 - 240, 150);
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50));
             String option;
             option = "REPLAY LEVEL";
