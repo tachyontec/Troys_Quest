@@ -28,6 +28,7 @@ public class ObstacleSetter {
             gamePanel.obstacles.add(new Obstacle(spawnX,9*gamePanel.tileSize,0,0,30,gamePanel.tileSize,"spikesRoller",6,gamePanel));
             startingpoint += 5 * gamePanel.tileSize; // starting point changes each time new obstacle will be created
         }
-
+        gamePanel.enemies.add( new Enemy(9 * gamePanel.tileSize, 9 * gamePanel.tileSize, 1, 0, gamePanel.tileSize, gamePanel.tileSize, "Minotaur", gamePanel));
+        gamePanel.enemies.add( new Enemy(19 * gamePanel.tileSize, 9 * gamePanel.tileSize, 1, 0, gamePanel.tileSize, gamePanel.tileSize, "Minotaur", gamePanel));
     }
 }

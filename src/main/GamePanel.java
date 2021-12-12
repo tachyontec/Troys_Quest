@@ -108,6 +108,8 @@ public class GamePanel extends JPanel implements Runnable {
               bound.update();
               player.tick();
               handler.tick();
+              enemies.get(0).tick();
+              enemies.get(1).tick();
               if (handler.checkcollision()) {
                   if(player.getLivesLeft()>0){
                       player.setLivesLeft(player.getLivesLeft()-1);
@@ -139,7 +141,8 @@ public class GamePanel extends JPanel implements Runnable {
             player.render(g2);
             handler.render(g2);
             bound.render(g2);
-
+            enemies.get(0).render(g2);
+            enemies.get(1).render(g2);
             if (player.getLivesLeft() <= 0) {
                 g2.setColor(Color.RED);
                 g2.setFont(new Font("MV Boli", Font.PLAIN, 45));

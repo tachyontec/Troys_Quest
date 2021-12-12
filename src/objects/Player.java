@@ -64,11 +64,11 @@ public class Player extends GameObject {
         screenX = gamePanel.tileSize * 7;
         screenY = gamePanel.tileSize * 9;
         getPlayerImage();
-        walkinganimation = new Animation(2, run);
-        jumpinganimation = new Animation(10, jump);
-        idleanimation = new Animation(1, idle);
-        deathanimation = new Animation(2,death);
-        attackanimation = new Animation(2,attack);
+        walkinganimation = new Animation(6, run);
+        jumpinganimation = new Animation(5, jump);
+        idleanimation = new Animation(3, idle);
+        deathanimation = new Animation(6,death);
+        attackanimation = new Animation(9,attack);
         super.direction = "run";
         this.collision = true;
     }
@@ -76,7 +76,7 @@ public class Player extends GameObject {
     // in this method we are loading the images for each animation from resources folder res
     //this needs to be implemented in another class named Resources later
     public void getPlayerImage() {
-        run = Resource.getFilesInDir("res/Player/Run");
+        run = Resource.getFilesInDir("res/Player/Walk");
         jump = Resource.getFilesInDir("res/Player/Jump");
         idle = Resource.getFilesInDir("res/Player/Idle");
         death = Resource.getFilesInDir("res/Player/Die");
@@ -136,10 +136,10 @@ public class Player extends GameObject {
         if(this.isCollision() || this.state == State.DEAD) {//when a player is hit collision is turned off for some seconds so this.isCollision comes out false
             switch (state) {
                 case JUMP -> jumpinganimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
-                case DEAD -> deathanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
+                case DEAD -> deathanimation.drawAnimation(g, screenX, screenY,(int)72,(int) 72);
                 case RUN -> walkinganimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
                 case ALIVE -> idleanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
-                case ATTACK -> attackanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
+                case ATTACK -> attackanimation.drawAnimation(g, screenX, screenY, 68,  68);
             }
         } else {
             if((int) this.gamePanel.handler.collisionTimer % 2 ==0) {
