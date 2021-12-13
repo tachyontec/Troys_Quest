@@ -101,9 +101,11 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
     }
-
+    public int i =0;
     //in this method we update all GameObject objects
     public void update() {
+        System.out.println(player.deathTime);
+        System.out.println(hud.levelTimer );
           if(gameState == PLAY_STATE) {
               bound.update();
               player.tick();
@@ -111,25 +113,28 @@ public class GamePanel extends JPanel implements Runnable {
               enemies.get(0).tick();
               enemies.get(1).tick();
               if (handler.checkcollision()) {
-                  if(player.getLivesLeft()>0){
-                      player.setLivesLeft(player.getLivesLeft()-1);
+                  if (player.getLivesLeft() > 0) {
+                      player.setLivesLeft(player.getLivesLeft() - 1);
                       se.playSE(2);
-                  }else if (player.getLivesLeft() == 0) {
-                      if(hud.levelTimer - hud.deathTime > 0.5) {
-                          player.state = Player.State.DEAD;
-                          this.gameState = WIN_LOSE_STATE;
-                          System.out.println(gameState);
-                      }
                   }
               }
           }
+        if(player.getLivesLeft() == 0) {
+            if(i == 0) {
+                player.deathTime = hud.levelTimer;
+                i++;
+            }
+            if(hud.levelTimer - player.deathTime > 1) {
+                gameState = WIN_LOSE_STATE;
+                System.out.println(gameState);
+            }
+        }
     }
 
     ////in this method we paint all GameObject objects
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-
         if (gameState == MENU_STATE) {
             menu.drawMainMenu(g2);
         } else if(gameState == PAUSE_STATE){
@@ -141,8 +146,9 @@ public class GamePanel extends JPanel implements Runnable {
             player.render(g2);
             handler.render(g2);
             bound.render(g2);
-            enemies.get(0).render(g2);
-            enemies.get(1).render(g2);
+            for (Enemy enemy : enemies) {
+                enemy.render(g2);
+            }
             if (player.getLivesLeft() <= 0) {
                 g2.setColor(Color.RED);
                 g2.setFont(new Font("MV Boli", Font.PLAIN, 45));

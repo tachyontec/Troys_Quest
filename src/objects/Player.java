@@ -47,6 +47,7 @@ public class Player extends GameObject {
     public enum State {ALIVE,DEAD,JUMP,RUN,ATTACK};
     public State state = State.RUN;//state stores current player state
 
+    public double deathTime =0;//the time the player dies
 
     public boolean isCollision() {
         return collision;
@@ -142,7 +143,7 @@ public class Player extends GameObject {
                 case ATTACK -> attackanimation.drawAnimation(g, screenX, screenY, 68,  68);
             }
         } else {
-            if((int) this.gamePanel.handler.collisionTimer % 2 ==0) {
+            if((int) (this.gamePanel.handler.collisionTimer * 50) % 2 == 0) {
                 switch (state) {
                     case JUMP -> jumpinganimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
                     case DEAD -> deathanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
