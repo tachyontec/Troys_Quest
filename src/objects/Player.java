@@ -44,10 +44,11 @@ public class Player extends GameObject {
     Animation attackanimation;
 
     //creating enumarition for player state
-    public enum State {ALIVE,DEAD,JUMP,RUN,ATTACK};
+    public enum State {ALIVE, DEAD, JUMP, RUN, ATTACK}
+
     public State state = State.RUN;//state stores current player state
 
-    public double deathTime =0;//the time the player dies
+    public double deathTime = 0;//the time the player dies
 
     public boolean isCollision() {
         return collision;
@@ -65,11 +66,11 @@ public class Player extends GameObject {
         screenX = gamePanel.tileSize * 7;
         screenY = gamePanel.tileSize * 9;
         getPlayerImage();
-        walkinganimation = new Animation(6, run);
-        jumpinganimation = new Animation(5, jump);
-        idleanimation = new Animation(3, idle);
-        deathanimation = new Animation(6,death);
-        attackanimation = new Animation(9,attack);
+        walkinganimation = new Animation(run);
+        jumpinganimation = new Animation(jump);
+        idleanimation = new Animation(idle);
+        deathanimation = new Animation(death);
+        attackanimation = new Animation(attack);
         super.direction = "run";
         this.collision = true;
     }
@@ -92,7 +93,7 @@ public class Player extends GameObject {
             idleanimation.runAnimation();
             state = State.ALIVE;
         }
-        if(keyHandler.attackPressed) {
+        if (keyHandler.attackPressed) {
             state = State.ATTACK;
             attackanimation.runAnimation();
         }
@@ -116,16 +117,16 @@ public class Player extends GameObject {
             this.setX(this.getX() + getSpeedx());//moves the player along the x axis to the right
             walkinganimation.runAnimation();
         }
-        if ((!keyHandler.upPressed)&&(floor == getY())) {
+        if ((!keyHandler.upPressed) && (floor == getY())) {
             jumped = true;
         }
         if (this.getLivesLeft() == 0) {
-           this.state = State.DEAD;
-           deathanimation.runAnimation();
-           if (deathSoundIsDone == false) {
-               soundEffect.playSE(1);
-               deathSoundIsDone = true;// so that we stop the death sound
-           }
+            this.state = State.DEAD;
+            deathanimation.runAnimation();
+            if (!deathSoundIsDone) {
+                soundEffect.playSE(1);
+                deathSoundIsDone = true;// so that we stop the death sound
+            }
         }
     }
 
@@ -134,16 +135,16 @@ public class Player extends GameObject {
     public void render(Graphics2D g) {
         super.render(g);
         //this if is in place so that when the player is hit , he is invulnerable and his body is shown blinking to indicate that state
-        if(this.isCollision() || this.state == State.DEAD) {//when a player is hit collision is turned off for some seconds so this.isCollision comes out false
+        if (this.isCollision() || this.state == State.DEAD) {//when a player is hit collision is turned off for some seconds so this.isCollision comes out false
             switch (state) {
                 case JUMP -> jumpinganimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
-                case DEAD -> deathanimation.drawAnimation(g, screenX, screenY,(int)72,(int) 72);
+                case DEAD -> deathanimation.drawAnimation(g, screenX, screenY, 72, 72);
                 case RUN -> walkinganimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
                 case ALIVE -> idleanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
-                case ATTACK -> attackanimation.drawAnimation(g, screenX, screenY, 68,  68);
+                case ATTACK -> attackanimation.drawAnimation(g, screenX, screenY, 68, 68);
             }
         } else {
-            if((int) (this.gamePanel.handler.collisionTimer * 50) % 2 == 0) {
+            if ((int) (this.gamePanel.handler.collisionTimer * 50) % 2 == 0) {
                 switch (state) {
                     case JUMP -> jumpinganimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
                     case DEAD -> deathanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
@@ -157,22 +158,22 @@ public class Player extends GameObject {
         int x = screenX;
         int y = screenY;
 
-        if(screenX > getX()){
+        if (screenX > getX()) {
             x = (int) getX();
         }
 
-        if (screenY > getY()){
+        if (screenY > getY()) {
             y = (int) getY();
         }
 
         int rightDiff = gamePanel.screenWidth - screenX;
-        if(rightDiff > gamePanel.worldWidth - getX()){
+        if (rightDiff > gamePanel.worldWidth - getX()) {
             screenX = gamePanel.screenWidth - (gamePanel.worldWidth - (int) getX()); //and we subtract the difference from the current tile from the edge of the screen
         }
         //Then we calculate the length between player screenY and the right edge of the frame
         int bottomDiff = gamePanel.screenHeight - (gamePanel.worldHeight - (int) getY());
-        if(bottomDiff >gamePanel.worldHeight - getY()){
-            screenY = gamePanel.screenHeight - (gamePanel.worldHeight - (int)getY()); //and we subtract the difference from the current tile from the bottom edge of the screen
+        if (bottomDiff > gamePanel.worldHeight - getY()) {
+            screenY = gamePanel.screenHeight - (gamePanel.worldHeight - (int) getY()); //and we subtract the difference from the current tile from the bottom edge of the screen
         }
     }
 
@@ -191,18 +192,19 @@ public class Player extends GameObject {
                 System.exit(0);
             }
         }
-        public void stalldx(){
+
+        public void stalldx() {
             try {
                 if (keyHandler.leftPressed) {
-                    for(int i=0; i<15; i++)
+                    for (int i = 0; i < 15; i++)
                         setX(getX() - 1);//moves the player along the x axis to the left gradually
-                        Thread.sleep((long) (jumpingTime+50)); //smooths the jump act
+                    Thread.sleep((long) (jumpingTime + 50)); //smooths the jump act
                 } else if (keyHandler.rightPressed) {
-                    for(int i=0; i<15; i++)
+                    for (int i = 0; i < 15; i++)
                         setX(getX() + 1);//moves the player along the x axis to the right gradually
-                        Thread.sleep((long) (jumpingTime+50)); //smooths the jump act
+                    Thread.sleep((long) (jumpingTime + 50)); //smooths the jump act
                 }
-            }catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

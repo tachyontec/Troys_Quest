@@ -21,12 +21,9 @@ public class Enemy extends GameObject {
     private String name;
     GamePanel gamePanel;
 
-    enum State {ALIVE, DEAD, RUN, ATTACK, IDLE}
+    enum State {DEAD, RUN, ATTACK, IDLE}
 
-    ;
     State state;//state stores current player state
-    public int counter=0;
-    public boolean cont;
     //Animation instances for everything that our enemy does
     Animation walkingAnimation, idleAnimation, deathAnimation, attackAnimation;
 
@@ -34,7 +31,6 @@ public class Enemy extends GameObject {
     public BufferedImage[] run, idle, death, attack;
 
     public Enemy(double worldX, double worldY, double speedX, double speedY, int width, int height, String name, GamePanel gamePanel) {
-
         super(worldX, worldY, speedX, speedY, width, height);
         this.name = name;
         this.state = State.IDLE; //starting with Idle
@@ -49,10 +45,10 @@ public class Enemy extends GameObject {
         idle = Resource.getFilesInDir("res/Enemies/" + this.name + "/Idle");
         death = Resource.getFilesInDir("res/Enemies/" + this.name + "/Death");
         //Create the animations
-        walkingAnimation = new Animation(5, run);
-        idleAnimation = new Animation(5, idle);
-        attackAnimation = new Animation(5, attack);
-        deathAnimation = new Animation(5, death);
+        walkingAnimation = new Animation(run);
+        idleAnimation = new Animation(idle);
+        attackAnimation = new Animation(attack);
+        deathAnimation = new Animation(death);
     }
 
     //renders the animations of the enemy
@@ -63,11 +59,11 @@ public class Enemy extends GameObject {
         double screenY = this.getY() - gamePanel.player.getY() + gamePanel.player.screenY; //centers the player in relation to the screen in y axis,gp.player.screenY is used to offset the difference
 
         switch (state) {
-            case DEAD -> deathAnimation.drawAnimation(g, (int) screenX, (int) screenY, 2*gamePanel.tileSize  , 2*gamePanel.tileSize );
-            case RUN -> walkingAnimation.drawAnimation(g, (int) screenX, (int) screenY, 2*gamePanel.tileSize , 2*gamePanel.tileSize );
-            case IDLE -> idleAnimation.drawAnimation(g, (int) screenX, (int) screenY, 2*gamePanel.tileSize , 2*gamePanel.tileSize );
-            case ATTACK -> attackAnimation.drawAnimation(g, (int) screenX, (int) screenY, 2*
-                    gamePanel.tileSize, 2*gamePanel.tileSize
+            case DEAD -> deathAnimation.drawAnimation(g, (int) screenX, (int) screenY, 2 * gamePanel.tileSize, 2 * gamePanel.tileSize);
+            case RUN -> walkingAnimation.drawAnimation(g, (int) screenX, (int) screenY, 2 * gamePanel.tileSize, 2 * gamePanel.tileSize);
+            case IDLE -> idleAnimation.drawAnimation(g, (int) screenX, (int) screenY, 2 * gamePanel.tileSize, 2 * gamePanel.tileSize);
+            case ATTACK -> attackAnimation.drawAnimation(g, (int) screenX, (int) screenY, 2 *
+                    gamePanel.tileSize, 2 * gamePanel.tileSize
             );
         }
     }
@@ -77,7 +73,6 @@ public class Enemy extends GameObject {
     public void tick() {
         idleAnimation.runAnimation();
     }
-
 
 
     public String getName() {

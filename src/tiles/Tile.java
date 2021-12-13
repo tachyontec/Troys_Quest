@@ -1,6 +1,7 @@
 package tiles;
 
 import java.awt.image.BufferedImage;
+
 //represents each individual game tile
 public class Tile {
 

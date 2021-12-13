@@ -2,7 +2,6 @@ package objects;
 
 import main.GamePanel;
 
-import java.awt.*;
 import java.util.Random;
 
 public class ObstacleSetter {
@@ -22,13 +21,13 @@ public class ObstacleSetter {
         // !Array ,containing obstacle .png names for rand to pick randomly from , to be implemented as new obstacles get added!
         int startingpoint = 9 * gamePanel.tileSize; //starting point in map is where the player spawns
 
-        for(int i = 1;i <= 13;i++) { //
+        for (int i = 1; i <= 13; i++) { //
             int randomvariable = rand.nextInt(3);// a random number that will help to spawn player randomly
-            int spawnX = startingpoint + randomvariable * gamePanel.tileSize; //the X cordinate that obstacle will spawn
-            gamePanel.obstacles.add(new Obstacle(spawnX,9*gamePanel.tileSize,0,0,30,gamePanel.tileSize,"spikesRoller",6,gamePanel));
+            int spawnX = startingpoint + randomvariable * gamePanel.tileSize; //the X coordinate that obstacle will spawn
+            gamePanel.obstacles.add(new Obstacle(spawnX, 9 * gamePanel.tileSize, 0, 0, 30, gamePanel.tileSize, "spikesRoller", gamePanel));
             startingpoint += 5 * gamePanel.tileSize; // starting point changes each time new obstacle will be created
         }
-        gamePanel.enemies.add( new Enemy(9 * gamePanel.tileSize, 9 * gamePanel.tileSize, 1, 0, gamePanel.tileSize, gamePanel.tileSize, "Minotaur", gamePanel));
-        gamePanel.enemies.add( new Enemy(19 * gamePanel.tileSize, 9 * gamePanel.tileSize, 1, 0, gamePanel.tileSize, gamePanel.tileSize, "Minotaur", gamePanel));
+        gamePanel.enemies.add(new Enemy(9 * gamePanel.tileSize, 9 * gamePanel.tileSize, 1, 0, gamePanel.tileSize, gamePanel.tileSize, "Minotaur", gamePanel));
+        gamePanel.enemies.add(new Enemy(19 * gamePanel.tileSize, 9 * gamePanel.tileSize, 1, 0, gamePanel.tileSize, gamePanel.tileSize, "Minotaur", gamePanel));
     }
 }

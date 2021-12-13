@@ -12,11 +12,12 @@ public class Animation {
     public BufferedImage[] images; //the images that are needed for the animation
     public BufferedImage currentImg;//used to refer to the current image while drawing the animation
 
-    //constructor that gets speed and a list,or 1 or a table of BufferedImage
+    //constructor that gets a list or a table of BufferedImage
     //its initializes the images table
-    public Animation(int speed, BufferedImage... args) {
-        this.speed = speed;
+    public Animation(BufferedImage... args) {
         images = new BufferedImage[args.length];
+        //The speed will depend on how many images we have
+        this.speed = args.length / 60 + 1;
         //Copy args array into images:
         System.arraycopy(args, 0, images, 0, args.length);
         this.frames = args.length;

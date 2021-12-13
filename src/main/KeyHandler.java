@@ -1,6 +1,5 @@
 package main;
 
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -27,45 +26,88 @@ public class KeyHandler implements KeyListener {
 
         //MENU_STATE and PAUSE_STATE KEY INPUT
         //Each key has a different function in each game state
-        if(gp.gameState == gp.MENU_STATE || gp.gameState == gp.PAUSE_STATE || gp.gameState == gp.WIN_LOSE_STATE){
+        if (gp.gameState == GamePanel.WIN_LOSE_STATE) {
             //Since there are 3 choices in each menu we handle them similarly
             if (key == KeyEvent.VK_UP) {
                 gp.menu.choice--;
                 //menu arrow cycling between the 3 choices and never going out of bounds
-                if (gp.menu.choice < 0){
+                if (gp.menu.choice < 0) {
                     gp.menu.choice = 2;
                 }
             }
-            if (key == KeyEvent.VK_DOWN){
+            if (key == KeyEvent.VK_DOWN) {
                 gp.menu.choice++;
                 //menu arrow cycling between the 3 choices and never going out of bounds
-                if (gp.menu.choice > 2){
+                if (gp.menu.choice > 2) {
                     gp.menu.choice = 0;
                 }
             }
 
-            if (key == KeyEvent.VK_ENTER){ //if enter is pressed to select a choice
-                switch (gp.menu.choice){
+            if (key == KeyEvent.VK_ENTER) { //if enter is pressed to select a choice
+                switch (gp.menu.choice) {
                     case 0:
                         //first option RESUME (PAUSE_STATE) or NEW GAME (MENU_STATE) always changes the gameState to PLAY_STATE so no need for differentiation
-                        gp.gameState = gp.PLAY_STATE;
+                        gp.gameState = GamePanel.PLAY_STATE;
                         //gp.music.stopMusic();
                         gp.music.playMusic(0); //And PLAY_STATE music is the first track in the array
                         break;
                     case 1:
                         //2nd option varies so we check the current game state
-                        if(gp.gameState == gp.PAUSE_STATE ){
-                            gp.gameState = gp.MENU_STATE;
+                        if (gp.gameState == GamePanel.PAUSE_STATE) {
+                            gp.gameState = GamePanel.MENU_STATE;
                             gp.music.playMusic(5);
                             break;
-                        } else if (gp.gameState == gp.WIN_LOSE_STATE){
+                        } else if (gp.gameState == GamePanel.WIN_LOSE_STATE) {
                             gp.music.stopMusic();
-                            gp.gameState = gp.MENU_STATE;
+                            gp.gameState = GamePanel.MENU_STATE;
                             gp.music.playMusic(5);
 
                             break; //Level Selection To be implemented
                         }
-                    case 2 :
+                    case 2:
+                        //3rd option always exits the game
+                        System.exit(0);
+                }
+            }
+        } else if (gp.gameState == GamePanel.MENU_STATE || gp.gameState == GamePanel.PAUSE_STATE) {
+            //Since there are 3 choices in each menu we handle them similarly
+            if (key == KeyEvent.VK_UP) {
+                gp.menu.choice--;
+                //menu arrow cycling between the 3 choices and never going out of bounds
+                if (gp.menu.choice < 0) {
+                    gp.menu.choice = 2;
+                }
+            }
+            if (key == KeyEvent.VK_DOWN) {
+                gp.menu.choice++;
+                //menu arrow cycling between the 3 choices and never going out of bounds
+                if (gp.menu.choice > 2) {
+                    gp.menu.choice = 0;
+                }
+            }
+
+            if (key == KeyEvent.VK_ENTER) { //if enter is pressed to select a choice
+                switch (gp.menu.choice) {
+                    case 0:
+                        //first option RESUME (PAUSE_STATE) or NEW GAME (MENU_STATE) always changes the gameState to PLAY_STATE so no need for differentiation
+                        gp.gameState = GamePanel.PLAY_STATE;
+                        //gp.music.stopMusic();
+                        gp.music.playMusic(0); //And PLAY_STATE music is the first track in the array
+                        break;
+                    case 1:
+                        //2nd option varies so we check the current game state
+                        if (gp.gameState == GamePanel.PAUSE_STATE) {
+                            gp.gameState = GamePanel.MENU_STATE;
+                            gp.music.playMusic(5);
+                            break;
+                        } else if (gp.gameState == GamePanel.WIN_LOSE_STATE) {
+                            gp.music.stopMusic();
+                            gp.gameState = GamePanel.MENU_STATE;
+                            gp.music.playMusic(5);
+
+                            break; //Level Selection To be implemented
+                        }
+                    case 2:
                         //3rd option always exits the game
                         System.exit(0);
                 }
@@ -73,12 +115,11 @@ public class KeyHandler implements KeyListener {
         }
 
 
-
         //GAME STATE KEY INPUT
         //The speed that we will be moving objects.Player
         //We need to check after every button click because it is increasing through time
 
-        if (gp.gameState == gp.PLAY_STATE){
+        if (gp.gameState == GamePanel.PLAY_STATE) {
             if (key == KeyEvent.VK_RIGHT) {
                 rightPressed = true;
             } else if (key == KeyEvent.VK_LEFT) {

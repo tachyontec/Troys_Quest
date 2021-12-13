@@ -3,16 +3,13 @@ package sounds;
 import javax.sound.sampled.*;
 import java.io.IOException;
 import java.net.URL;
-import javax.sound.sampled.*;
-import java.io.IOException;
-import java.net.URL;
 
 //class that provides us with sounds that are located in res/Sound
 public class Sound {
 
 
     Clip clip; //used to open sound file
-    URL musicURL[] = new URL[10];     //we store the sound file path
+    URL[] musicURL = new URL[10];     //we store the sound file path
 
     public Sound() {
         //in each url of the array we store each sound, we will have to remember the index of each sound, it does not bother us for this many sounds
@@ -33,11 +30,7 @@ public class Sound {
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
 
-        } catch (UnsupportedAudioFileException e) {
-            e.printStackTrace();
-        } catch (LineUnavailableException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
             e.printStackTrace();
         }
     }

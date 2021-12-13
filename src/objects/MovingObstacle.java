@@ -15,7 +15,7 @@ public class MovingObstacle extends Obstacle {
     int speed;
 
     public MovingObstacle(double worldX, double worldY, double speedx, double speedy, int width, int height, GamePanel gamePanel, String name, int speed) {
-        super(worldX,worldY,speedx,speedy,width,height,name,speed,gamePanel);
+        super(worldX, worldY, speedx, speedy, width, height, name, gamePanel);
         this.gamePanel = gamePanel;
         //While making the object we also determine its speed
         this.speed = speed;

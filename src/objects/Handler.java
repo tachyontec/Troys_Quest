@@ -2,7 +2,6 @@ package objects;
 
 import java.awt.*;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Handler {
@@ -11,7 +10,7 @@ public class Handler {
     Player player;
     DecimalFormat decFormat = new DecimalFormat("#0.00");
     double collisionTimer;
-    double collisionTime=0;
+    double collisionTime = 0;
 
     public Handler(LinkedList<GameObject> obstacleLinkedList, Player player, LinkedList<Enemy> enemies) {
         this.obstacleLinkedList = obstacleLinkedList;
@@ -38,15 +37,16 @@ public class Handler {
             enemy.render(g2);
         }
     }
+
     /*
     Checks for collision of the player with any obstacles
     if a player collides,he is invulnerable for a couple of seconds
     */
-    public boolean checkcollision () {
+    public boolean checkcollision() {
         decFormat.format(collisionTimer);
-        collisionTimer += (double) 1/60;
+        collisionTimer += (double) 1 / 60;
         boolean b = false;
-        if(collisionTimer - collisionTime > 2.00) {
+        if (collisionTimer - collisionTime > 2.00) {
             player.setCollision(true);
         }
         for (GameObject object : obstacleLinkedList) {
@@ -56,8 +56,8 @@ public class Handler {
                 collisionTime = collisionTimer;
                 break;
             }
-            if(object.intersects(player))
-                player.setX(player.getX()-20);//so as not to go "into" obstacles
+            if (object.intersects(player))
+                player.setX(player.getX() - 20);//so as not to go "into" obstacles
         }
         for (Enemy enemy : enemies) {
             if (enemy.intersects(player) && player.isCollision()) {

@@ -48,14 +48,9 @@ public abstract class GameObject extends Rectangle {
         }
     }
 
-    //we use a default constructor in the objects.Player class
-    public GameObject() {
-    }
-
-
     public void render(Graphics2D g2) {
         g2.setColor(Color.RED);
-        g2.drawRect(x,y,width,height);
+        g2.drawRect(x, y, width, height);
     }
 
     public void tick() {
@@ -70,7 +65,7 @@ public abstract class GameObject extends Rectangle {
      to make the collision rectangle follow along with the object*/
     public void setX(double worldx) {
         this.worldX = (int) worldx;
-        this.x =(int) worldX;
+        this.x = (int) worldX;
     }
 
     public double getY() {
@@ -79,7 +74,7 @@ public abstract class GameObject extends Rectangle {
 
     public void setY(double worldy) {
         this.worldY = (int) worldy;
-        this.y =(int) worldY;
+        this.y = (int) worldY;
     }
 
     public double getSpeedx() {

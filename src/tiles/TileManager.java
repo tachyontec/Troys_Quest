@@ -109,32 +109,30 @@ public class TileManager {
             double screenY = worldY - gp.player.getY() + gp.player.screenY; //centers the player in relation to the screen in y axis,gp.player.screenY is used to offset the difference
 
 
-
             //Make camera not go out of bounds
             //Left edge of the map
-            if(gp.player.screenX > gp.player.getX()){
+            if (gp.player.screenX > gp.player.getX()) {
                 screenX = worldX; //prevent screenX become larger than worldX
             }
             //Top edge of the map
-            if(gp.player.screenY > gp.player.getY()){
+            if (gp.player.screenY > gp.player.getY()) {
                 screenY = worldY; //prevent screenY become larger than worldY
             }
             //Then we calculate the length between player screenX and the right edge of the frame
             int rightDiff = gp.screenWidth - gp.player.screenX;
-            if(rightDiff > gp.worldWidth - gp.player.getX()){
+            if (rightDiff > gp.worldWidth - gp.player.getX()) {
                 screenX = gp.screenWidth - (gp.worldWidth - worldX); //and we subtract the difference from the current tile from the edge of the screen
             }
             //Then we calculate the length between player screenY and the right edge of the frame
             int bottomDiff = gp.screenHeight - (gp.worldHeight - worldY);
-            if(bottomDiff >gp.worldHeight - gp.player.getY()){
+            if (bottomDiff > gp.worldHeight - gp.player.getY()) {
                 screenY = gp.screenHeight - (gp.worldHeight - worldY); //and we subtract the difference from the current tile from the bottom edge of the screen
             }
 
-            if(      gp.player.screenX > gp.player.getX()
+            if (gp.player.screenX > gp.player.getX()
                     || gp.player.screenY > gp.player.getY()
                     || rightDiff > gp.worldWidth - gp.player.getX()
-                    || bottomDiff >gp.worldHeight - gp.player.getY() )
-            {
+                    || bottomDiff > gp.worldHeight - gp.player.getY()) {
                 g2.drawImage(tile[tileNum].image, (int) screenX, (int) screenY, gp.tileSize, gp.tileSize, null);
             }
 
