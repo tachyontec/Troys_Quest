@@ -21,6 +21,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int worldHeight = tileSize * maxWorldRow;
     public final int screenWidth = tileSize * maxScreenCol; // screen width 768
     public final int screenHeight = tileSize * maxScreenRow; // screen height 576
+    public int deathCounter = 0;
 
     //GAME STATES : Informs us about what is happening currently in the game
     public static final int PLAY_STATE = 0;//When game is running
@@ -104,8 +105,6 @@ public class GamePanel extends JPanel implements Runnable {
 
     //in this method we update all GameObject objects
     public void update() {
-        System.out.println(player.deathTime);
-        System.out.println(hud.levelTimer);
         if (gameState == PLAY_STATE) {
             bound.update();
             player.tick();
@@ -130,8 +129,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
     }
-
-    ////in this method we paint all GameObject objects
+    //in this method we paint all GameObject objects
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
@@ -148,12 +146,6 @@ public class GamePanel extends JPanel implements Runnable {
             bound.render(g2);
             for (Enemy enemy : enemies) {
                 enemy.render(g2);
-            }
-            if (player.getLivesLeft() <= 0) {
-                g2.setColor(Color.RED);
-                g2.setFont(new Font("MV Boli", Font.PLAIN, 45));
-                g2.drawString("You lost ", 300, 300);
-
             }
             hud.draw(g2);
         }

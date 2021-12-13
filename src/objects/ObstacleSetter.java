@@ -30,4 +30,5 @@ public class ObstacleSetter {
         gamePanel.enemies.add(new Enemy(9 * gamePanel.tileSize, 9 * gamePanel.tileSize, 1, 0, gamePanel.tileSize, gamePanel.tileSize, "Minotaur", gamePanel));
         gamePanel.enemies.add(new Enemy(19 * gamePanel.tileSize, 9 * gamePanel.tileSize, 1, 0, gamePanel.tileSize, gamePanel.tileSize, "Minotaur", gamePanel));
     }
+
 }
