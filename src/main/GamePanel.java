@@ -94,7 +94,7 @@ public class GamePanel extends JPanel implements Runnable {
                 frames++;
             }
             if (timer > 1000000000) {
-                System.out.println("FPS " + frames); //prints out our fps to check if it works
+               // System.out.println("FPS " + frames); //prints out our fps to check if it works
                 frames = 0;
                 timer = 0;
             }
