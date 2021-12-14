@@ -89,7 +89,7 @@ public class Player extends GameObject {
     //moves the player by altering the x,y coordinates with keyboard arrows
     @Override
     public synchronized void tick() { //synchronized because we involve another thread for jumping and we don't want it to collide with our main game thread
-        if ((!keyHandler.rightPressed) && (!keyHandler.leftPressed) && (!keyHandler.upPressed) && (!keyHandler.attackPressed) ) {
+        if ((!keyHandler.rightPressed) && (!keyHandler.leftPressed) && (!keyHandler.upPressed) && (!keyHandler.attackPressed)) {
             idleanimation.runAnimation();
             state = State.ALIVE;
         }
@@ -100,20 +100,30 @@ public class Player extends GameObject {
         }
 
         if (keyHandler.upPressed) {
-            if (jumped) { //if statement to ensure that jumped is envoked once every time
+
+            Thread t = new Thread(new thread());
+
+            if (jumped) { //if statement to ensure that jumped is invoked once every time
                 state = State.JUMP;
-                System.out.println("PlayerY" + getY());
-                screenY -= 15;
-                this.setY(this.getY() - 15);//moves the player upwards along the y axis
+                if(getY()>300) {
+                    screenY -= 15;
+                    this.setY(this.getY() - 15);//moves the player upwards along the y axis
+                }
                 jumpinganimation.runAnimation();
                 soundEffect.playSE(3);
-                new Thread(new thread()).start();//initiating a new thread to perform the jump act
+                t.start();//initiating a new thread to perform the jump act
             }
-            if ((floor==getY())&&(!jumped)) { //condition to ensure that when the jump is done...
-                idleanimation.runAnimation();//... the player does his idle animation...
-                state = State.ALIVE;//... is alive...
-                setY(floor);//... and finally is EXACTLY on the right floor height
+
+            if((!t.isAlive())&&(floor!=getY())){
+                setY(floor);
             }
+
+            if((!jumped)&&(floor==getY())){
+                idleanimation.runAnimation();
+                state = State.ALIVE;
+            }
+
+
         }
 
         if (keyHandler.leftPressed) {
@@ -193,15 +203,16 @@ public class Player extends GameObject {
                 try {
                     Thread.sleep((long) jumpingTime);
                     stalldx();//performing movement along the x axis gradually
-                    screenY += 15;
-                    setY(getY()+15);
+                    if(getY()<432) {
+                        screenY += 15;
+                        setY(getY() + 15);
+                    }
                     direction = "run";//changes the direction to run in order to continue the run animation
                     jumped = false;
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.exit(0);
                 }
-
             }
 
 
