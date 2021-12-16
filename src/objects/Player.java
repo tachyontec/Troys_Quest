@@ -13,7 +13,7 @@ import java.awt.image.BufferedImage;
 public class Player extends GameObject {
     public double floor; //floor of every platform
     public boolean jumped = true;
-    public float jumpingTime = 80;
+    public float jumpingTime = 100;
     //player gets keyhandler to implement keyboard input
     public KeyHandler keyHandler;
     //player needs Game Panel to spawn on it
@@ -72,7 +72,6 @@ public class Player extends GameObject {
         idleanimation = new Animation(idle);
         deathanimation = new Animation(death);
         attackanimation = new Animation(attack);
-        super.direction = "run";
         this.collision = true;
     }
 
@@ -207,7 +206,6 @@ public class Player extends GameObject {
                         screenY += 15;
                         setY(getY() + 15);
                     }
-                    direction = "run";//changes the direction to run in order to continue the run animation
                     jumped = false;
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -49,6 +49,7 @@ public class GamePanel extends JPanel implements Runnable {
     public LinkedList<Enemy> enemies = new LinkedList<>();
     public Handler handler = new Handler(obstacles, player, enemies);
     public Bound bound = new Bound(player, this);
+    public MovingObstacle movingObstacle = new MovingObstacle(11 * tileSize, 5 * tileSize, 3, 4, 30 , tileSize , this , "Bird");
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -109,6 +110,7 @@ public class GamePanel extends JPanel implements Runnable {
             bound.update();
             player.tick();
             handler.tick();
+            movingObstacle.tick();
             for(Enemy enemy : enemies) {
                 enemy.tick();
             }
@@ -144,19 +146,15 @@ public class GamePanel extends JPanel implements Runnable {
             tileM.draw(g2);
             player.render(g2);
             handler.render(g2);
+            movingObstacle.render(g2);
             bound.render(g2);
             for (Enemy enemy : enemies) {
                 enemy.render(g2);
             }
-            if (player.getLivesLeft() <= 0) {
-                g2.setColor(Color.RED);
-                g2.setFont(new Font("MV Boli", Font.PLAIN, 45));
-                g2.drawString("You lost ", 300, 300);
-
-            }
             hud.draw(g2);
         }
-            g2.dispose();
+        g2.dispose();
+
     }
 
 }

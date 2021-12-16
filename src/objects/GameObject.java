@@ -21,7 +21,6 @@ public abstract class GameObject extends Rectangle {
     private double speedX;
     private double speedY;
     public static int counter;
-    public String direction;
     public boolean collision = false;
     //List of objects that we will need to tick and render
     public static LinkedList<GameObject> gameObjects = new LinkedList<>();
@@ -32,7 +31,6 @@ public abstract class GameObject extends Rectangle {
     public int spriteNumber = 0;
 
     public Rectangle area; //creating invisible rectangle to store data
-    public boolean collisionOn = false;
 
     //generic constructor , spawns game objects at x ,y coordinates , sets the speed in x,y axis 
     public GameObject(double worldX, double worldY, double speedX, double speedY, int width, int height) {

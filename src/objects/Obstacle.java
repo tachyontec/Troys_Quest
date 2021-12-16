@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 
 public class Obstacle extends GameObject {
 
-    BufferedImage[] movement;
+    public BufferedImage[] movement;
     private String name;
     Animation animation;
     GamePanel gamePanel;
@@ -48,9 +48,6 @@ public class Obstacle extends GameObject {
         this.name = name;
     }
 
-    public boolean isCollision() {
-        return collision;
-    }
 
     public void setCollision(boolean collision) {
         this.collision = collision;
