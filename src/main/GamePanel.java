@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import java.awt.*;
 import java.util.LinkedList;
 
+import static java.lang.Thread.sleep;
+
 public class GamePanel extends JPanel implements Runnable {
     //Screen settings
     public final int originalTileSize = 16; // size of tile
@@ -100,17 +102,16 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
     }
-
-    public int i = 0;
-
+    public int i =0;//mhn to peiraksete
     //in this method we update all GameObject objects
     public void update() {
         if (gameState == PLAY_STATE) {
             bound.update();
             player.tick();
             handler.tick();
-            enemies.get(0).tick();
-            enemies.get(1).tick();
+            for(Enemy enemy : enemies) {
+                enemy.tick();
+            }
             if (handler.checkcollision()) {
                 if (player.getLivesLeft() > 0) {
                     player.setLivesLeft(player.getLivesLeft() - 1);
@@ -147,9 +148,15 @@ public class GamePanel extends JPanel implements Runnable {
             for (Enemy enemy : enemies) {
                 enemy.render(g2);
             }
+            if (player.getLivesLeft() <= 0) {
+                g2.setColor(Color.RED);
+                g2.setFont(new Font("MV Boli", Font.PLAIN, 45));
+                g2.drawString("You lost ", 300, 300);
+
+            }
             hud.draw(g2);
         }
-        g2.dispose();
+            g2.dispose();
     }
 
 }

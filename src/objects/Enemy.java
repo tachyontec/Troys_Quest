@@ -6,6 +6,7 @@ import main.GamePanel;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.lang.Math;
 
 /*
 public class Enemy
@@ -71,7 +72,18 @@ public class Enemy extends GameObject {
     //determines what our enemy does at any given moment
     @Override
     public void tick() {
+        this.state = State.IDLE;
         idleAnimation.runAnimation();
+        if (Math.abs(this.getX()-this.gamePanel.player.getX()) <= gamePanel.tileSize/2 + gamePanel.tileSize/4) {//when player x coordinate in [minotaurX*3/4*tilesize,minotaurX]
+            this.state = State.ATTACK;
+            attackAnimation.runAnimation();
+        } else if(Math.abs(this.getX()-this.gamePanel.player.getX()) < 3 * gamePanel.tileSize //when player x coordinate in (minotaurX*3*tilesize,minotaurX*3/4*tilesize)
+                    && (Math.abs(this.getX()-this.gamePanel.player.getX()) > gamePanel.tileSize/2 + gamePanel.tileSize/4)) {
+            this.state = State.RUN;
+            walkingAnimation.runAnimation();
+            this.setX(this.getX() - 1 );
+
+        }
     }
 
 
