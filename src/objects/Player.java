@@ -22,7 +22,8 @@ public class Player extends GameObject {
     //they look when they move left,right and jump etc.
     //the three bufferedImage tables run,jump,idle contain the photos that are needed in animations
     public Sound soundEffect = new Sound();
-    public BufferedImage[] run;
+    public BufferedImage[] right;
+    public BufferedImage[] left;
     public BufferedImage[] jump;
     public BufferedImage[] idle;
     public BufferedImage[] death;
@@ -37,16 +38,17 @@ public class Player extends GameObject {
     private boolean collision;
 
     //creating for each animation needed for the player an object of Animation class
-    Animation walkinganimation;
+    Animation leftanimation;
+    Animation rightanimation;
     Animation jumpinganimation;
     Animation idleanimation;
     Animation deathanimation;
     Animation attackanimation;
 
     //creating enumarition for player state
-    public enum State {ALIVE, DEAD, JUMP, RUN, ATTACK}
+    public enum State {ALIVE, DEAD, JUMP, RIGHT, ATTACK,LEFT}
 
-    public State state = State.RUN;//state stores current player state
+    public State state = State.RIGHT;//state stores current player state
 
     public double deathTime = 0;//the time the player dies
 
@@ -67,7 +69,8 @@ public class Player extends GameObject {
         screenY = gamePanel.tileSize * 9;
         getPlayerImage();
         floor = this.getY();//sets the floor on which player is for every platform he stands on
-        walkinganimation = new Animation(run);
+        rightanimation = new Animation(right);
+        leftanimation = new Animation(left);
         jumpinganimation = new Animation(jump);
         idleanimation = new Animation(idle);
         deathanimation = new Animation(death);
@@ -78,7 +81,8 @@ public class Player extends GameObject {
     // in this method we are loading the images for each animation from resources folder res
     //this needs to be implemented in another class named Resources later
     public void getPlayerImage() {
-        run = Resource.getFilesInDir("res/Player/Walk");
+        right = Resource.getFilesInDir("res/Player/Walk/Right");
+        left = Resource.getFilesInDir("res/Player/Walk/Left");
         jump = Resource.getFilesInDir("res/Player/Jump");
         idle = Resource.getFilesInDir("res/Player/Idle");
         death = Resource.getFilesInDir("res/Player/Die");
@@ -126,13 +130,13 @@ public class Player extends GameObject {
         }
 
         if (keyHandler.leftPressed) {
-            state = State.RUN;
+            state = State.LEFT;
             this.setX(this.getX() - this.getSpeedx());//moves the player along the x axis to the left
-            walkinganimation.runAnimation();
+            leftanimation.runAnimation();
         } else if (keyHandler.rightPressed) {
-            state = State.RUN;
+            state = State.RIGHT;
             this.setX(this.getX() + getSpeedx());//moves the player along the x axis to the right
-            walkinganimation.runAnimation();
+            rightanimation.runAnimation();
         }
 
         if ((!keyHandler.upPressed) && (floor == getY())) {
@@ -158,7 +162,8 @@ public class Player extends GameObject {
             switch (state) {
                 case JUMP -> jumpinganimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
                 case DEAD -> deathanimation.drawAnimation(g, screenX, screenY, 72, 72);
-                case RUN -> walkinganimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
+                case LEFT -> leftanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
+                case RIGHT -> rightanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
                 case ALIVE -> idleanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
                 case ATTACK -> attackanimation.drawAnimation(g, screenX, screenY, 68, 68);
             }
@@ -167,7 +172,8 @@ public class Player extends GameObject {
                 switch (state) {
                     case JUMP -> jumpinganimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
                     case DEAD -> deathanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
-                    case RUN -> walkinganimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
+                    case LEFT -> leftanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
+                    case RIGHT -> rightanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
                     case ALIVE -> idleanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
                     case ATTACK -> attackanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
                 }
