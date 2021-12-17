@@ -202,7 +202,7 @@ public class Player extends GameObject {
                 try {
                     Thread.sleep((long) jumpingTime);
                     stalldx();//performing movement along the x axis gradually
-                    if(getY()<432) {
+                    if(getY() < 432) {
                         screenY += 15;
                         setY(getY() + 15);
                     }

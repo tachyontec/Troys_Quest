@@ -16,6 +16,7 @@ public class Menu {
     BufferedImage buttonImage;
     BufferedImage tombImage;
     BufferedImage wreath;
+    int dynamicTextX;
 
     public int choice = 0; //option selection default
     int defaultX = 200;
@@ -25,6 +26,7 @@ public class Menu {
     public Menu(GamePanel gamePanel) {
         this.gamepanel = gamePanel;
         this.menuFont = new Font("MV Boli", Font.PLAIN, 35);
+        this.dynamicTextX = gamePanel.tileSize * 16;
         try {
             this.helmetImage = ImageIO.read(new File("res/menu/MenuHelmet.png"));
             this.backgroundImage = ImageIO.read(new File("res/Backgrounds/backgroundMenu.png"));
@@ -33,6 +35,14 @@ public class Menu {
             this.wreath =  ImageIO.read(new File("res/menu/olive wreath.png"));
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    //update the moving text in main menu
+    public void textUpdate() {
+        dynamicTextX-= 2;
+        if(dynamicTextX == -2000){
+            dynamicTextX = gamepanel.tileSize * 16;
         }
     }
 
@@ -71,6 +81,11 @@ public class Menu {
         if (choice == 2) {
             g2.drawString(">", defaultX + 20, defaultY + 120);
         }
+
+        //Dynamic Text
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 30));
+        g2.setColor(Color.BLACK);
+        g2.drawString("Tip:Use arrow keys to move the player and navigate the Menu ,ENTER to select an option,P to pause the game" , dynamicTextX , 500) ;
     }
 
     //Graphic drawing of pause menu
