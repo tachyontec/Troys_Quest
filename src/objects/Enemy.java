@@ -22,7 +22,9 @@ public class Enemy extends GameObject {
     private String name;
     GamePanel gamePanel;
 
+    public int livesLeft;
     enum State {DEAD, RUN, ATTACK, IDLE}
+    //variables used to calculate enemies' death time
 
     State state;//state stores current player state
     //Animation instances for everything that our enemy does
@@ -37,6 +39,7 @@ public class Enemy extends GameObject {
         this.state = State.IDLE; //starting with Idle
         this.setAnimation();
         this.gamePanel = gamePanel;
+        this.livesLeft = 1;
     }
 
     public void setAnimation() {
@@ -56,6 +59,8 @@ public class Enemy extends GameObject {
     @Override
     public void render(Graphics2D g) {
         super.render(g);
+        g.setColor(Color.BLUE);
+        g.drawRect((int)this.worldX,(int) this.worldY, this.width, this.height);
         double screenX = this.getX() - gamePanel.player.getX() + gamePanel.player.screenX; //centers the player in relation to the screen in x axis,gp.player.screenX is used to offset the difference
         double screenY = this.getY() - gamePanel.player.getY() + gamePanel.player.screenY; //centers the player in relation to the screen in y axis,gp.player.screenY is used to offset the difference
 
@@ -69,22 +74,28 @@ public class Enemy extends GameObject {
         }
     }
 
+
     //determines what our enemy does at any given moment
     @Override
     public void tick() {
-        this.state = State.IDLE;
-        idleAnimation.runAnimation();
-        if (Math.abs(this.getX()-this.gamePanel.player.getX()) <= gamePanel.tileSize/2 + gamePanel.tileSize/4) {//when player x coordinate in [minotaurX*3/4*tilesize,minotaurX]
+        //System.out.println(this.enemyDeathTime);
+         if(this.livesLeft <= 0) {
+            this.state = State.DEAD;
+            deathAnimation.runAnimation();
+        }else if (Math.abs(this.getX()-this.gamePanel.player.getX()) <= gamePanel.tileSize/2 + gamePanel.tileSize/4) {//when player x coordinate in [minotaurX*3/4*tilesize,minotaurX]
             this.state = State.ATTACK;
             attackAnimation.runAnimation();
         } else if(Math.abs(this.getX()-this.gamePanel.player.getX()) < 3 * gamePanel.tileSize //when player x coordinate in (minotaurX*3*tilesize,minotaurX*3/4*tilesize)
                     && (Math.abs(this.getX()-this.gamePanel.player.getX()) > gamePanel.tileSize/2 + gamePanel.tileSize/4)) {
             this.state = State.RUN;
             walkingAnimation.runAnimation();
-            this.setX(this.getX() - 1 );
-
+            this.setX(this.getX() - 1);
+        } else {
+            this.state = State.IDLE;
+            idleAnimation.runAnimation();
         }
     }
+
 
 
     public String getName() {

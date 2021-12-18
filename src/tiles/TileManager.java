@@ -69,7 +69,7 @@ public class TileManager {
                 String line = br.readLine(); //read each line separately and create a String variable for each one
                 while (col < gp.maxWorldCol) { // loop through all columns of the current line
 
-                    String[] numbers = line.split(" "); // make a 1D array witch contains all the numbers of the specific line
+                    String[] numbers = line.split(" "); // make a 1D array witch contains all the numbers of the specific line REGEX PAPAPAPAPAP
 
                     int number = Integer.parseInt(numbers[col]); //detaches the element numbers[col] from the array and saves it in number variable
 

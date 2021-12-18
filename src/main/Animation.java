@@ -17,7 +17,7 @@ public class Animation {
     public Animation(BufferedImage... args) {
         images = new BufferedImage[args.length];
         //The speed will depend on how many images we have
-        this.speed =   60 / args.length + 1;
+        this.speed =   60 / args.length - 10;
         //Copy args array into images:
         System.arraycopy(args, 0, images, 0, args.length);
         this.frames = args.length;

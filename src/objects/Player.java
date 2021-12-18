@@ -37,6 +37,8 @@ public class Player extends GameObject {
     public boolean deathSoundIsDone;
     private boolean collision;
 
+    public Rectangle attackHitbox;
+    public boolean isAttackCollision ;
     //creating for each animation needed for the player an object of Animation class
     Animation leftanimation;
     Animation rightanimation;
@@ -62,12 +64,16 @@ public class Player extends GameObject {
 
     //Constructor using fields and initializing the animations objects
     public Player(double worldX, double worldY, double speedx, double speedy, KeyHandler keyHandler, GamePanel gamePanel) {
+
         super(worldX, worldY, speedx, speedy, 30, gamePanel.tileSize);
         this.keyHandler = keyHandler;
         this.gamePanel = gamePanel;
+
         screenX = gamePanel.tileSize * 7;
         screenY = gamePanel.tileSize * 9;
+
         getPlayerImage();
+
         floor = this.getY();//sets the floor on which player is for every platform he stands on
         rightanimation = new Animation(right);
         leftanimation = new Animation(left);
@@ -75,7 +81,12 @@ public class Player extends GameObject {
         idleanimation = new Animation(idle);
         deathanimation = new Animation(death);
         attackanimation = new Animation(attack);
+
         this.collision = true;
+
+        this.attackHitbox = new Rectangle( (int) (this.worldX + gamePanel.tileSize) ,(int) (this.worldY), gamePanel.tileSize / 4 , gamePanel.tileSize);
+        this.isAttackCollision = false ;
+
     }
 
     // in this method we are loading the images for each animation from resources folder res
@@ -87,6 +98,7 @@ public class Player extends GameObject {
         idle = Resource.getFilesInDir("res/Player/Idle");
         death = Resource.getFilesInDir("res/Player/Die");
         attack = Resource.getFilesInDir("res/Player/Attack");
+
     }
 
     //moves the player by altering the x,y coordinates with keyboard arrows
@@ -151,6 +163,9 @@ public class Player extends GameObject {
                 deathSoundIsDone = true;// so that we stop the death sound
             }
         }
+        if(keyHandler.attackPressed) {
+            isAttackCollision = true;
+        }
     }
 
     // the direction variable indicates which images are to be drawn for each animation of the player
@@ -168,7 +183,7 @@ public class Player extends GameObject {
                 case ATTACK -> attackanimation.drawAnimation(g, screenX, screenY, 68, 68);
             }
         } else {
-            if ((int) (this.gamePanel.handler.collisionTimer * 50) % 2 == 0) {
+            if ((int) (this.gamePanel.handler.timer * 50) % 2 == 0) {
                 switch (state) {
                     case JUMP -> jumpinganimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
                     case DEAD -> deathanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);

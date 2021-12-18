@@ -9,8 +9,9 @@ public class Handler {
     LinkedList<Enemy> enemies;
     Player player;
     DecimalFormat decFormat = new DecimalFormat("#0.00");
-    double collisionTimer;
+    double timer;
     double collisionTime = 0;
+    double enemyDeathTime = 0;
 
     public Handler(LinkedList<GameObject> obstacleLinkedList, Player player, LinkedList<Enemy> enemies) {
         this.obstacleLinkedList = obstacleLinkedList;
@@ -42,32 +43,50 @@ public class Handler {
     Checks for collision of the player with any obstacles
     if a player collides,he is invulnerable for a couple of seconds
     */
-    public boolean checkcollision() {
-        decFormat.format(collisionTimer);
-        collisionTimer += (double) 1 / 60;
+    public boolean checkPlayerCollision() {
+
+        decFormat.format(timer);
+        timer += (double) 1 / 60;
+
         boolean b = false;
-        if (collisionTimer - collisionTime > 2.00) {
+
+        if ( timer - collisionTime > 2.00) {
             player.setCollision(true);
         }
+
         for (GameObject object : obstacleLinkedList) {
             if (object.intersects(player) && player.isCollision()) {
                 b = true;
                 player.setCollision(false);
-                collisionTime = collisionTimer;
+                collisionTime = timer;
                 break;
             }
+
             if (object.intersects(player))
                 player.setX(player.getX() - 20);//so as not to go "into" obstacles
+
         }
+
         for (Enemy enemy : enemies) {
             if (enemy.intersects(player) && player.isCollision()) {
                 b = true;
                 player.setCollision(false);
-                collisionTime = collisionTimer;
+                collisionTime = timer;
                 break;
             }
         }
         return b;
+    }
+    public void checkEnemyCollision() {
+        for(Enemy enemy : enemies) {
+            if (enemy.intersects(player.attackHitbox) && player.isAttackCollision && enemy.livesLeft > 0) {
+                enemy.livesLeft = 0 ;
+                this.enemyDeathTime = this.timer;
+            }
+            if(this.timer - this.enemyDeathTime > 1 && enemy.livesLeft == 0) {
+                enemies.remove(enemy);
+            }
+        }
     }
 
 
