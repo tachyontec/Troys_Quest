@@ -28,6 +28,8 @@ public class ObstacleSetter {
             startingpoint += 5 * gamePanel.tileSize; // starting point changes each time new obstacle will be created
         }*/
         //gamePanel.enemies.add(new Enemy(9 * gamePanel.tileSize, 9 * gamePanel.tileSize, 1, 0, gamePanel.tileSize, gamePanel.tileSize, "Minotaur", gamePanel));
+        gamePanel.obstacles.add(new MovingObstacle(20*gamePanel.tileSize,gamePanel.floor,3,0,gamePanel.tileSize,gamePanel.tileSize,"Arrow",gamePanel));
+        gamePanel.obstacles.add(new MovingObstacle(11 * gamePanel.tileSize, 5 * gamePanel.tileSize, 3, 4, 30 , gamePanel.tileSize , "Bird",gamePanel));
         gamePanel.enemies.add(new Enemy(19 * gamePanel.tileSize, 9 * gamePanel.tileSize, 1, 0, gamePanel.tileSize, gamePanel.tileSize, "Minotaur", gamePanel));
     }
 

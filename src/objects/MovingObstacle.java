@@ -20,7 +20,7 @@ public class MovingObstacle extends GameObject {
     //Buffered Images are the ones that contain our main character
     //they look when they move left,right and jump etc.
 
-    public MovingObstacle(double worldX, double worldY, double speedx, double speedy, int width, int height, GamePanel gamePanel, String name) {
+    public MovingObstacle(double worldX, double worldY, double speedx, double speedy, int width, int height, String name,GamePanel gamePanel) {
         super(worldX, worldY, speedx, speedy, width, height);
         this.gamePanel = gamePanel;
         this.direction = Direction.LEFT;
@@ -41,9 +41,10 @@ public class MovingObstacle extends GameObject {
 
     public void getMovingObstacleImage() {
         leftHandSide = Resource.getFilesInDir("res/objects/"+ name +"/Left" );
-        rightHandSide = Resource.getFilesInDir("res/objects/"+ name +"/Right" );
-        rightanimation = new Animation(rightHandSide);
+        //rightHandSide = Resource.getFilesInDir("res/objects/"+ name +"/Right" );
+        //rightanimation = new Animation(rightHandSide);
         leftAnimation = new Animation(leftHandSide);
+        rightanimation = leftAnimation.reverseAnimation();
     }
 
     @Override
@@ -67,7 +68,6 @@ public class MovingObstacle extends GameObject {
         } else if(Bound.end.intersects(this)) {
             direction = Direction.LEFT;
         }
-
     }
 }
 

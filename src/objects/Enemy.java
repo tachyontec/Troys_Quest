@@ -8,14 +8,14 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.lang.Math;
 
-/*
-public class Enemy
-creates enemies for our player to fight
-most enemies have running , dying , idle and attacking animations
-The constructor creates the enemy instance and sets them on the map at a fixed location
-setAnimation() creates the animation instances and gets the images for the animation
-render() sets the player at a fixed location constantly and renders the animations
-tick() dictates what our enemy does at any given moment
+/**
+ * public class Enemy
+ * creates enemies for our player to fight
+ * most enemies have running , dying , idle and attacking animations
+ * The constructor creates the enemy instance and sets them on the map at a fixed location
+ * setAnimation() creates the animation instances and gets the images for the animation
+ * render() sets the player at a fixed location constantly and renders the animations
+ * tick() dictates what our enemy does at any given moment
  */
 public class Enemy extends GameObject {
 

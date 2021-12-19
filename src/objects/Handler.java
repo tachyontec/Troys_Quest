@@ -50,7 +50,7 @@ public class Handler {
 
         boolean b = false;
 
-        if ( timer - collisionTime > 2.00) {
+        if (timer - collisionTime > 2.00) {
             player.setCollision(true);
         }
 
@@ -77,13 +77,14 @@ public class Handler {
         }
         return b;
     }
+
     public void checkEnemyCollision() {
-        for(Enemy enemy : enemies) {
+        for (Enemy enemy : enemies) {
             if (enemy.intersects(player.attackHitbox) && player.isAttackCollision && enemy.livesLeft > 0) {
-                enemy.livesLeft = 0 ;
+                enemy.livesLeft = 0;
                 this.enemyDeathTime = this.timer;
             }
-            if(this.timer - this.enemyDeathTime > 1 && enemy.livesLeft == 0) {
+            if (this.timer - this.enemyDeathTime > 1 && enemy.livesLeft == 0) {
                 enemies.remove(enemy);
             }
         }
