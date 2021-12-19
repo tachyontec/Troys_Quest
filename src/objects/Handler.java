@@ -2,18 +2,19 @@ package objects;
 
 import java.awt.*;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Handler {
     LinkedList<GameObject> obstacleLinkedList;
-    LinkedList<Enemy> enemies;
+    ArrayList<Enemy> enemies;
     Player player;
     DecimalFormat decFormat = new DecimalFormat("#0.00");
     double timer;
     double collisionTime = 0;
     double enemyDeathTime = 0;
 
-    public Handler(LinkedList<GameObject> obstacleLinkedList, Player player, LinkedList<Enemy> enemies) {
+    public Handler(LinkedList<GameObject> obstacleLinkedList, Player player, ArrayList<Enemy> enemies) {
         this.obstacleLinkedList = obstacleLinkedList;
         this.player = player;
         this.enemies = enemies;
@@ -50,7 +51,7 @@ public class Handler {
 
         boolean b = false;
 
-        if ( timer - collisionTime > 2.00) {
+        if (timer - collisionTime > 2.00) {
             player.setCollision(true);
         }
 
@@ -61,7 +62,6 @@ public class Handler {
                 collisionTime = timer;
                 break;
             }
-
             if (object.intersects(player))
                 player.setX(player.getX() - 20);//so as not to go "into" obstacles
 
@@ -72,6 +72,7 @@ public class Handler {
                 b = true;
                 player.setCollision(false);
                 collisionTime = timer;
+                player.setX(player.getX() - 20);//so as not to go "into" enemies
                 break;
             }
         }
@@ -85,6 +86,7 @@ public class Handler {
             }
             if(this.timer - this.enemyDeathTime > 1 && enemy.livesLeft == 0) {
                 enemies.remove(enemy);
+                break;//so that when an enemy is removes the for loop doesn't crash
             }
         }
     }

@@ -37,8 +37,10 @@ public class Player extends GameObject {
     public boolean deathSoundIsDone;
     private boolean collision;
 
+    //a rectangle that dictates where the player attacks
     public Rectangle attackHitbox;
-    public boolean isAttackCollision ;
+    public boolean isAttackCollision;//and a boolean value to say if you are attacking or not
+
     //creating for each animation needed for the player an object of Animation class
     Animation leftanimation;
     Animation rightanimation;
@@ -48,7 +50,7 @@ public class Player extends GameObject {
     Animation attackanimation;
 
     //creating enumarition for player state
-    public enum State {ALIVE, DEAD, JUMP, RIGHT, ATTACK,LEFT}
+    public enum State {ALIVE, DEAD, JUMP, RIGHT, ATTACK, LEFT}
 
     public State state = State.RIGHT;//state stores current player state
 
@@ -75,16 +77,17 @@ public class Player extends GameObject {
         getPlayerImage();
 
         floor = this.getY();//sets the floor on which player is for every platform he stands on
-        rightanimation = new Animation(right);
-        leftanimation = new Animation(left);
-        jumpinganimation = new Animation(jump);
-        idleanimation = new Animation(idle);
-        deathanimation = new Animation(death);
-        attackanimation = new Animation(attack);
+        rightanimation = new Animation(0 , right);
+        leftanimation = new Animation(0 , left);
+        jumpinganimation = new Animation(0 , jump);
+        idleanimation = new Animation(0 , idle);
+        deathanimation = new Animation(0 , death);
+        attackanimation = new Animation(5 , attack);
 
         this.collision = true;
 
-        this.attackHitbox = new Rectangle( (int) (this.worldX + gamePanel.tileSize) ,(int) (this.worldY), gamePanel.tileSize / 4 , gamePanel.tileSize);
+        this.attackHitbox = new Rectangle( (int) (this.worldX + gamePanel.tileSize)//attack hitbox's y same as the player's because they need to  be on the same height
+                ,(int) (this.worldY), gamePanel.tileSize / 4 , gamePanel.tileSize);//attack hitbox's coordinates x in front of the player by a tile so that the enemy hits in front of him
         this.isAttackCollision = false ;
 
     }
@@ -163,8 +166,10 @@ public class Player extends GameObject {
                 deathSoundIsDone = true;// so that we stop the death sound
             }
         }
-        if(keyHandler.attackPressed) {
+        if(keyHandler.attackPressed) { // when space is pressed , isAttackCollision indicates that enemies can collide with the sword's hitbox
             isAttackCollision = true;
+        } else {
+            isAttackCollision = false;
         }
     }
 
@@ -172,25 +177,27 @@ public class Player extends GameObject {
     @Override
     public void render(Graphics2D g) {
         super.render(g);
+        g.setColor(Color.blue);
+        g.drawRect(this.attackHitbox.x , this.attackHitbox.y , this.attackHitbox.width , this.attackHitbox.height);
         //this if is in place so that when the player is hit , he is invulnerable and his body is shown blinking to indicate that state
         if (this.isCollision() || this.state == State.DEAD) {//when a player is hit collision is turned off for some seconds so this.isCollision comes out false
             switch (state) {
                 case JUMP -> jumpinganimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
-                case DEAD -> deathanimation.drawAnimation(g, screenX, screenY, 72, 72);
+                case DEAD -> deathanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize + 24, gamePanel.tileSize + 24);
                 case LEFT -> leftanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
                 case RIGHT -> rightanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
                 case ALIVE -> idleanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
-                case ATTACK -> attackanimation.drawAnimation(g, screenX, screenY, 68, 68);
+                case ATTACK -> attackanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize + 50, gamePanel.tileSize );
             }
         } else {
             if ((int) (this.gamePanel.handler.timer * 50) % 2 == 0) {
                 switch (state) {
                     case JUMP -> jumpinganimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
-                    case DEAD -> deathanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
+                    case DEAD -> deathanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize + 24, gamePanel.tileSize + 24);
                     case LEFT -> leftanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
                     case RIGHT -> rightanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
                     case ALIVE -> idleanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
-                    case ATTACK -> attackanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize);
+                    case ATTACK -> attackanimation.drawAnimation(g, screenX, screenY, gamePanel.tileSize + 50, gamePanel.tileSize);
                 }
             }
         }

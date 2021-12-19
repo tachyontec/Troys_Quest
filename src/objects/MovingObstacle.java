@@ -42,8 +42,8 @@ public class MovingObstacle extends GameObject {
     public void getMovingObstacleImage() {
         leftHandSide = Resource.getFilesInDir("res/objects/"+ name +"/Left" );
         rightHandSide = Resource.getFilesInDir("res/objects/"+ name +"/Right" );
-        rightanimation = new Animation(rightHandSide);
-        leftAnimation = new Animation(leftHandSide);
+        rightanimation = new Animation(0 , rightHandSide);
+        leftAnimation = new Animation(0 , leftHandSide);
     }
 
     @Override

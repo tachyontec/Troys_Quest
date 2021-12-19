@@ -19,7 +19,7 @@ public class Obstacle extends GameObject {
         this.name = name;
         //Image is taken automatically from the folder with same name with the object
         this.movement = Resource.getFilesInDir("res/objects/" + name);
-        animation = new Animation(movement);
+        animation = new Animation(0 , movement);
         this.gamePanel = gamePanel;
     }
 

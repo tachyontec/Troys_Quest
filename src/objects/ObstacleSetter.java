@@ -27,8 +27,15 @@ public class ObstacleSetter {
             gamePanel.obstacles.add(new Obstacle(spawnX, 9 * gamePanel.tileSize, 0, 0, 30, gamePanel.tileSize, "spikesRoller", gamePanel));
             startingpoint += 5 * gamePanel.tileSize; // starting point changes each time new obstacle will be created
         }*/
-        //gamePanel.enemies.add(new Enemy(9 * gamePanel.tileSize, 9 * gamePanel.tileSize, 1, 0, gamePanel.tileSize, gamePanel.tileSize, "Minotaur", gamePanel));
-        gamePanel.enemies.add(new Enemy(19 * gamePanel.tileSize, 9 * gamePanel.tileSize, 1, 0, gamePanel.tileSize, gamePanel.tileSize, "Minotaur", gamePanel));
+        Enemy enemy1 = new Enemy(18 * gamePanel.tileSize, 8.6 * gamePanel.tileSize, 1, 0, gamePanel.tileSize , gamePanel.tileSize  , "Minotaur", gamePanel);
+        Enemy enemy2 = new Enemy(40 * gamePanel.tileSize, 8.6 * gamePanel.tileSize, 1, 0, gamePanel.tileSize , gamePanel.tileSize  , "Minotaur", gamePanel);
+        Enemy enemy3 = new Enemy(69 * gamePanel.tileSize, 8.6 * gamePanel.tileSize, 1, 0, gamePanel.tileSize , gamePanel.tileSize  , "Minotaur", gamePanel);
+        enemy1.y = (int) enemy1.worldY + gamePanel.tileSize / 2; // so that the enemy touches the ground , because minotaur png's are not the resolution we need
+        enemy2.y = (int) enemy2.worldY + gamePanel.tileSize / 2; // so that the enemy touches the ground , because minotaur png's are not the resolution we need
+        enemy3.y = (int) enemy3.worldY + gamePanel.tileSize / 2; // so that the enemy touches the ground , because minotaur png's are not the resolution we need
+        gamePanel.enemies.add(enemy1);
+        gamePanel.enemies.add(enemy2);
+        gamePanel.enemies.add(enemy3);
     }
 
 }
