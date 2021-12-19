@@ -43,7 +43,7 @@ public class MovingObstacle extends GameObject {
         leftHandSide = Resource.getFilesInDir("res/objects/"+ name +"/Left" );
         //rightHandSide = Resource.getFilesInDir("res/objects/"+ name +"/Right" );
         //rightanimation = new Animation(rightHandSide);
-        leftAnimation = new Animation(leftHandSide);
+        leftAnimation = new Animation(0,leftHandSide);
         rightanimation = leftAnimation.reverseAnimation();
     }
 

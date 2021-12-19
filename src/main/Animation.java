@@ -48,7 +48,7 @@ public class Animation {
 
             affineTransformOp.filter(bimg, reverse[i]);
         }
-        return new Animation(reverse);
+        return new Animation(0,reverse);
     }
 
     //calling this method makes the animation run in backend
