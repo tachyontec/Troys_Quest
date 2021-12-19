@@ -68,6 +68,7 @@ public class KeyHandler implements KeyListener {
                             gp.player.setX(7 * gp.tileSize);
                             gp.player.setY(9 * gp.tileSize);
                             gp.player.setLivesLeft(3);
+                            GamePanel.i = 0;//mhn peirazete
                             gp.hud.levelTimer = 0;
                             //End of level reset
                         }

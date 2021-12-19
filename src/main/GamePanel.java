@@ -104,7 +104,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
     }
-    public int i =0;//mhn to peiraksete
+    public  static int i = 0;//mhn to peiraksete
     //in this method we update all GameObject objects
     public void update() {
         if (gameState == PLAY_STATE) {
