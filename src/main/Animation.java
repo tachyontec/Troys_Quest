@@ -16,10 +16,10 @@ public class Animation {
 
     //constructor that gets a list or a table of BufferedImage
     //its initializes the images table
-    public Animation(BufferedImage... args) {
+    public Animation(int speed , BufferedImage... args ) {
         images = new BufferedImage[args.length];
         //The speed will depend on how many images we have
-        this.speed =   60 / args.length - 10;
+        this.speed = 60 / args.length - speed ; // bigger speed -> slower animation and vice versa
         //Copy args array into images:
         System.arraycopy(args, 0, images, 0, args.length);
         this.frames = args.length;

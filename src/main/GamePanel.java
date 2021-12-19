@@ -6,6 +6,7 @@ import tiles.*;
 
 import javax.swing.JPanel;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import static java.lang.Thread.sleep;
@@ -47,13 +48,13 @@ public class GamePanel extends JPanel implements Runnable {
     public HUD hud = new HUD(this);
     public Menu menu = new Menu(this);
     public LinkedList<GameObject> obstacles = new LinkedList<>();
-    public LinkedList<Enemy> enemies = new LinkedList<>();
+    public ArrayList<Enemy> enemies = new ArrayList<>();
     public Handler handler = new Handler(obstacles, player, enemies);
     public Bound bound = new Bound(player, this);
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
-        this.setBackground(Color.BLACK);
+        this.setBackground(Color.CYAN);
         this.setDoubleBuffered(true);
         this.addKeyListener(keyHandler);
         this.setFocusable(true);

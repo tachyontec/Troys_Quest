@@ -30,6 +30,7 @@ public class Enemy extends GameObject {
     //Animation instances for everything that our enemy does
     Animation walkingAnimation, idleAnimation, deathAnimation, attackAnimation;
 
+
     //the three bufferedImage tables run,jump,idle contain the photos that are needed in animations
     public BufferedImage[] run, idle, death, attack;
 
@@ -40,6 +41,7 @@ public class Enemy extends GameObject {
         this.setAnimation();
         this.gamePanel = gamePanel;
         this.livesLeft = 1;
+
     }
 
     public void setAnimation() {
@@ -49,18 +51,16 @@ public class Enemy extends GameObject {
         idle = Resource.getFilesInDir("res/Enemies/" + this.name + "/Idle");
         death = Resource.getFilesInDir("res/Enemies/" + this.name + "/Death");
         //Create the animations
-        walkingAnimation = new Animation(run);
-        idleAnimation = new Animation(idle);
-        attackAnimation = new Animation(attack);
-        deathAnimation = new Animation(death);
+        walkingAnimation = new Animation(0 , run);
+        idleAnimation = new Animation(-3 , idle);
+        attackAnimation = new Animation(3 , attack);
+        deathAnimation = new Animation(-3 , death);
     }
 
     //renders the animations of the enemy
     @Override
     public void render(Graphics2D g) {
         super.render(g);
-        g.setColor(Color.BLUE);
-        g.drawRect((int)this.worldX,(int) this.worldY, this.width, this.height);
         double screenX = this.getX() - gamePanel.player.getX() + gamePanel.player.screenX; //centers the player in relation to the screen in x axis,gp.player.screenX is used to offset the difference
         double screenY = this.getY() - gamePanel.player.getY() + gamePanel.player.screenY; //centers the player in relation to the screen in y axis,gp.player.screenY is used to offset the difference
 
@@ -69,8 +69,7 @@ public class Enemy extends GameObject {
             case RUN -> walkingAnimation.drawAnimation(g, (int) screenX, (int) screenY, 2 * gamePanel.tileSize, 2 * gamePanel.tileSize);
             case IDLE -> idleAnimation.drawAnimation(g, (int) screenX, (int) screenY, 2 * gamePanel.tileSize, 2 * gamePanel.tileSize);
             case ATTACK -> attackAnimation.drawAnimation(g, (int) screenX, (int) screenY, 2 *
-                    gamePanel.tileSize, 2 * gamePanel.tileSize
-            );
+                    gamePanel.tileSize, 2 * gamePanel.tileSize);
         }
     }
 
