@@ -147,10 +147,14 @@ public class Player extends GameObject {
         if (keyHandler.leftPressed) {
             state = State.LEFT;
             this.setX(this.getX() - this.getSpeedx());//moves the player along the x axis to the left
+            attackHitbox.x = (int) (this.getX() + gamePanel.tileSize);//moves the attack hitbox to follow players' hitbox
+            attackHitbox.y = (int) this.getY();//moves the attack hitbox to follow players' hitbox
             leftanimation.runAnimation();
         } else if (keyHandler.rightPressed) {
             state = State.RIGHT;
             this.setX(this.getX() + getSpeedx());//moves the player along the x axis to the right
+            attackHitbox.x = (int) (this.getX() + gamePanel.tileSize);//moves the attack hitbox to follow players' hitbox
+            attackHitbox.y = (int) this.getY();//moves the attack hitbox to follow players' hitbox
             rightanimation.runAnimation();
         }
 
@@ -213,7 +217,7 @@ public class Player extends GameObject {
             y = (int) getY();
         }
 
-        /*int rightDiff = gamePanel.screenWidth - screenX;
+        int rightDiff = gamePanel.screenWidth - screenX;
         if (rightDiff > gamePanel.worldWidth - getX()) {
             screenX = gamePanel.screenWidth - (gamePanel.worldWidth - (int) getX()); //and we subtract the difference from the current tile from the edge of the screen
         }
@@ -221,7 +225,7 @@ public class Player extends GameObject {
         int bottomDiff = gamePanel.screenHeight - (gamePanel.worldHeight - (int) getY());
         if (bottomDiff > gamePanel.worldHeight - getY()) {
             screenY = gamePanel.screenHeight - (gamePanel.worldHeight - (int) getY()); //and we subtract the difference from the current tile from the bottom edge of the screen
-        }*/
+        }
     }
 
     public class thread implements Runnable {
