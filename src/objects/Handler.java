@@ -78,13 +78,14 @@ public class Handler {
         }
         return b;
     }
+
     public void checkEnemyCollision() {
-        for(Enemy enemy : enemies) {
+        for (Enemy enemy : enemies) {
             if (enemy.intersects(player.attackHitbox) && player.isAttackCollision && enemy.livesLeft > 0) {
-                enemy.livesLeft = 0 ;
+                enemy.livesLeft = 0;
                 this.enemyDeathTime = this.timer;
             }
-            if(this.timer - this.enemyDeathTime > 1 && enemy.livesLeft == 0) {
+            if (this.timer - this.enemyDeathTime > 1 && enemy.livesLeft == 0) {
                 enemies.remove(enemy);
                 break;//so that when an enemy is removes the for loop doesn't crash
             }

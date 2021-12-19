@@ -16,6 +16,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int originalTileSize = 16; // size of tile
     public final int scale = 3; // scaling size that will scale the tiles
     public final int tileSize = originalTileSize * scale; //tile size after scaling 48
+    public final int floor = 9 * tileSize; //Here is the floor level
     public final int maxScreenCol = 16; // how many tiles will be horizontaly
     public final int maxScreenRow = 12; //how many tiles will be vertically
     public final int maxWorldCol = 83;
@@ -42,7 +43,7 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameThread;
 
 
-    public Player player = new Player(7 * tileSize, 9 * tileSize, 3, 4, keyHandler, this);
+    public Player player = new Player(7 * tileSize, floor, 3, 4, keyHandler, this);
     public ObstacleSetter obstacleSetter = new ObstacleSetter(this);
     public HUD hud = new HUD(this);
     public Menu menu = new Menu(this);
@@ -50,7 +51,6 @@ public class GamePanel extends JPanel implements Runnable {
     public ArrayList<Enemy> enemies = new ArrayList<>();
     public Handler handler = new Handler(obstacles, player, enemies);
     public Bound bound = new Bound(player, this);
-    public MovingObstacle movingObstacle = new MovingObstacle(11 * tileSize, 5 * tileSize, 3, 4, 30 , tileSize , this , "Bird");
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -111,7 +111,6 @@ public class GamePanel extends JPanel implements Runnable {
             bound.update();
             player.tick();
             handler.tick();
-            movingObstacle.tick();
             handler.checkEnemyCollision();
             for(Enemy enemy : enemies) {
                 enemy.tick();
@@ -149,7 +148,6 @@ public class GamePanel extends JPanel implements Runnable {
             tileM.draw(g2);
             player.render(g2);
             handler.render(g2);
-            movingObstacle.render(g2);
             bound.render(g2);
             for (Enemy enemy : enemies) {
                 enemy.render(g2);
