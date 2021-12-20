@@ -49,8 +49,12 @@ public class GamePanel extends JPanel implements Runnable {
     public Menu menu = new Menu(this);
     public LinkedList<GameObject> obstacles = new LinkedList<>();
     public ArrayList<Enemy> enemies = new ArrayList<>();
-    public Handler handler = new Handler(obstacles, player, enemies);
+    public LinkedList<Coin> coinlist = new LinkedList<>(); // list that contains all the coins in game
+    public Handler handler = new Handler(obstacles, player, enemies, coinlist);
     public Bound bound = new Bound(player, this);
+    //public Coin coin = new Coin(8 * tileSize, floor, 0, 0,tileSize/2,tileSize/2,this);
+    //public Coin coin2 = new Coin(9 * tileSize, floor, 0, 0,tileSize/2,tileSize/2,this);
+
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -112,9 +116,6 @@ public class GamePanel extends JPanel implements Runnable {
             player.tick();
             handler.tick();
             handler.checkEnemyCollision();
-            for(Enemy enemy : enemies) {
-                enemy.tick();
-            }
             if (handler.checkPlayerCollision()) {
                 if (player.getLivesLeft() > 0) {
                     player.setLivesLeft(player.getLivesLeft() - 1);
@@ -164,7 +165,3 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
 }
-
-
-
-

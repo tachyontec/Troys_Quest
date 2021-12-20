@@ -13,20 +13,27 @@ public class ObstacleSetter {
     }
 
     //floor is Y=8
-    //initializes obstacles in obstacles array with their image icon and x ,y position relative to the map (worldX , worldY)
+    //initializes obstacles in obstacles array with their image icon
+    // x ,y position relative to the map (worldX , worldY)
     public void setObject() {
         Random rand = new Random();
-        //We divide the map witch is 16x69 tiles in areas along the x axis containing 5 tiles each like so 1._2._3._4._5._.
+        //We divide the map witch is 16x69 tiles in areas along
+        // the x axis containing 5 tiles each like so 1._2._3._4._5._.
         //Each area has 3 tiles on witch obstacles are spawnable and 2 tiles that are void of objects.
-        // !Array ,containing obstacle .png names for rand to pick randomly from , to be implemented as new obstacles get added!
+        // !Array ,containing obstacle .png names for rand to pick randomly from ,
+        // to be implemented as new obstacles get added!
         int startingpoint = 9 * gamePanel.tileSize; //starting point in map is where the player spawns
 
-        /*for (int i = 1; i <= 13; i++) {
+        for (int i = 1; i <= 13; i++) {
             int randomvariable = rand.nextInt(3);// a random number that will help to spawn player randomly
             int spawnX = startingpoint + randomvariable * gamePanel.tileSize; //the X coordinate that obstacle will spawn
-            gamePanel.obstacles.add(new Obstacle(spawnX, 9 * gamePanel.tileSize, 0, 0, 30, gamePanel.tileSize, "spikesRoller", gamePanel));
+            gamePanel.obstacles.add(new Obstacle(spawnX, 9 * gamePanel.tileSize, 0,
+                    0, 30, gamePanel.tileSize, "spikesRoller", gamePanel));
+            //setting up the list of the coins relative to the spawn of the obstacles
+            gamePanel.coinlist.add( new Coin(spawnX + 2 * gamePanel.tileSize,
+                    gamePanel.floor,0,0,gamePanel.tileSize / 2, gamePanel.tileSize / 2,gamePanel));// creating
             startingpoint += 5 * gamePanel.tileSize; // starting point changes each time new obstacle will be created
-        }*/
+        }
         Enemy enemy1 = new Enemy(18 * gamePanel.tileSize, 8.6 * gamePanel.tileSize, 1, 0, gamePanel.tileSize , gamePanel.tileSize  , "Minotaur", gamePanel);
         Enemy enemy2 = new Enemy(40 * gamePanel.tileSize, 8.6 * gamePanel.tileSize, 1, 0, gamePanel.tileSize , gamePanel.tileSize  , "Minotaur", gamePanel);
         Enemy enemy3 = new Enemy(69 * gamePanel.tileSize, 8.6 * gamePanel.tileSize, 1, 0, gamePanel.tileSize , gamePanel.tileSize  , "Minotaur", gamePanel);
