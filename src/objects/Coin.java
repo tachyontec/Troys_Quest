@@ -23,6 +23,7 @@ public class Coin extends GameObject {
     public State state;
     Animation idleanimation;
     BufferedImage [] idleimages;
+    public static int coinCollectionCounter; // counts the coins that have been collected
 
     public Coin(double worldX, double worldY,
                 double speedX, double speedY, int width, int height,GamePanel gamePanel ) {
@@ -64,6 +65,7 @@ public class Coin extends GameObject {
         if (gamePanel.player.intersects(this)) {
             state = State.PICKED;
             result = true;
+            coinCollectionCounter++;
         }
         return result;
     }

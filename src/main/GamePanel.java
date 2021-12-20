@@ -150,15 +150,6 @@ public class GamePanel extends JPanel implements Runnable {
             player.render(g2);
             handler.render(g2);
             bound.render(g2);
-            for (Enemy enemy : enemies) {
-                enemy.render(g2);
-            }
-            if (player.getLivesLeft() <= 0) {
-                g2.setColor(Color.RED);
-                g2.setFont(new Font("MV Boli", Font.PLAIN, 45));
-                g2.drawString("You lost ", 300, 300);
-
-            }
             hud.draw(g2);
         }
             g2.dispose();
