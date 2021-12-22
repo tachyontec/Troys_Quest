@@ -3,6 +3,7 @@ package objects;
 import main.Animation;
 import main.GamePanel;
 import main.Resource;
+import sounds.Sound;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -24,6 +25,7 @@ public class Coin extends GameObject {
     Animation idleanimation;
     BufferedImage [] idleimages;
     public static int coinCollectionCounter; // counts the coins that have been collected
+    public Sound soundEffect = new Sound(); // to implement sound of ncoin when picked
 
     public Coin(double worldX, double worldY,
                 double speedX, double speedY, int width, int height,GamePanel gamePanel ) {
@@ -66,6 +68,8 @@ public class Coin extends GameObject {
             state = State.PICKED;
             result = true;
             coinCollectionCounter++;
+            soundEffect.playSE(4);
+
         }
         return result;
     }
