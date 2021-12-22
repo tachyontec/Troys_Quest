@@ -52,8 +52,6 @@ public class GamePanel extends JPanel implements Runnable {
     public LinkedList<Coin> coinlist = new LinkedList<>(); // list that contains all the coins in game
     public Handler handler = new Handler(obstacles, player, enemies, coinlist);
     public Bound bound = new Bound(player, this);
-    //public Coin coin = new Coin(8 * tileSize, floor, 0, 0,tileSize/2,tileSize/2,this);
-    //public Coin coin2 = new Coin(9 * tileSize, floor, 0, 0,tileSize/2,tileSize/2,this);
 
 
     public GamePanel() {
@@ -122,6 +120,7 @@ public class GamePanel extends JPanel implements Runnable {
                     se.playSE(2);
                 }
             }
+
         } else if (gameState == MENU_STATE){
             menu.textUpdate();
         }

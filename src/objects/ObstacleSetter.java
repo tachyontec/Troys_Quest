@@ -43,8 +43,15 @@ public class ObstacleSetter {
         gamePanel.enemies.add(enemy1);
         gamePanel.enemies.add(enemy2);
         gamePanel.enemies.add(enemy3);
-        Bird bird = new Bird(18 * gamePanel.tileSize, 5 * gamePanel.tileSize,1,0,gamePanel.tileSize,gamePanel.tileSize,gamePanel,"Bird");
+        Bird bird = new Bird(18 * gamePanel.tileSize, 5 * gamePanel.tileSize,
+                1,0,gamePanel.tileSize,gamePanel.tileSize,gamePanel,"Bird");
         gamePanel.obstacles.add(bird);
+        MovingObstacle arrow = new MovingObstacle(9 * gamePanel.tileSize,
+                gamePanel.floor - gamePanel.tileSize,
+                1, 4, gamePanel.tileSize, gamePanel.tileSize,"arrow",gamePanel);//added an arow to  game panel
+        arrow.height -= 30;// changed arrows rectangle height because of the way Rectangles are drawn and made
+        arrow.y += 14;// changed arrows rectangle y because of the way Rectangles are drawn and made
+        gamePanel.obstacles.add(arrow);
     }
 
 }
