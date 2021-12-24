@@ -208,7 +208,7 @@ public class Player extends GameObject {
             }
         }
 
-        //FIX ME RENDERING GLITCH FROM UP PRESSED
+        //FIX ME NIKOLAOS KATSIOS RENDERING GLITCH FROM UP PRESSED
        /* int x = screenX;
         int y = screenY;
 
