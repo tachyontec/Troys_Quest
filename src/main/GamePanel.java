@@ -19,7 +19,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int floor = 9 * tileSize; //Here is the floor level
     public final int maxScreenCol = 16; // how many tiles will be horizontaly
     public final int maxScreenRow = 12; //how many tiles will be vertically
-    public final int maxWorldCol = 83;
+    public final int maxWorldCol = 112;
     public final int maxWorldRow = 12;
     public final int worldWidth = tileSize * maxWorldCol;
     public final int worldHeight = tileSize * maxWorldRow;
@@ -69,6 +69,24 @@ public class GamePanel extends JPanel implements Runnable {
         music.playMusic(5);// we play the 5th sound file which is the starting menu music
     }
 
+    //resets all the game assets to their default values
+    public void resetGame() {
+        //player reset
+        player.setLivesLeft(3);
+        player.setCoinsCollected(0);
+        player.setX(7 * tileSize);
+        player.setY(9 * tileSize);
+        player.screenX = tileSize * 7;
+        player.screenY = tileSize * 9;
+        //object reset
+        obstacleSetter.clearObjects();
+        obstacleSetter.setObject();
+        //misc resets
+        GamePanel.i = 0;
+        hud.levelTimer = 0;
+    }
+
+
     //this method starts the thread and automaticly calls method run
     public void startGameThread() {
         gameThread = new Thread(this);
@@ -100,7 +118,7 @@ public class GamePanel extends JPanel implements Runnable {
                 frames++;
             }
             if (timer > 1000000000) {
-               // System.out.println("FPS " + frames); //prints out our fps to check if it works
+                System.out.println("FPS " + frames); //prints out our fps to check if it works
                 frames = 0;
                 timer = 0;
             }
@@ -114,6 +132,9 @@ public class GamePanel extends JPanel implements Runnable {
             player.tick();
             handler.tick();
             handler.checkEnemyCollision();
+            for(Enemy enemy : enemies) {
+                enemy.tick();
+            }
             if (handler.checkPlayerCollision()) {
                 if (player.getLivesLeft() > 0) {
                     player.setLivesLeft(player.getLivesLeft() - 1);
@@ -149,9 +170,22 @@ public class GamePanel extends JPanel implements Runnable {
             player.render(g2);
             handler.render(g2);
             bound.render(g2);
+            for (Enemy enemy : enemies) {
+                enemy.render(g2);
+            }
+            if (player.getLivesLeft() <= 0) {
+                g2.setColor(Color.RED);
+                g2.setFont(new Font("MV Boli", Font.PLAIN, 45));
+                g2.drawString("You lost ", 300, 300);
+
+            }
             hud.draw(g2);
         }
             g2.dispose();
     }
 
 }
+
+
+
+

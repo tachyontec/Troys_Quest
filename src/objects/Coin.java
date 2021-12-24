@@ -24,7 +24,6 @@ public class Coin extends GameObject {
     public State state;
     Animation idleanimation;
     BufferedImage [] idleimages;
-    public static int coinCollectionCounter; // counts the coins that have been collected
     public Sound soundEffect = new Sound(); // to implement sound of ncoin when picked
 
     public Coin(double worldX, double worldY,
@@ -67,7 +66,7 @@ public class Coin extends GameObject {
         if (gamePanel.player.intersects(this)) {
             state = State.PICKED;
             result = true;
-            coinCollectionCounter++;
+            gamePanel.player.setCoinsCollected(gamePanel.player.getCoinsCollected() + 1);
             soundEffect.playSE(4);
 
         }

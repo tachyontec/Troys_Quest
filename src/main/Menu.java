@@ -21,6 +21,7 @@ public class Menu {
     public int choice = 0; //option selection default
     int defaultX = 200;
     int defaultY = 300;
+    int shadowOffset = 3;
     DecimalFormat decFormat = new DecimalFormat("#0.00");
 
     public Menu(GamePanel gamePanel) {
@@ -55,28 +56,38 @@ public class Menu {
         g2.drawImage(buttonImage , defaultX - 50 , defaultY + 10, gamepanel.tileSize * 9 , 60  ,null);
         g2.drawImage(buttonImage , defaultX - 50 , defaultY - 50 , gamepanel.tileSize * 9 , 60  ,null);
         g2.drawImage(helmetImage , 600 , 45 , gamepanel.tileSize * 2  , 60  ,null);
-        //Title
+
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 80));
         String title = "Troy's Quest";
         //Title Shadow
         g2.drawString(title, 93, 103);
         g2.setColor(new Color(181, 179, 92));
+        //Title
         g2.drawString(title, 90, 100);
 
         //Menu options
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 50));
         String option;
         option = "NEW GAME";
+        g2.setColor(Color.BLACK);
+        g2.drawString(option, defaultX + shadowOffset, defaultY + shadowOffset );
+        g2.setColor(new Color(181, 179, 92));
         g2.drawString(option, defaultX, defaultY);
         if (choice == 0) {
             g2.drawString(">", defaultX - 30, defaultY); //arrow shows each option instead of buttons . It is placed slightly to the left
         }
         option = "SELECT LEVEL";
+        g2.setColor(Color.BLACK);
+        g2.drawString(option, defaultX + shadowOffset, defaultY + shadowOffset + 60);
+        g2.setColor(new Color(181, 179, 92));
         g2.drawString(option, defaultX, defaultY + 60);
         if (choice == 1) {
             g2.drawString(">", defaultX - 30, defaultY + 60);
         }
         option = "EXIT";
+        g2.setColor(Color.BLACK);
+        g2.drawString(option, defaultX + shadowOffset + 50, defaultY + shadowOffset + 120  );
+        g2.setColor(new Color(181, 179, 92));
         g2.drawString(option, defaultX + 50, defaultY + 120);
         if (choice == 2) {
             g2.drawString(">", defaultX + 20, defaultY + 120);
@@ -106,18 +117,27 @@ public class Menu {
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 50));
         String option;
         option = "RESUME";
+        g2.setColor(Color.BLACK);
+        g2.drawString(option, defaultX + shadowOffset + 20, defaultY + shadowOffset );
+        g2.setColor(new Color(181, 179, 92));
         g2.drawString(option, defaultX + 20, defaultY);
         if (choice == 0) {
             g2.drawString(">", defaultX - 10, defaultY);
         }
         option = "BACK TO MAIN MENU";
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 33));
+        g2.setColor(Color.BLACK);
+        g2.drawString(option, defaultX + shadowOffset - 5, defaultY + shadowOffset + 57);
+        g2.setColor(new Color(181, 179, 92));
         g2.drawString(option, defaultX - 5, defaultY + 57);
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 50));
         if (choice == 1) {
             g2.drawString(">", defaultX - 30, defaultY + 60);
         }
         option = "EXIT";
+        g2.setColor(Color.BLACK);
+        g2.drawString(option, defaultX + shadowOffset + 50, defaultY + shadowOffset + 120 );
+        g2.setColor(new Color(181, 179, 92));
         g2.drawString(option, defaultX + 50, defaultY + 120);
         if (choice == 2) {
             g2.drawString(">", defaultX + 20, defaultY + 120);
@@ -153,21 +173,37 @@ public class Menu {
             g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 40));
             String option;
             option = "REPLAY LEVEL";
+        g2.setColor(Color.BLACK);
+        g2.drawString(option, defaultX + shadowOffset, defaultY + shadowOffset );
+        g2.setColor(new Color(181, 179, 92));
             g2.drawString(option, defaultX, defaultY);
             if (choice == 0) {
                 g2.drawString(">", defaultX - 30, defaultY);
             }
             option = "BACK TO MAIN MENU";
             g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 33));
+            g2.setColor(Color.BLACK);
+            g2.drawString(option, defaultX + shadowOffset - 5 , defaultY + shadowOffset + 57 );
+            g2.setColor(new Color(181, 179, 92));
             g2.drawString(option, defaultX - 5, defaultY + 57);
             g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 40));
             if (choice == 1) {
                 g2.drawString(">", defaultX - 30, defaultY + 60);
             }
             option = "EXIT";
+            g2.setColor(Color.BLACK);
+            g2.drawString(option, defaultX + shadowOffset + 50 , defaultY + shadowOffset + 120 );
+            g2.setColor(new Color(181, 179, 92));
             g2.drawString(option, defaultX + 50, defaultY + 120);
             if (choice == 2) {
                 g2.drawString(">", defaultX + 20, defaultY + 120);
+            }
+
+            if(gamepanel.player.getLivesLeft() > 0) {
+                g2.setColor(Color.BLACK);
+                g2.drawString("TIME: " + decFormat.format(gamepanel.hud.levelTimer) + "sec", 10 + shadowOffset , 500 + shadowOffset);
+                g2.setColor(new Color(181, 179, 92));
+                g2.drawString("TIME: " + decFormat.format(gamepanel.hud.levelTimer) + "sec", 10 , 500);
             }
 
     }

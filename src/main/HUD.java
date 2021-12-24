@@ -1,6 +1,7 @@
 package main;
 
 import objects.Coin;
+import objects.Player;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -33,7 +34,7 @@ public class HUD {
         g2.drawImage(heartImage, gamepanel.tileSize / 2, gamepanel.tileSize / 2 - 10, gamepanel.tileSize, gamepanel.tileSize, null);
         g2.drawString("x " + gamepanel.player.getLivesLeft(), 74, 50);
         g2.drawImage(coinImage,(gamepanel.tileSize / 2) + 3 * gamepanel.tileSize, gamepanel.tileSize / 2 - 10, gamepanel.tileSize, gamepanel.tileSize,null);
-        g2.drawString("x " + Coin.coinCollectionCounter, (int) ((gamepanel.tileSize / 2) + 4.5 * gamepanel.tileSize), 50);
+        g2.drawString("x " + gamepanel.player.getCoinsCollected(), (int) ((gamepanel.tileSize / 2) + 4.5 * gamepanel.tileSize), 50);
         levelTimer += (double) 1 / 60;
         if (gamepanel.player.getLivesLeft() == 0) {
             g2.drawString("Time:" + decFormat.format(deathTime), gamepanel.tileSize * 10, 50);

@@ -17,7 +17,7 @@ public class Sound {
         musicURL[1] = getClass().getResource("/Sound/BOOM.wav");
         musicURL[2] = getClass().getResource("/Sound/HIT.wav");
         musicURL[3] = getClass().getResource("/Sound/JUMP.wav");
-        musicURL[4] = getClass().getResource("/Sound/Coin.wav");
+        musicURL[4] = getClass().getResource("/Sound/coinSound.wav");
         musicURL[5] = getClass().getResource("/Sound/bensound-anewbeginning.wav");
     }
 

@@ -24,9 +24,9 @@ public class ObstacleSetter {
         // to be implemented as new obstacles get added!
         int startingpoint = 9 * gamePanel.tileSize; //starting point in map is where the player spawns
 
-        for (int i = 1; i <= 13; i++) {
-            int randomvariable = rand.nextInt(3);// a random number that will help to spawn player randomly
-            int spawnX = startingpoint + randomvariable * gamePanel.tileSize; //the X coordinate that obstacle will spawn
+        for (int i = 1; i <= 20; i++) {
+            int randomVariable = rand.nextInt(3);// a random number that will help to spawn player randomly
+            int spawnX = startingpoint + randomVariable * gamePanel.tileSize; //the X coordinate that obstacle will spawn
             gamePanel.obstacles.add(new Obstacle(spawnX, 9 * gamePanel.tileSize, 0,
                     0, 30, gamePanel.tileSize, "spikesRoller", gamePanel));
             //setting up the list of the coins relative to the spawn of the obstacles
@@ -44,14 +44,21 @@ public class ObstacleSetter {
         gamePanel.enemies.add(enemy2);
         gamePanel.enemies.add(enemy3);
         Bird bird = new Bird(18 * gamePanel.tileSize, 5 * gamePanel.tileSize,
-                1,0,gamePanel.tileSize,gamePanel.tileSize,gamePanel,"Bird");
+                4,0,gamePanel.tileSize,gamePanel.tileSize,gamePanel,"Bird");
         gamePanel.obstacles.add(bird);
         MovingObstacle arrow = new MovingObstacle(9 * gamePanel.tileSize,
-                gamePanel.floor - gamePanel.tileSize,
-                1, 4, gamePanel.tileSize, gamePanel.tileSize,"arrow",gamePanel);//added an arow to  game panel
+                gamePanel.floor - gamePanel.tileSize * 5 - gamePanel.tileSize,
+                5, 4, gamePanel.tileSize, gamePanel.tileSize,"arrow",gamePanel);//added an arow to  game panel
         arrow.height -= 30;// changed arrows rectangle height because of the way Rectangles are drawn and made
         arrow.y += 14;// changed arrows rectangle y because of the way Rectangles are drawn and made
         gamePanel.obstacles.add(arrow);
     }
+ //clears all the objects created in the game by emptying the lists that contain them
+    public void clearObjects() {
+        gamePanel.enemies.clear();
+        gamePanel.obstacles.clear();
+        gamePanel.coinlist.clear();
+    }
+
 
 }

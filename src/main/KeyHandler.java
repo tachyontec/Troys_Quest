@@ -48,10 +48,7 @@ public class KeyHandler implements KeyListener {
                     case 0: //FIRST CHOICE
                         if(gp.gameState == GamePanel.MENU_STATE){ //NEW GAME
                             //Start of level reset
-                            gp.player.setX(7 * gp.tileSize);
-                            gp.player.setY(9 * gp.tileSize);
-                            gp.player.setLivesLeft(3);
-                            gp.hud.levelTimer = 0;
+                            gp.resetGame();
                             //End of level reset
                             gp.gameState = GamePanel.PLAY_STATE;
                             gp.music.stopMusic();
@@ -65,11 +62,7 @@ public class KeyHandler implements KeyListener {
                             gp.music.playMusic(0); //GAME SONG
                             gp.gameState = GamePanel.PLAY_STATE;
                             //Start of level reset
-                            gp.player.setX(7 * gp.tileSize);
-                            gp.player.setY(9 * gp.tileSize);
-                            gp.player.setLivesLeft(3);
-                            GamePanel.i = 0;//mhn peirazete
-                            gp.hud.levelTimer = 0;
+                            gp.resetGame();
                             //End of level reset
                         }
                         break;

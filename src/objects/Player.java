@@ -31,6 +31,8 @@ public class Player extends GameObject {
     public final int axisX = 400;
     public final int axisY = 400;
     private int livesLeft = 3;
+
+    private int coinsCollected; // counts the coins that have been collected
     public int screenX;
     public int screenY;
     //used so that we do not have the death sound used recursively when the player dies and the state is dead
@@ -206,16 +208,20 @@ public class Player extends GameObject {
             }
         }
 
-        int x = screenX;
+        //FIX ME RENDERING GLITCH FROM UP PRESSED
+       /* int x = screenX;
         int y = screenY;
 
         if (screenX > getX()) {
             x = (int) getX();
         }
 
+
         if (screenY > getY()) {
             y = (int) getY();
         }
+
+        */
 
         int rightDiff = gamePanel.screenWidth - screenX;
         if (rightDiff > gamePanel.worldWidth - getX()) {
@@ -226,6 +232,10 @@ public class Player extends GameObject {
         if (bottomDiff > gamePanel.worldHeight - getY()) {
             screenY = gamePanel.screenHeight - (gamePanel.worldHeight - (int) getY()); //and we subtract the difference from the current tile from the bottom edge of the screen
         }
+
+
+
+
     }
 
     public class thread implements Runnable {
@@ -270,4 +280,14 @@ public class Player extends GameObject {
     public void setLivesLeft(int livesLeft) {
         this.livesLeft = livesLeft;
     }
+
+    public int getCoinsCollected() {
+        return coinsCollected;
+    }
+
+    public void setCoinsCollected(int coinsCollected) {
+        this.coinsCollected = coinsCollected;
+    }
+
 }
+

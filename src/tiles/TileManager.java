@@ -111,13 +111,16 @@ public class TileManager {
 
             //Make camera not go out of bounds
             //Left edge of the map
+
             if (gp.player.screenX > gp.player.getX()) {
                 screenX = worldX; //prevent screenX become larger than worldX
             }
+
             //Top edge of the map
             if (gp.player.screenY > gp.player.getY()) {
                 screenY = worldY; //prevent screenY become larger than worldY
             }
+
             //Then we calculate the length between player screenX and the right edge of the frame
             int rightDiff = gp.screenWidth - gp.player.screenX;
             if (rightDiff > gp.worldWidth - gp.player.getX()) {
@@ -135,6 +138,8 @@ public class TileManager {
                     || bottomDiff > gp.worldHeight - gp.player.getY()) {
                 g2.drawImage(tile[tileNum].image, (int) screenX, (int) screenY, gp.tileSize, gp.tileSize, null);
             }
+
+
 
             g2.drawImage(tile[tileNum].image, (int) screenX, (int) screenY, gp.tileSize, gp.tileSize, null); //draws the tile in the specified screenX and screenY
 
