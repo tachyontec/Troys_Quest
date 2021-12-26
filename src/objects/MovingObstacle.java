@@ -4,6 +4,8 @@ import main.*;
 
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
 /**
@@ -20,7 +22,7 @@ public class MovingObstacle extends GameObject {
     public GamePanel gamePanel;
     public BufferedImage[] left;
     public BufferedImage[] right;
-    public enum State {RIGHT, LEFT};
+    public enum State {RIGHT, LEFT}
     //state stores the current state of the movingobstacle
     public State state;
     Animation leftAnimation;
@@ -51,7 +53,14 @@ public class MovingObstacle extends GameObject {
             g.drawImage(left[0], (int) screenX, (int) screenY,
                     gamePanel.tileSize, gamePanel.tileSize, null);
         } else if (state == State.RIGHT){
-            g.drawImage(right[0], (int) screenX, (int) screenY,
+            //This code is used to draw an Image rotated
+            double rotationRequired = Math.toRadians (180); //We want to switch direction from left to right
+            double locationX = left[0].getWidth() / 2;
+            double locationY = left[0].getHeight() / 2;
+            AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locationX, locationY);
+            AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+            //final draw:
+            g.drawImage(op.filter(left[0],null), (int) screenX, (int) screenY,
                     gamePanel.tileSize, gamePanel.tileSize, null);
         }
 

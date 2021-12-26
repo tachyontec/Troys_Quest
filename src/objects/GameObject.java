@@ -1,17 +1,20 @@
 package objects;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.util.LinkedList;
 
 //superclass for all the object of the game
 public abstract class GameObject extends Rectangle {
-    //this method extends Rectangle class from java.awt to implement collision
-    //what all the objects have in common
-    //worldx,worldy are the coordinates of the game object relative to the map as pictured in mapLayout.txt,represented in tiles 
-    //screenx,screeny are the coordinates of the game object relative to the screen (frame)
-    // id is the differentiator for player , obstacle etc.
-    //counter helps each object have a ID
-    //we have a speed variable for each axis (x and y)
+    /**
+     * this method extends Rectangle class from java.awt to implement collision
+     * what all the objects have in common
+     * worldx,worldy are the coordinates of the game object relative to the map as pictured in mapLayout.txt,represented in tiles
+     * screenx,screeny are the coordinates of the game object relative to the screen (frame)
+     * id is the differentiator for player , obstacle etc.
+     * counter helps each object have a ID
+     * we have a speed variable for each axis (x and y)
+     */
 
     public double worldX;
     public double worldY;
@@ -97,5 +100,13 @@ public abstract class GameObject extends Rectangle {
 
     public int getId() {
         return id;
+    }
+
+    //This method is used to draw a rectangle reversing it by 180 degrees
+    public void renderreverse(Graphics2D g2) {
+        g2.setColor(Color.RED);
+        g2.rotate(Math.toRadians(180));
+
+        g2.drawRect(x, y, width, height);
     }
 }
