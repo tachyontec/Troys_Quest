@@ -183,7 +183,6 @@ public class Player extends GameObject {
     @Override
     public void render(Graphics2D g) {
         super.render(g);
-        g.setColor(Color.blue);
         g.drawRect(this.attackHitbox.x , this.attackHitbox.y , this.attackHitbox.width , this.attackHitbox.height);
         //this if is in place so that when the player is hit , he is invulnerable and his body is shown blinking to indicate that state
         if (this.isCollision() || this.state == State.DEAD) {//when a player is hit collision is turned off for some seconds so this.isCollision comes out false

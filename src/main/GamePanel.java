@@ -44,7 +44,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 
     public Player player = new Player(7 * tileSize, floor, 3, 4, keyHandler, this);
-    public ObstacleSetter obstacleSetter = new ObstacleSetter(this);
+    public GameObjectSetter obstacleSetter = new GameObjectSetter(this);
     public HUD hud = new HUD(this);
     public Menu menu = new Menu(this);
     public LinkedList<GameObject> obstacles = new LinkedList<>();
@@ -56,7 +56,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
-        this.setBackground(Color.CYAN);
+        this.setBackground(new Color(43, 145, 193));
         this.setDoubleBuffered(true);
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
@@ -132,9 +132,6 @@ public class GamePanel extends JPanel implements Runnable {
             player.tick();
             handler.tick();
             handler.checkEnemyCollision();
-            for(Enemy enemy : enemies) {
-                enemy.tick();
-            }
             if (handler.checkPlayerCollision()) {
                 if (player.getLivesLeft() > 0) {
                     player.setLivesLeft(player.getLivesLeft() - 1);
@@ -170,15 +167,6 @@ public class GamePanel extends JPanel implements Runnable {
             player.render(g2);
             handler.render(g2);
             bound.render(g2);
-            for (Enemy enemy : enemies) {
-                enemy.render(g2);
-            }
-            if (player.getLivesLeft() <= 0) {
-                g2.setColor(Color.RED);
-                g2.setFont(new Font("MV Boli", Font.PLAIN, 45));
-                g2.drawString("You lost ", 300, 300);
-
-            }
             hud.draw(g2);
         }
             g2.dispose();
