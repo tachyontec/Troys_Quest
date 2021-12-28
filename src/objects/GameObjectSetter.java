@@ -7,7 +7,7 @@ import java.util.Random;
 public class GameObjectSetter {
 
     GamePanel gamePanel;
-
+    String str [] = new String[2];//string array that contains the names of the obstacles
     public GameObjectSetter(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
     }
@@ -20,7 +20,8 @@ public class GameObjectSetter {
         //We divide the map witch is 16x102 tiles in areas along
         // the x axis containing 5 tiles each like so 1._2._3._4._5._.
         //Each area has 3 tiles on witch obstacles or enemies are spawnable and 2 tiles that are void of objects.
-        // !Array ,containing obstacle .png names for rand to pick randomly from ,
+        str[0] = "Fire";
+        str[1] = "spikesRoller";
         // to be implemented as new obstacles get added!
         int startingpoint = 9 * gamePanel.tileSize; //starting point in map is where the player spawns
         /*we spawn 4 times in a row an obstacle and the we spawn an enemy for our player to fight.*/
@@ -35,8 +36,11 @@ public class GameObjectSetter {
                 gamePanel.enemies.add(enemy);
 
             } else {
+                // used to choose randomly
+                // one of the 2 obstacles(Fire or spikesRoller)
+                int x = rand.nextInt(2);
                 gamePanel.obstacles.add(new Obstacle(spawnX, gamePanel.floor, 0,
-                        0, 30, gamePanel.tileSize, "spikesRoller", gamePanel));
+                        0, 30, gamePanel.tileSize, str[x], gamePanel));
                 /* we spawn a coin above an obstacle with a random way to make player
                 jump a little or a lot to reach it and also make game harder*/
                 int randomY = (rand.nextInt(3) +1);

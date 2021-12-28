@@ -14,7 +14,7 @@ public class Bird extends GameObject {
     public BufferedImage[] right;
     Animation leftAnimation;
     Animation rightanimation;
-    public enum Direction {LEFT, RIGHT};
+    public enum Direction {LEFT, RIGHT}
     public Direction direction;
     public String name;
     //Buffered Images are the ones that contain our main character
@@ -33,9 +33,13 @@ public class Bird extends GameObject {
     //paint Bird left animation if flys left else paints right animation
     public void render(Graphics2D g) {
         super.render(g);
+        //centers the player in relation to the screen in x axis,gp.player.screenX is used to offset the difference
+        double screenX = this.getX() - gamePanel.player.getX() + gamePanel.player.screenX;
+        //centers the player in relation to the screen in y axis,gp.player.screenY is used to offset the difference
+        double screenY = this.getY() - gamePanel.player.getY() + gamePanel.player.screenY;
         switch (direction) {
-            case LEFT -> leftAnimation.drawAnimation(g, (int) this.getX(), (int) this.getY(), gamePanel.tileSize, gamePanel.tileSize);
-            case RIGHT -> rightanimation.drawAnimation(g, (int) this.getX(), (int) this.getY(), gamePanel.tileSize, gamePanel.tileSize);
+            case LEFT -> leftAnimation.drawAnimation(g, (int) screenX, (int) screenY, gamePanel.tileSize, gamePanel.tileSize);
+            case RIGHT -> rightanimation.drawAnimation(g, (int) screenX, (int) screenY, gamePanel.tileSize, gamePanel.tileSize);
         }
     }
 
