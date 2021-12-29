@@ -49,8 +49,8 @@ public class KeyHandler implements KeyListener {
                     case 0: //FIRST CHOICE
                         if(gp.gameState == GamePanel.MENU_STATE){ //NEW GAME
                             //Start of level reset
-                            gp.resetGame(1);
                             GamePanel.currentLevel = 1;
+                            gp.resetGame(1);
                             //End of level reset
                             gp.gameState = GamePanel.PLAY_STATE;
                             gp.music.stopMusic();
@@ -59,16 +59,22 @@ public class KeyHandler implements KeyListener {
                             gp.gameState = GamePanel.PLAY_STATE;
                             gp.music.stopMusic();
                             gp.music.playMusic(0); //GAME SONG
-                        } else if(gp.gameState == GamePanel.WIN_LOSE_STATE){ //REPLAY LEVEL
-                            gp.music.stopMusic();
-                            gp.music.playMusic(0); //GAME SONG
-                            //Start of level reset
-                            gp.resetGame(gp.currentLevel);
-                            //End of level reset
-                            gp.gameState = GamePanel.PLAY_STATE;
+                        } else if(gp.gameState == GamePanel.WIN_LOSE_STATE){
+                            if(gp.player.getLivesLeft() == 0) { //REPLAY LEVEL
+                                gp.music.stopMusic();
+                                gp.music.playMusic(0); //GAME SONG
+                                //Start of level reset
+                                gp.resetGame(gp.currentLevel);
+                                //End of level reset
+                                gp.gameState = GamePanel.PLAY_STATE;
+                            } else {
+                                GamePanel.currentLevel++;
+                                gp.resetGame(GamePanel.currentLevel);
+                                gp.gameState = GamePanel.PLAY_STATE;
+                            }
                         } else if (gp.gameState == GamePanel.LEVEL_SELECTION_STATE) { //LEVEL 1 SELECTED
-                            gp.resetGame(1);
                             gp.currentLevel = 1;
+                            gp.resetGame(1);
                             gp.gameState = GamePanel.PLAY_STATE;
                         }
                         break;
@@ -85,15 +91,15 @@ public class KeyHandler implements KeyListener {
                             gp.resetGame(GamePanel.currentLevel);
                             gp.gameState = GamePanel.MENU_STATE;
                         } else if (gp.gameState == GamePanel.LEVEL_SELECTION_STATE) { //LEVEL 2 SELECTED
-                            gp.resetGame(2);
                             gp.currentLevel = 2;
+                            gp.resetGame(2);
                             gp.gameState = GamePanel.PLAY_STATE;
                         }
                         break;
                     case 2 : //3RD CHOICE
                         if(gp.gameState == GamePanel.LEVEL_SELECTION_STATE) { //LEVEL 3 SELECTED
-                            gp.resetGame(3);
                             gp.currentLevel = 3;
+                            gp.resetGame(3);
                             gp.gameState = GamePanel.PLAY_STATE;
                         } else {
                             System.exit(0);
