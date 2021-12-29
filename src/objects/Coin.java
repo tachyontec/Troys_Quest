@@ -42,11 +42,14 @@ public class Coin extends GameObject {
     @Override
     public void render(Graphics2D g2) {
         super.render(g2);
-        double screenX = this.getX() - gamePanel.player.getX() + gamePanel.player.screenX; //centers the player in relation to the screen in x axis,gp.player.screenX is used to offset the difference
-        double screenY = this.getY() - gamePanel.player.getY() + gamePanel.player.screenY; //centers the player in relat
+        //centers the player in relation to the screen in x axis,gp.player.screenX is used to offset the difference
+        double screenX = this.getX() - gamePanel.player.getX() + gamePanel.player.screenX;
+        //centers the player in relat
+        double screenY = this.getY() - gamePanel.player.getY() + gamePanel.player.screenY;
         g2.setColor(Color.BLACK);
         if(state == State.IDLE){
-            idleanimation.drawAnimation(g2, (int) screenX, (int) screenY, gamePanel.tileSize /2, gamePanel.tileSize /2);
+            idleanimation.drawAnimation(g2, (int) screenX, (int) screenY,
+                    gamePanel.tileSize /2, gamePanel.tileSize /2);
         }else {
             System.out.println("picked");
         }
@@ -54,8 +57,8 @@ public class Coin extends GameObject {
     }
 
     @Override
-    public void tick() {
-        super.tick();
+    public void update() {
+        super.update();
         if(state == State.IDLE) {
             idleanimation.runAnimation();
         }

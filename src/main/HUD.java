@@ -1,13 +1,7 @@
 package main;
 
-import objects.Coin;
-import objects.Player;
-
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.text.DecimalFormat;
 
 public class HUD {
@@ -35,7 +29,7 @@ public class HUD {
     }
 
 
-    public void draw(Graphics2D g2) {
+    public void render(Graphics2D g2) {
         g2.setFont(gameFont);
         g2.setColor(Color.WHITE);
         g2.drawImage(heartImage, gamepanel.tileSize / 2, gamepanel.tileSize / 2 - 10, gamepanel.tileSize, gamepanel.tileSize, null);

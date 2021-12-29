@@ -176,17 +176,13 @@ public class GamePanel extends JPanel implements Runnable {
         } else if (gameState == LEVEL_SELECTION_STATE){
             menu.drawLevelSelectionMenu(g2);
         } else {
-            tileM.draw(g2);
+            tileM.render(g2);
             player.render(g2);
             handler.render(g2);
             bound.render(g2);
-            hud.draw(g2);
+            hud.render(g2);
         }
             g2.dispose();
     }
 
 }
-
-
-
-

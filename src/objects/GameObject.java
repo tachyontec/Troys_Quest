@@ -54,7 +54,7 @@ public abstract class GameObject extends Rectangle {
         g2.drawRect(x, y, width, height);
     }
 
-    public void tick() {
+    public void update() {
     }
 
     //getters and setters for each field
