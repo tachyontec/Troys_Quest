@@ -81,7 +81,7 @@ public class Handler {
         }
 
             for (Enemy enemy : enemies) {
-                if (enemy.intersects(player) && player.isCollision()) {
+                if (enemy.intersects(player) && player.isCollision() && enemy.isCollision()) {
                     b = true;
                     player.setCollision(false);
                     collisionTime = timer;
@@ -103,9 +103,11 @@ public class Handler {
         public void checkEnemyCollision () {
             for (Enemy enemy : enemies) {
                 if (enemy.intersects(player.attackHitbox) &&
-                        player.isAttackCollision && enemy.livesLeft > 0) {
+                        player.isAttackCollision && enemy.livesLeft > 0 && enemy.isCollision()) {
                     enemy.livesLeft = 0;
                     this.enemyDeathTime = this.timer;
+                    enemy.setCollision(false);
+
                 }
                 if (this.timer - this.enemyDeathTime > 1 && enemy.livesLeft == 0) {
                     enemies.remove(enemy);

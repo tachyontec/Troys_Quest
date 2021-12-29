@@ -29,6 +29,7 @@ public class Enemy extends GameObject {
     State state;//state stores current player state
     //Animation instances for everything that our enemy does
     Animation walkingAnimation, idleAnimation, deathAnimation, attackAnimation;
+    private boolean collision;
 
 
     //the three bufferedImage tables run,jump,idle contain the photos that are needed in animations
@@ -41,6 +42,7 @@ public class Enemy extends GameObject {
         this.setAnimation();
         this.gamePanel = gamePanel;
         this.livesLeft = 1;
+        this.collision = true;
 
     }
 
@@ -99,5 +101,13 @@ public class Enemy extends GameObject {
 
     public String getName() {
         return name;
+    }
+
+    public boolean isCollision() {
+        return collision;
+    }
+
+    public void setCollision(boolean collision) {
+        this.collision = collision;
     }
 }
