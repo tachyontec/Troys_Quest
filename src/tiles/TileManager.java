@@ -17,16 +17,11 @@ public class TileManager {
 
     int[][] mapTileNumber; //a 2D array that witch represents our mapLayout
 
-    public TileManager(GamePanel gp, int levelNumber) {
+    public TileManager(GamePanel gp) {
         this.gp = gp;
         tile = new Tile[20];
         mapTileNumber = new int[gp.maxWorldCol][gp.maxWorldRow];//we initialise the array that represents our map so that its size is the same as our level
         getTileImage();//we load the images of the tiles from the /res folder
-        switch (levelNumber) {
-            case 1 -> loadMap("/maps/Level1Layout.txt");
-            case 2 -> loadMap("/maps/Level2Layout.txt");
-        }
-
     }
 
     /*
