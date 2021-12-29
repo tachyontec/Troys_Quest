@@ -78,7 +78,7 @@ public class Enemy extends GameObject {
 
     //determines what our enemy does at any given moment
     @Override
-    public void tick() {
+    public void update() {
         //System.out.println(this.enemyDeathTime);
          if(this.livesLeft <= 0) {
             this.state = State.DEAD;

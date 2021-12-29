@@ -23,16 +23,16 @@ public class Handler {
         this.coinlist = coinlist;
     }
 
-    public void tick() {
+    public void update() {
         for (GameObject object : obstacleLinkedList) {
-            object.tick();
+            object.update();
         }
         for (Enemy enemy : enemies) {
-            enemy.tick();
+            enemy.update();
         }
 
         for (Coin coin : coinlist) {
-            coin.tick();
+            coin.update();
         }
     }
 

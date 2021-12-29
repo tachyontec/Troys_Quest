@@ -38,12 +38,13 @@ public class MovingObstacle extends GameObject {
     //paint Bird left animation if flys left else paints right animation
     public void render(Graphics2D g) {
         super.render(g);
-        //centers the player in relation to the screen in x axis,gp.player.screenX is used to offset the difference
+        /*centers the player in relation to the screen in x axis,
+        gp.player.screenX is used to offset the difference*/
         double screenX = this.getX() - gamePanel.player.getX() + gamePanel.player.screenX;
-        //centers the player in relation to the screen in y axis,gp.player.screenY is used to offset the difference
+        /*centers the player in relation to the screen in y axis,
+        gp.player.screenY is used to offset the difference*/
         double screenY = this.getY() - gamePanel.player.getY() + gamePanel.player.screenY;
         animation.drawAnimation(g , (int) screenX, (int) screenY, gamePanel.tileSize, gamePanel.tileSize);
-
     }
 
     public void getMovingObstacleImage() {
@@ -52,16 +53,8 @@ public class MovingObstacle extends GameObject {
     }
 
     @Override
-    public void tick() {
+    public void update() {
         animation.runAnimation();
         setX(getX() - getSpeedx());
     }
-
-    //in this method we check the collision of the obstacle with the bound,
-    // if they collide the moving obstacles gets removed from the list
-
-
 }
-
-
-

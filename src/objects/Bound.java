@@ -16,17 +16,24 @@ public class Bound {
     public Bound(Player player, GamePanel gamePanel) {
         this.player = player;
         this.gamepanel = gamePanel;
-        start = new Obstacle(5 * gamePanel.tileSize, gamePanel.tileSize * 5, 0, 0, gamePanel.tileSize, gamePanel.tileSize * 5, "Flag", gamePanel);
-        start.worldY = (9 * gamePanel.tileSize);//we change start worldX because we need tha flag to spawn down next to the player but the rectangle to be taller
-        end = new Obstacle(110 * gamePanel.tileSize, gamePanel.tileSize * 5, 0, 0, gamePanel.tileSize, gamePanel.tileSize * 5, "Flag", gamePanel);
-        end.worldY = (9 * gamePanel.tileSize);//we change end worldX because we need tha flag to spawn down next to the player but the rectangle to be taller
+        start = new Obstacle(5 * gamePanel.tileSize, gamePanel.tileSize * 5,
+                0, 0, gamePanel.tileSize, gamePanel.tileSize * 5, "Flag", gamePanel);
+        /*we change start worldX because we need tha flag
+        to spawn down next to the player but the rectangle to be taller */
+        start.worldY = (9 * gamePanel.tileSize);
+        end = new Obstacle(110 * gamePanel.tileSize, gamePanel.tileSize * 5,
+                0, 0, gamePanel.tileSize, gamePanel.tileSize * 5, "Flag", gamePanel);
+        /* we change end worldX because we need tha flag
+        to spawn down next to the player but the rectangle to be taller */
+        end.worldY = (9 * gamePanel.tileSize);
 
     }
 
-    //checking the collision of the player with the starting and ending bound only if the player is very near the bounds
+    /* checking the collision of the player with the starting and
+    ending bound only if the player is very near the bounds */
     public void update() {
-        start.tick();
-        end.tick();
+        start.update();
+        end.update();
 
         if (start.worldX - player.getX() <= 10) {
             if (start.intersects(player)) {
