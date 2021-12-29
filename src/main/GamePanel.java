@@ -17,7 +17,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int scale = 3; // scaling size that will scale the tiles
     public final int tileSize = originalTileSize * scale; //tile size after scaling 48
     public final int floor = 9 * tileSize; //Here is the floor level
-    public final int maxScreenCol = 16; // how many tiles will be horizontaly
+    public final int maxScreenCol = 16; // how many tiles will be horizontally
     public final int maxScreenRow = 12; //how many tiles will be vertically
     public final int maxWorldCol = 112;
     public final int maxWorldRow = 12;
@@ -26,12 +26,14 @@ public class GamePanel extends JPanel implements Runnable {
     public final int screenWidth = tileSize * maxScreenCol; // screen width 768
     public final int screenHeight = tileSize * maxScreenRow; // screen height 576
     public int deathCounter = 0;
+    public static int currentLevel;
 
     //GAME STATES : Informs us about what is happening currently in the game
     public static final int PLAY_STATE = 0;//When game is running
     public static final int PAUSE_STATE = 1;//when game is paused
     public static final int MENU_STATE = 2;//when we are in the menu
     public static final int WIN_LOSE_STATE = 3;//when level is concluded , either in win or defeat
+    public static final int LEVEL_SELECTION_STATE = 4;
 
     public int gameState;
 
@@ -65,12 +67,18 @@ public class GamePanel extends JPanel implements Runnable {
     public void setUpGame() {
         obstacleSetter.setObject();
         tileM = new TileManager(this,1);
+        currentLevel = 1;
         gameState = MENU_STATE;
         music.playMusic(5);// we play the 5th sound file which is the starting menu music
     }
 
     //resets all the game assets to their default values
-    public void resetGame() {
+    public void resetGame(int levelNumber) {
+        //level reset
+        switch (levelNumber) {
+            case 1 -> tileM.loadMap("/maps/Level1Layout.txt");
+            case 2 -> tileM.loadMap("/maps/Level2Layout.txt");
+        }
         //player reset
         player.setLivesLeft(3);
         player.setCoinsCollected(0);
@@ -84,10 +92,11 @@ public class GamePanel extends JPanel implements Runnable {
         //misc resets
         GamePanel.i = 0;
         hud.levelTimer = 0;
+        hud.counter =0;
     }
 
 
-    //this method starts the thread and automaticly calls method run
+    //this method starts the thread and automatically calls method run
     public void startGameThread() {
         gameThread = new Thread(this);
         gameThread.start();
@@ -124,7 +133,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
     }
-    public  static int i = 0;//mhn to peiraksete
+    public  static int i = 0;
     //in this method we update all GameObject objects
     public void update() {
         if (gameState == PLAY_STATE) {
@@ -164,6 +173,8 @@ public class GamePanel extends JPanel implements Runnable {
             menu.drawPauseMenu(g2);
         } else if (gameState == WIN_LOSE_STATE) {
             menu.drawWinLoseMenu(g2);
+        } else if (gameState == LEVEL_SELECTION_STATE){
+            menu.drawLevelSelectionMenu(g2);
         } else {
             tileM.draw(g2);
             player.render(g2);

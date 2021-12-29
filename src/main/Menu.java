@@ -208,5 +208,51 @@ public class Menu {
 
     }
 
+    public void drawLevelSelectionMenu(Graphics2D g2){
+        g2.setFont(menuFont);
+        int defaultXs = 100;
+        int defaultYs = 200;
+        //Background
+        g2.drawImage(backgroundImage , 0  , 0 ,gamepanel.tileSize * 16 , gamepanel.tileSize * 12  , null);
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 80));
+        String title = "Level Selection";
+        //Title Shadow
+        g2.drawString(title, 93, 103);
+        g2.setColor(new Color(181, 179, 92));
+        //Title
+        g2.drawString(title, 90, 100);
+        //OPTIONS
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 40));
+        String option;
+        option = "LEVEL 1";
+        g2.setColor(Color.BLACK);
+        g2.drawString(option, defaultXs + shadowOffset, defaultYs + shadowOffset );
+        g2.setColor(new Color(181, 179, 92));
+        g2.drawString(option, defaultXs , defaultYs);
+        g2.setColor(Color.BLACK);
+        if (choice == 0) {
+            g2.drawString(">", defaultXs - 30 , defaultYs);
+        }
+        option = "LEVEL 2";
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 40));
+        g2.drawString(option, defaultXs + shadowOffset , defaultYs + shadowOffset + 130 );
+        g2.setColor(new Color(181, 179, 92));
+        g2.drawString(option, defaultXs, defaultYs + 130);
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 40));
+        g2.setColor(Color.BLACK);
+        if (choice == 1) {
+            g2.drawString(">", defaultXs - 30, defaultYs + 130);
+        }
+        option = "LEVEL 3";
+        g2.drawString(option, defaultXs + shadowOffset, defaultYs + shadowOffset + 260);
+        g2.setColor(new Color(181, 179, 92));
+        g2.drawString(option, defaultXs , defaultYs + 260);
+        g2.setColor(Color.BLACK);
+        if (choice == 2) {
+            g2.drawString(">", defaultXs -30, defaultYs + 260);
+        }
+    }
+
+
 
 }

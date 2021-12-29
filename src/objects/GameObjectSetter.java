@@ -66,7 +66,8 @@ public class GameObjectSetter {
 
     }
     //since arrow spawning is dynamic , we need to handle it separately from level obstacle layout and call it repetitively from gamepanel.update()
-    //TO BE OPTIMIZED
+    //TO BE OPTIMIZED --> CUT MAP INTO AREAS OF 20 TILES , CHECK PLAYER'S worldX and spawn them along as the player moves between them
+    //change arrow rectangle
     public void addArrow() {
         if(gamePanel.player.getX() < 90 * gamePanel.tileSize) {
             if ((gamePanel.hud.counter % 180 == 0)) {
