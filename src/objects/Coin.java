@@ -7,7 +7,6 @@ import sounds.Sound;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.LinkedList;
 /**
  * public class Coin
  * creates coins for reward

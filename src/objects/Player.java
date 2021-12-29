@@ -174,11 +174,8 @@ public class Player extends GameObject {
                 deathSoundIsDone = true;// so that we stop the death sound
             }
         }
-        if (keyHandler.attackPressed) { // when space is pressed , isAttackCollision indicates that enemies can collide with the sword's hitbox
-            isAttackCollision = true;
-        } else {
-            isAttackCollision = false;
-        }
+        // when space is pressed , isAttackCollision indicates that enemies can collide with the sword's hitbox
+        isAttackCollision = keyHandler.attackPressed;
     }
 
     // the direction variable indicates which images are to be drawn for each animation of the player

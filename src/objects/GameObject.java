@@ -1,8 +1,6 @@
 package objects;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.util.LinkedList;
 
 //superclass for all the object of the game
 public abstract class GameObject extends Rectangle {
@@ -25,8 +23,6 @@ public abstract class GameObject extends Rectangle {
     private double speedY;
     public static int counter;
     public boolean collision = false;
-    //List of objects that we will need to tick and render
-    public static LinkedList<GameObject> gameObjects = new LinkedList<>();
 
     //sprites are smaller rectangles that make up the whole window
     //we hold the counter and the number for each of our sprites
@@ -44,9 +40,6 @@ public abstract class GameObject extends Rectangle {
         this.speedX = speedX;
         this.speedY = speedY;
         this.id = counter;
-        if (this.getClass().equals(Player.class) || this.getClass().equals(MovingObstacle.class)) {
-            gameObjects.add(this); //add all objects that we will need to tick and render
-        }
     }
 
     public void render(Graphics2D g2) {

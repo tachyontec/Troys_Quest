@@ -7,7 +7,7 @@ import java.util.Random;
 public class GameObjectSetter {
 
     GamePanel gamePanel;
-    String str [] = new String[2];//string array that contains the names of the obstacles
+    String[] str = {"Fire","spikesRoller"};//string array that contains the names of the obstacles
     Random rand = new Random();
     public GameObjectSetter(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -20,9 +20,6 @@ public class GameObjectSetter {
         //We divide the map witch is 16x102 tiles in areas along
         // the x axis containing 5 tiles each like so 1._2._3._4._5._.
         //Each area has 3 tiles on witch obstacles or enemies are spawnable and 2 tiles that are void of objects.
-        str[0] = "Fire";
-        str[1] = "spikesRoller";
-        // to be implemented as new obstacles get added!
         int startingpoint = 9 * gamePanel.tileSize; //starting point in map is where the player spawns
         /*we spawn 4 times in a row an obstacle and the we spawn an enemy for our player to fight.*/
         for (int i = 1; i <= 20; i++) {
@@ -33,28 +30,28 @@ public class GameObjectSetter {
                         1, 0, gamePanel.tileSize, gamePanel.tileSize, "Minotaur", gamePanel);
                 // so that the enemy touches the ground , because minotaur png's are not the resolution we need
                 enemy.y = (int) enemy.worldY + gamePanel.tileSize / 2;
-                gamePanel.enemies.add(enemy);
+                Handler.enemies.add(enemy);
 
             } else {
                 // used to choose randomly
                 // one of the 2 obstacles(Fire or spikesRoller)
                 int x = rand.nextInt(2);
-                gamePanel.obstacles.add(new Obstacle(spawnX, gamePanel.floor, 0,
+                Handler.obstacles.add(new Obstacle(spawnX, gamePanel.floor, 0,
                         0, 30, gamePanel.tileSize, str[x], gamePanel));
                 /* we spawn a coin above an obstacle with a random way to make player
                 jump a little or a lot to reach it and also make game harder*/
                 int randomY = (rand.nextInt(3) +1);
-                gamePanel.coinlist.add(new Coin(spawnX , gamePanel.floor - (randomY * gamePanel.tileSize),
+                Handler.coinlist.add(new Coin(spawnX , gamePanel.floor - (randomY * gamePanel.tileSize),
                         0, 0, gamePanel.tileSize, gamePanel.tileSize,gamePanel ));
             }
             // we spawn coins after an obstacle or enemy for reward
-            gamePanel.coinlist.add(new Coin(spawnX + 2 * gamePanel.tileSize, gamePanel.floor,
+            Handler.coinlist.add(new Coin(spawnX + 2 * gamePanel.tileSize, gamePanel.floor,
                     0, 0, gamePanel.tileSize, gamePanel.tileSize,gamePanel ));
             startingpoint += 5 * gamePanel.tileSize;
         }
         Bird bird = new Bird(18 * gamePanel.tileSize, 5 * gamePanel.tileSize,
                 4,0,gamePanel.tileSize,gamePanel.tileSize,gamePanel,"Bird");
-        gamePanel.obstacles.add(bird);
+        Handler.obstacles.add(bird);
     }
     //since arrow spawning is dynamic , we need to handle it separately from level obstacle layout and call it repetitively from gamepanel.update()
     //TO BE OPTIMIZED --> CUT MAP INTO AREAS OF 20 TILES , CHECK PLAYER'S worldX and spawn them along as the player moves between them
@@ -67,7 +64,7 @@ public class GameObjectSetter {
                         4, 4, gamePanel.tileSize, gamePanel.tileSize, "arrow", gamePanel);
                 arrow.height -= 30;// changed arrows rectangle height because of the way Rectangles are drawn and made
                 arrow.y += 14;// changed arrows rectangle y because of the way Rectangles are drawn and made
-                gamePanel.obstacles.add(arrow);
+                Handler.obstacles.add(arrow);
             }
         }
     }
@@ -75,9 +72,9 @@ public class GameObjectSetter {
 
     //clears all the objects created in the game by emptying the lists that contain them
     public void clearObjects() {
-        gamePanel.enemies.clear();
-        gamePanel.obstacles.clear();
-        gamePanel.coinlist.clear();
+        Handler.enemies.clear();
+        Handler.obstacles.clear();
+        Handler.coinlist.clear();
     }
 
 

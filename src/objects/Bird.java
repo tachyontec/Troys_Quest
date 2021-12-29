@@ -59,14 +59,14 @@ public class Bird extends GameObject {
     public void update() {
         checkcollision();
         switch (direction) {
-            case LEFT :
+            case LEFT -> {
                 leftAnimation.runAnimation();
                 setX(getX() - getSpeedx());
-                break;
-            case RIGHT :
+            }
+            case RIGHT -> {
                 rightanimation.runAnimation();
                 setX(getX() + getSpeedx());
-                break;
+            }
         }
     }
     /* in this method we check the collision of the bird with the bounds,

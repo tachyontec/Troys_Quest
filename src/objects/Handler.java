@@ -2,53 +2,38 @@ package objects;
 
 import java.awt.*;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Handler {
-    LinkedList<GameObject> obstacleLinkedList;
-    ArrayList<Enemy> enemies;
-    LinkedList<Coin> coinlist;
+    static LinkedList<GameObject> obstacles=new LinkedList<>();
+    static LinkedList<Enemy> enemies=new LinkedList<>();
+    static LinkedList<Coin> coinlist=new LinkedList<>();
+    //Create an Array to irretate over all lists at once
+    private final LinkedList [] all = new LinkedList[]{obstacles,enemies, coinlist};
     Player player;
     DecimalFormat decFormat = new DecimalFormat("#0.00");
     double timer;
     double collisionTime = 0;
     double enemyDeathTime = 0;
 
-    public Handler(LinkedList<GameObject> obstacleLinkedList, Player player,
-                   ArrayList<Enemy> enemies, LinkedList<Coin> coinlist) {
-        this.obstacleLinkedList = obstacleLinkedList;
-        this.player = player;
-        this.enemies = enemies;
-        this.coinlist = coinlist;
+    public Handler(Player player) {
+        this.player=player;
     }
 
     public void update() {
-        for (GameObject object : obstacleLinkedList) {
-            object.update();
-        }
-        for (Enemy enemy : enemies) {
-            enemy.update();
-        }
-
-        for (Coin coin : coinlist) {
-            coin.update();
+        for (LinkedList l:all){
+            for (Object x:l){
+                ((GameObject)x).update();
+            }
         }
     }
 
     public void render(Graphics2D g2) {
         g2.setColor(Color.RED);
-        for (GameObject object : obstacleLinkedList) {
-            //g2.drawRect(object.x,object.y,object.width,object  .height);
-            object.render(g2);
-        }
-
-        for (Enemy enemy : enemies) {
-            enemy.render(g2);
-        }
-
-        for(Coin coin : coinlist) {
-            coin.render(g2);
+        for (LinkedList l:all){
+            for (Object x:l){
+                ((GameObject)x).render(g2);
+            }
         }
     }
 
@@ -67,7 +52,7 @@ public class Handler {
             player.setCollision(true);
         }
 
-        for (GameObject object : obstacleLinkedList) {
+        for (GameObject object : obstacles) {
             if (object.intersects(player) && player.isCollision()) {
                 b = true;
                 player.setCollision(false);
