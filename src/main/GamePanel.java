@@ -138,8 +138,8 @@ public class GamePanel extends JPanel implements Runnable {
     public void update() {
         if (gameState == PLAY_STATE) {
             bound.update();
-            player.tick();
-            handler.tick();
+            player.update();
+            handler.update();
             hud.update();
             obstacleSetter.addArrow();
             handler.checkEnemyCollision();
