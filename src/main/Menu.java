@@ -16,6 +16,8 @@ public class Menu {
     BufferedImage buttonImage;
     BufferedImage tombImage;
     BufferedImage wreath;
+    BufferedImage lv1Preview;
+    BufferedImage lv2Preview;
     int dynamicTextX;
 
     public int choice = 0; //option selection default
@@ -34,6 +36,8 @@ public class Menu {
             this.buttonImage = ImageIO.read(new File("res/Buttons/Button.png"));
             this.tombImage = ImageIO.read(new File("res/menu/tombstone2.png"));
             this.wreath =  ImageIO.read(new File("res/menu/olive wreath.png"));
+            this.lv1Preview = ImageIO.read(new File("res/menu/Level1Preview.png"));
+            this.lv2Preview = ImageIO.read(new File("res/menu/Level2Preview.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -172,7 +176,11 @@ public class Menu {
             //Options
             g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 40));
             String option;
-            option = "REPLAY LEVEL";
+            if(gamepanel.player.getLivesLeft() == 0 ){
+                option = "REPLAY LEVEL";
+            } else {
+                option = "NEXT LEVEL";
+            }
         g2.setColor(Color.BLACK);
         g2.drawString(option, defaultX + shadowOffset, defaultY + shadowOffset );
         g2.setColor(new Color(181, 179, 92));
@@ -229,6 +237,7 @@ public class Menu {
         g2.drawString(option, defaultXs + shadowOffset, defaultYs + shadowOffset );
         g2.setColor(new Color(181, 179, 92));
         g2.drawString(option, defaultXs , defaultYs);
+        g2.drawImage(lv1Preview , defaultXs + 200 , defaultYs - 65 , gamepanel.tileSize * 3 , gamepanel.tileSize * 2 , null);
         g2.setColor(Color.BLACK);
         if (choice == 0) {
             g2.drawString(">", defaultXs - 30 , defaultYs);
@@ -239,6 +248,7 @@ public class Menu {
         g2.setColor(new Color(181, 179, 92));
         g2.drawString(option, defaultXs, defaultYs + 130);
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 40));
+        g2.drawImage(lv2Preview , defaultXs + 200 , defaultYs + 70 , gamepanel.tileSize * 3 , gamepanel.tileSize * 2 , null);
         g2.setColor(Color.BLACK);
         if (choice == 1) {
             g2.drawString(">", defaultXs - 30, defaultYs + 130);
