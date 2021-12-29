@@ -37,7 +37,7 @@ public class HUD {
 
     public void draw(Graphics2D g2) {
         g2.setFont(gameFont);
-        g2.setColor(Color.BLACK);
+        g2.setColor(Color.WHITE);
         g2.drawImage(heartImage, gamepanel.tileSize / 2, gamepanel.tileSize / 2 - 10, gamepanel.tileSize, gamepanel.tileSize, null);
         g2.drawString("x " + gamepanel.player.getLivesLeft(), 74, 50);
         g2.drawImage(coinImage,(gamepanel.tileSize / 2) + 3 * gamepanel.tileSize, gamepanel.tileSize / 2 - 10, gamepanel.tileSize, gamepanel.tileSize,null);

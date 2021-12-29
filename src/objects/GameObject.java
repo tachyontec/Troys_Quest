@@ -9,7 +9,7 @@ public abstract class GameObject extends Rectangle {
     /**
      * this method extends Rectangle class from java.awt to implement collision
      * what all the objects have in common
-     * worldx,worldy are the coordinates of the game object relative to the map as pictured in mapLayout.txt,represented in tiles
+     * worldx,worldy are the coordinates of the game object relative to the map as pictured in Level1Layout.txt,represented in tiles
      * screenx,screeny are the coordinates of the game object relative to the screen (frame)
      * id is the differentiator for player , obstacle etc.
      * counter helps each object have a ID

@@ -17,23 +17,28 @@ public class TileManager {
 
     int[][] mapTileNumber; //a 2D array that witch represents our mapLayout
 
-    public TileManager(GamePanel gp) {
+    public TileManager(GamePanel gp, int levelno) {
         this.gp = gp;
-        tile = new Tile[10];
+        tile = new Tile[20];
         mapTileNumber = new int[gp.maxWorldCol][gp.maxWorldRow];//we initialise the array that represents our map so that its size is the same as our level
         getTileImage();//we load the images of the tiles from the /res folder
-        loadMap("/maps/mapLayout.txt");//we load the map
+        switch (levelno) {
+            case 1 -> loadMap("/maps/Level1Layout.txt");
+            case 2 -> loadMap("/maps/Level2Layout.txt");
+        }
+
     }
 
     /*
     This method initialises our tile[] array so that every cell contains a single png
     we do that because the map is constructed with a .txt file (e.g. mapLayout) which contains a bunch of integers 1-10
     we want to take that .txt file and replace all ints with a tile of our choice
-    every int i in the .txt file is going to be replaced with tile[i] on our gamesmenu
+    every int i in the .txt file is going to be replaced
+     with tile[i] on our gamesmenu
     */
     public void getTileImage() {
         try {
-            for (int i = 0; i < 7; i++) {
+            for (int i = 0; i < 20; i++) {
                 tile[i] = new Tile();
             }//if there are no tiles placed at a certain spot , the background shows
             //we input 0 on the .txt file where we want the background to show
@@ -43,6 +48,17 @@ public class TileManager {
             tile[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("cloud1.png")));
             tile[5].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("sky.png")));
             tile[6].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("bush.png")));
+            tile[7].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("CrossBoxFill.png")));
+            tile[8].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("crossBox.png")));
+            tile[9].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("RockGround.png")));
+            tile[10].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("rockBackground.png")));
+            tile[11].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("rockRedBG.png")));
+            tile[12].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("torch_bg.png")));
+            tile[13].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("RockCeiling.png")));
+            tile[14].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("gravelCeiling.png")));
+            tile[15].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("stalagmiteCeiling.png")));
+
+
 
         } catch (IOException e) {
 
