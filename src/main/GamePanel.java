@@ -131,6 +131,8 @@ public class GamePanel extends JPanel implements Runnable {
             bound.update();
             player.tick();
             handler.tick();
+            hud.update();
+            obstacleSetter.addArrow();
             handler.checkEnemyCollision();
             if (handler.checkPlayerCollision()) {
                 if (player.getLivesLeft() > 0) {

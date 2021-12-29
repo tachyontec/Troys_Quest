@@ -8,6 +8,7 @@ public class GameObjectSetter {
 
     GamePanel gamePanel;
     String str [] = new String[2];//string array that contains the names of the obstacles
+    Random rand = new Random();
     public GameObjectSetter(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
     }
@@ -16,7 +17,6 @@ public class GameObjectSetter {
     //initializes obstacles in obstacles array with their image icon
     // x ,y position relative to the map (worldX , worldY)
     public void setObject() {
-        Random rand = new Random();
         //We divide the map witch is 16x102 tiles in areas along
         // the x axis containing 5 tiles each like so 1._2._3._4._5._.
         //Each area has 3 tiles on witch obstacles or enemies are spawnable and 2 tiles that are void of objects.
@@ -55,13 +55,28 @@ public class GameObjectSetter {
         Bird bird = new Bird(18 * gamePanel.tileSize, 5 * gamePanel.tileSize,
                 4,0,gamePanel.tileSize,gamePanel.tileSize,gamePanel,"Bird");
         gamePanel.obstacles.add(bird);
-        MovingObstacle arrow = new MovingObstacle(25* gamePanel.tileSize,
+        /*MovingObstacle arrow = new MovingObstacle(25* gamePanel.tileSize,
                 gamePanel.floor ,
                 2, 4, gamePanel.tileSize, gamePanel.tileSize,"arrow",gamePanel);//added an arow to  game panel
         arrow.height -= 30;// changed arrows rectangle height because of the way Rectangles are drawn and made
         arrow.y += 14;// changed arrows rectangle y because of the way Rectangles are drawn and made
         gamePanel.obstacles.add(arrow);
+
+         */
+
     }
+    //since arrow spawning is dynamic , we need to handle it separately from level obstacle layout and call it repetitively from gamepanel.update()
+    //TO BE OPTIMIZED
+    public void addArrow() {
+        if(gamePanel.player.getX() < 90 * gamePanel.tileSize) {
+            if ((gamePanel.hud.counter % 180 == 0)) {
+                gamePanel.obstacles.add(new MovingObstacle(100 * gamePanel.tileSize,
+                        gamePanel.floor - rand.nextInt(4) * gamePanel.tileSize,
+                        4, 4, gamePanel.tileSize, gamePanel.tileSize, "arrow", gamePanel));
+            }
+        }
+    }
+
 
     //clears all the objects created in the game by emptying the lists that contain them
     public void clearObjects() {
