@@ -63,28 +63,29 @@ public class Handler {
 
         boolean b = false;
 
-        if (timer - collisionTime > 2.00) {
+        if (timer - collisionTime > 2.00) {//if player is invulnerable for 2 seconds , make him vulnerable again
             player.setCollision(true);
         }
 
-        for (GameObject object : obstacleLinkedList) {
-            if (object.intersects(player) && player.isCollision()) {
-                b = true;
-                player.setCollision(false);
-                collisionTime = timer;
+        for (GameObject object : obstacleLinkedList) {//for every object that may harm the player
+            if (object.intersects(player) && player.isCollision()) {//if object collides with player while player is vulnerable
+                b = true;//return true , meaning that the player is hit
+                player.setCollision(false);//make player invulnerable
+                collisionTime = timer;//store the time that the player is hit so that we can revert his state to vulnerable in time
                 break;
             }
-            if (object.intersects(player) && !object.getClass().equals(Bird.class)) {
+            //if an object that is not a bird or an arrow intersects with our player , we want the player to move back so that he can't just go through the obstacles , he has to avoid them
+            if (object.intersects(player) && !object.getClass().equals(Bird.class) && !object.getClass().equals(MovingObstacle.class)) {
                 player.setX(player.getX() - 20);//so as not to go "into" obstacles
-
             }
         }
 
-            for (Enemy enemy : enemies) {
+            for (Enemy enemy : enemies) {//for every enemyu on the level
+                //if both player and enemy are in a state that enables them to collide
                 if (enemy.intersects(player) && player.isCollision() && enemy.isCollision()) {
-                    b = true;
-                    player.setCollision(false);
-                    collisionTime = timer;
+                    b = true;//return that player is hit
+                    player.setCollision(false);//make player invulnerable
+                    collisionTime = timer;//store the time that the player is hit so that we can revert his state to vulnerable in time
                     player.setX(player.getX() - 20);//so as not to go "into" enemies
                     break;
                 }
@@ -99,16 +100,18 @@ public class Handler {
 
             return b;
         }
-
+        //checks whether an enemy is hit or not , and removes enemies when they die
         public void checkEnemyCollision () {
-            for (Enemy enemy : enemies) {
+            for (Enemy enemy : enemies) {//for every enemy
+                //if enemy collides with players' attack hitbox (his sword) and player is attacking (pressing space) and the enemy is alive and ccollidable
                 if (enemy.intersects(player.attackHitbox) &&
                         player.isAttackCollision && enemy.livesLeft > 0 && enemy.isCollision()) {
-                    enemy.livesLeft = 0;
-                    this.enemyDeathTime = this.timer;
-                    enemy.setCollision(false);
+                    enemy.livesLeft = 0;//kill enemy
+                    this.enemyDeathTime = this.timer;//store enemys' death time so that we remove them from the map after death animation is done
+                    enemy.setCollision(false);//make it so that enemy can't hit us when he is dead
 
                 }
+                //wait for death animation to play , then remove enemy
                 if (this.timer - this.enemyDeathTime > 1 && enemy.livesLeft == 0) {
                     enemies.remove(enemy);
                     break;//so that when an enemy is removes the for loop doesn't crash
