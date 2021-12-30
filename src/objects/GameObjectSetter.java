@@ -101,8 +101,6 @@ public class GameObjectSetter {
             Bird bird = new Bird(18 * gamePanel.tileSize, 5 * gamePanel.tileSize,
                     4, 0, gamePanel.tileSize, gamePanel.tileSize, gamePanel, "Bird");
             Handler.obstacles.add(bird);
-                    4,0,gamePanel.tileSize,gamePanel.tileSize,gamePanel,"Bird");
-            gamePanel.obstacles.add(bird);
         } else {
             Enemy enemy = new Enemy(16 * gamePanel.tileSize, 8.6 * gamePanel.tileSize,
                     1, 0, 3 * gamePanel.tileSize,3 * gamePanel.tileSize, "Minotaur", gamePanel);

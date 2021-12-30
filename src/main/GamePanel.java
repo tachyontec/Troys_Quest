@@ -59,7 +59,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setUpGame() {
         obstacleSetter.setObject();
-        tileM = new TileManager(this);
+        tileM = new TileManager(this , 1);
         currentLevel = 1;
         gameState = MENU_STATE;
         music.playMusic(5);// we play the 5th sound file which is the starting menu music
