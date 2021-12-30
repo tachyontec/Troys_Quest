@@ -127,7 +127,7 @@ public class TileManager {
             int worldX = worldCol * gp.tileSize;
             int worldY = worldRow * gp.tileSize;
             double screenX = worldX - gp.player.getX() + gp.player.screenX; //centers the player in relation to the screen in x axis,gp.player.screenX is used to offset the difference
-            double screenY = worldY; //centers the player in relation to the screen in y axis,gp.player.screenY is used to offset the difference
+            double screenY = worldY;
 
 
             //Make camera not go out of bounds

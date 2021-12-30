@@ -201,7 +201,7 @@ public class Player extends GameObject {
                         gamePanel.tileSize + 50, gamePanel.tileSize);
             }
         } else {
-            if ((int) (this.gamePanel.handler.timer * 50) % 2 == 0) {
+            if ((int) (this.gamePanel.CurrentLevel.handler.timer * 50) % 2 == 0) {
                 switch (state) {
                     case JUMP -> jumpinganimation.drawAnimation(g, screenX, screenY,
                             gamePanel.tileSize, gamePanel.tileSize);
