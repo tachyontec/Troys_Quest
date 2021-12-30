@@ -49,57 +49,34 @@ public class GameObjectSetter {
                     4, 0, gamePanel.tileSize, gamePanel.tileSize, gamePanel, "Bird");
             Handler.obstacles.add(bird);
         } else if (GamePanel.currentLevel == 2) {
-            System.out.println("1");
+            /*we spawn 4 times in a row an obstacle and the we spawn an enemy for our player to fight.*/
             for (int i = 1; i <= 20; i++) {
                 int randomTile = rand.nextInt(3);
                 int spawnX = startingpoint + randomTile * gamePanel.tileSize;
                 if (i % 4 == 0) {
                     Enemy enemy = new Enemy(spawnX, 8.6 * gamePanel.tileSize,
-                            1, 0, gamePanel.tileSize, gamePanel.tileSize, "Minotaur", gamePanel);
+                            1, 0, 3 * gamePanel.tileSize,3 * gamePanel.tileSize, "Minotaur", gamePanel);
                     // so that the enemy touches the ground , because minotaur png's are not the resolution we need
-                    enemy.y = (int) enemy.worldY + gamePanel.tileSize / 2;
+                    //enemy.y = (int) enemy.worldY + gamePanel.tileSize / 2;
                     Handler.enemies.add(enemy);
                 } else {
                     // used to choose randomly
                     // one of the 2 obstacles(Fire or spikesRoller)
                     Handler.obstacles.add(new Obstacle(spawnX, gamePanel.floor, 0,
                             0, 30, gamePanel.tileSize, str[0], gamePanel));
-                }
-                //We divide the map witch is 16x102 tiles in areas along
-                // the x axis containing 5 tiles each like so 1._2._3._4._5._.
-                //Each area has 3 tiles on witch obstacles or enemies are spawnable and 2 tiles that are void of objects.
-                startingpoint = 9 * gamePanel.tileSize; //starting point in map is where the player spawns
-                /*we spawn 4 times in a row an obstacle and the we spawn an enemy for our player to fight.*/
-            }
-            for (int i = 1; i <= 20; i++) {
-                int randomTile = rand.nextInt(3);
-                int spawnX = startingpoint + randomTile * gamePanel.tileSize;
-                if (i % 4 == 0) {
-                    Enemy enemy = new Enemy(spawnX, 8.6 * gamePanel.tileSize,
-                            1, 0, gamePanel.tileSize, gamePanel.tileSize, "Minotaur", gamePanel);
-                    // so that the enemy touches the ground , because minotaur png's are not the resolution we need
-                    enemy.y = (int) enemy.worldY + gamePanel.tileSize / 2;
-                    Handler.enemies.add(enemy);
-
-                } else {
-                    // used to choose randomly
-                    // one of the 2 obstacles(Fire or spikesRoller)
-                    int x = rand.nextInt(2);
-                    Handler.obstacles.add(new Obstacle(spawnX, gamePanel.floor, 0,
-                            0, 30, gamePanel.tileSize, str[x], gamePanel));
                 /* we spawn a coin above an obstacle with a random way to make player
                 jump a little or a lot to reach it and also make game harder*/
-                    int randomY = (rand.nextInt(3) + 1);
-                    Handler.coinlist.add(new Coin(spawnX, gamePanel.floor - (randomY * gamePanel.tileSize),
-                            0, 0, gamePanel.tileSize, gamePanel.tileSize, gamePanel));
+                    int randomY = (rand.nextInt(3) +1);
+                    Handler.coinlist.add(new Coin(spawnX , gamePanel.floor - (randomY * gamePanel.tileSize),
+                            0, 0, gamePanel.tileSize, gamePanel.tileSize,gamePanel ));
                 }
                 // we spawn coins after an obstacle or enemy for reward
                 Handler.coinlist.add(new Coin(spawnX + 2 * gamePanel.tileSize, gamePanel.floor,
-                        0, 0, gamePanel.tileSize, gamePanel.tileSize, gamePanel));
+                        0, 0, gamePanel.tileSize, gamePanel.tileSize,gamePanel ));
                 startingpoint += 5 * gamePanel.tileSize;
             }
             Bird bird = new Bird(18 * gamePanel.tileSize, 5 * gamePanel.tileSize,
-                    4, 0, gamePanel.tileSize, gamePanel.tileSize, gamePanel, "Bird");
+                    4,0,gamePanel.tileSize,gamePanel.tileSize,gamePanel,"Bird");
             Handler.obstacles.add(bird);
         } else {
             Enemy enemy = new Enemy(16 * gamePanel.tileSize, 8.6 * gamePanel.tileSize,
