@@ -75,15 +75,37 @@ public class Level {
         handler.obstacles.add(bird);
     }
 
-
+    //since arrow spawning is dynamic , we need to handle it separately from level obstacle layout and call it repetitively from gamepanel.update()
     public void addArrow() {
-        if (gamePanel.player.getX() < 85 * gamePanel.tileSize) {
-            if ((gamePanel.hud.counter % 180 == 0)) {
+        if (gamePanel.hud.counter % 180 == 0) { //every 3 seconds we spawn an arrow since our game updates itself 60 times per second (FPS)
+            //We cut up the level into 4 areas so that arrows spawn throughout the whole map and the player never sees them appear out of thin air
+            if ((gamePanel.player.getX() < 25 * gamePanel.tileSize)) { //1st area
+                MovingObstacle arrow = new MovingObstacle(50 * gamePanel.tileSize,
+                        gamePanel.floor - rand.nextInt(4) * gamePanel.tileSize,
+                        4, 4, gamePanel.tileSize, gamePanel.tileSize, "arrow", gamePanel);
+                arrow.height -= 30;// changed arrows rectangle height manually to match the actual shape of the arrow and adjust collision box
+                arrow.y += 14;// changed arrows rectangle y manually to match the actual shape of the arrow and adjust collision box
+                handler.obstacles.add(arrow);
+            } else if (gamePanel.player.getX() < 50 * gamePanel.tileSize) { //2nd area
+                MovingObstacle arrow = new MovingObstacle(75 * gamePanel.tileSize,
+                        gamePanel.floor - rand.nextInt(4) * gamePanel.tileSize,
+                        4, 4, gamePanel.tileSize, gamePanel.tileSize, "arrow", gamePanel);
+                arrow.height -= 30;
+                arrow.y += 14;
+                handler.obstacles.add(arrow);
+            } else if (gamePanel.player.getX() < 75 * gamePanel.tileSize) { //3rd area
                 MovingObstacle arrow = new MovingObstacle(100 * gamePanel.tileSize,
                         gamePanel.floor - rand.nextInt(4) * gamePanel.tileSize,
                         4, 4, gamePanel.tileSize, gamePanel.tileSize, "arrow", gamePanel);
-                arrow.height -= 30;// changed arrows rectangle height because of the way Rectangles are drawn and made
-                arrow.y += 14;// changed arrows rectangle y because of the way Rectangles are drawn and made
+                arrow.height -= 30;
+                arrow.y += 14;
+                handler.obstacles.add(arrow);
+            } else if (gamePanel.player.getX() < 95 * gamePanel.tileSize) { //4th area
+                MovingObstacle arrow = new MovingObstacle(115 * gamePanel.tileSize,
+                        gamePanel.floor - rand.nextInt(4) * gamePanel.tileSize,
+                        4, 4, gamePanel.tileSize, gamePanel.tileSize, "arrow", gamePanel);
+                arrow.height -= 30;
+                arrow.y += 14;
                 handler.obstacles.add(arrow);
             }
         }

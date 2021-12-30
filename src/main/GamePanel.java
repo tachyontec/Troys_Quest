@@ -61,12 +61,11 @@ public class GamePanel extends JPanel implements Runnable {
     public Level level3 = new Level(this, "/maps/Level3Layout.txt",
             new TileManager(this), obstacle1,enemies1,true );
 
-    public Level CurrentLevel; // stores the Level that player has chosed
+    public Level CurrentLevel; // stores the Level that player has chosen
 
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
-        this.setBackground(new Color(43, 145, 193));
         this.setDoubleBuffered(true);
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
