@@ -1,4 +1,4 @@
-package objects;
+/*package objects;
 
 import main.GamePanel;
 
@@ -28,15 +28,15 @@ public class GameObjectSetter {
             // the x axis containing 5 tiles each like so 1._2._3._4._5._.
             //Each area has 3 tiles on witch obstacles or enemies are spawnable and 2 tiles that are void of objects.
             // to be implemented as new obstacles get added!
-            /*we spawn 4 times in a row an obstacle and the we spawn an enemy for our player to fight.*/
+            //we spawn 4 times in a row an obstacle and the we spawn an enemy for our player to fight.
             for (int i = 1; i <= 20; i++) {
                 int randomTile = rand.nextInt(3);
                 int spawnX = startingpoint + randomTile * gamePanel.tileSize;
                 //spawn a spike roller
                 Handler.obstacles.add(new Obstacle(spawnX, gamePanel.floor, 0,
                         0, 30, gamePanel.tileSize, str[1], gamePanel));
-                    /* we spawn a coin above an obstacle with a random way to make player
-                    jump a little or a lot to reach it and also make game harder*/
+                    // we spawn a coin above an obstacle with a random way to make player
+                    //jump a little or a lot to reach it and also make game harder
                 int randomY = (rand.nextInt(3) + 1);
                 Handler.coinlist.add(new Coin(spawnX, gamePanel.floor - (randomY * gamePanel.tileSize),
                         0, 0, gamePanel.tileSize, gamePanel.tileSize, gamePanel));
@@ -50,7 +50,7 @@ public class GameObjectSetter {
                     4, 0, gamePanel.tileSize, gamePanel.tileSize, gamePanel, "Bird");
             Handler.obstacles.add(bird);
         } else if (GamePanel.currentLevel == 2) {
-            /*we spawn 4 times in a row an obstacle and the we spawn an enemy for our player to fight.*/
+            //we spawn 4 times in a row an obstacle and the we spawn an enemy for our player to fight.
             for (int i = 1; i <= 20; i++) {
                 int randomTile = rand.nextInt(3);
                 int spawnX = startingpoint + randomTile * gamePanel.tileSize;
@@ -66,8 +66,8 @@ public class GameObjectSetter {
                     // one of the 2 obstacles(Fire or spikesRoller)
                     Handler.obstacles.add(new Obstacle(spawnX, gamePanel.floor, 0,
                             0, 30, gamePanel.tileSize, str[0], gamePanel));
-                /* we spawn a coin above an obstacle with a random way to make player
-                jump a little or a lot to reach it and also make game harder*/
+                // we spawn a coin above an obstacle with a random way to make player
+                jump a little or a lot to reach it and also make game harder
                     int randomY = (rand.nextInt(3) +1);
                     Handler.coinlist.add(new Coin(spawnX , gamePanel.floor - (randomY * gamePanel.tileSize),
                             0, 0, gamePanel.tileSize, gamePanel.tileSize,gamePanel ));
@@ -116,3 +116,4 @@ public class GameObjectSetter {
 
 
 }
+*/

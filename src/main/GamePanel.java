@@ -73,9 +73,6 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void setUpGame() {
-        obstacleSetter.setObject();
-        tileM = new TileManager(this , 1);
-        currentLevel = 1;
         gameState = MENU_STATE;
         music.playMusic(5);// we play the 5th sound file which is the starting menu music
     }
@@ -84,10 +81,18 @@ public class GamePanel extends JPanel implements Runnable {
     public void resetGame(int levelNumber) {
         //level reset
         switch (levelNumber) {
-            case 1 -> tileM.loadMap("/maps/Level1Layout.txt");
-            case 2 -> tileM.loadMap("/maps/Level2Layout.txt");
-            case 3 -> tileM.loadMap("/maps/Level3Layout.txt");
-
+            case 1 :
+                level1.setupLevel();
+                CurrentLevel = level1;
+                break;
+            case 2 :
+                level2.setupLevel();
+                CurrentLevel = level2;
+                break;
+            case 3 :
+                level3.setupLevel();
+                CurrentLevel = level3;
+                break;
         }
         //player reset
         player.setLivesLeft(3);
@@ -97,8 +102,8 @@ public class GamePanel extends JPanel implements Runnable {
         player.screenX = tileSize * 7;
         player.screenY = tileSize * 9;
         //object reset
-        obstacleSetter.clearObjects();
-        obstacleSetter.setObject();
+        CurrentLevel.clearObjects();
+        CurrentLevel.setupGameObjects();
         //misc resets
         GamePanel.i = 0;
         hud.levelTimer = 0;
@@ -152,7 +157,7 @@ public class GamePanel extends JPanel implements Runnable {
             CurrentLevel.handler.update();
             hud.update();
             if(GamePanel.currentLevel != 2) {
-                obstacleSetter.addArrow();
+                level1.addArrow();
             }
             CurrentLevel.handler.checkEnemyCollision();
             if (CurrentLevel.handler.checkPlayerCollision()) {
