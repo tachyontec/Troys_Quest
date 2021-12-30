@@ -19,12 +19,13 @@ public class TileManager {
 
     public TileManager(GamePanel gp, int levelNumber) {
         this.gp = gp;
-        tile = new Tile[20];
+        tile = new Tile[30];
         mapTileNumber = new int[gp.maxWorldCol][gp.maxWorldRow];//we initialise the array that represents our map so that its size is the same as our level
         getTileImage();//we load the images of the tiles from the /res folder
         switch (levelNumber) {
             case 1 -> loadMap("/maps/Level1Layout.txt");
             case 2 -> loadMap("/maps/Level2Layout.txt");
+            case 3 -> loadMap("/maps/Level3Layout.txt");
         }
 
     }
@@ -38,7 +39,7 @@ public class TileManager {
     */
     public void getTileImage() {
         try {
-            for (int i = 0; i < 20; i++) {
+            for (int i = 0; i < 30; i++) {
                 tile[i] = new Tile();
             }//if there are no tiles placed at a certain spot , the background shows
             //we input 0 on the .txt file where we want the background to show
@@ -57,8 +58,12 @@ public class TileManager {
             tile[13].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("RockCeiling.png")));
             tile[14].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("gravelCeiling.png")));
             tile[15].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("stalagmiteCeiling.png")));
-
-
+            tile[16].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("CasteWallBg.png")));
+            tile[17].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("grillFireWallBg.png")));
+            tile[18].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("grillWallBg.png")));
+            tile[19].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("plankOnWaterGround.png")));
+            tile[20].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("WaterfallEnd.png")));
+            tile[21].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("CastleWallTop.png")));
 
         } catch (IOException e) {
 

@@ -77,6 +77,12 @@ public class GameObjectSetter {
             Bird bird = new Bird(18 * gamePanel.tileSize, 5 * gamePanel.tileSize,
                     4,0,gamePanel.tileSize,gamePanel.tileSize,gamePanel,"Bird");
             gamePanel.obstacles.add(bird);
+        } else {
+            Enemy enemy = new Enemy(16 * gamePanel.tileSize, 8.6 * gamePanel.tileSize,
+                    1, 0, 3 * gamePanel.tileSize,3 * gamePanel.tileSize, "Minotaur", gamePanel);
+            // so that the enemy touches the ground , because minotaur png's are not the resolution we need
+            enemy.y = (int) enemy.worldY + gamePanel.tileSize / 2;
+            gamePanel.enemies.add(enemy);
         }
     }
 

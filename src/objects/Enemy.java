@@ -67,11 +67,10 @@ public class Enemy extends GameObject {
         double screenY = this.getY() - gamePanel.player.getY() + gamePanel.player.screenY; //centers the player in relation to the screen in y axis,gp.player.screenY is used to offset the difference
 
         switch (state) {
-            case DEAD -> deathAnimation.drawAnimation(g, (int) screenX, (int) screenY, 2 * gamePanel.tileSize, 2 * gamePanel.tileSize);
-            case RUN -> walkingAnimation.drawAnimation(g, (int) screenX, (int) screenY, 2 * gamePanel.tileSize, 2 * gamePanel.tileSize);
-            case IDLE -> idleAnimation.drawAnimation(g, (int) screenX, (int) screenY, 2 * gamePanel.tileSize, 2 * gamePanel.tileSize);
-            case ATTACK -> attackAnimation.drawAnimation(g, (int) screenX, (int) screenY, 2 *
-                    gamePanel.tileSize, 2 * gamePanel.tileSize);
+            case DEAD -> deathAnimation.drawAnimation(g, (int) screenX, (int) screenY, this.width, this.height);
+            case RUN -> walkingAnimation.drawAnimation(g, (int) screenX, (int) screenY, this.width, this.height);
+            case IDLE -> idleAnimation.drawAnimation(g, (int) screenX, (int) screenY, this.width, this.height);
+            case ATTACK -> attackAnimation.drawAnimation(g, (int) screenX, (int) screenY, this.width, this.height);
         }
     }
 

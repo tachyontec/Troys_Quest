@@ -78,6 +78,8 @@ public class GamePanel extends JPanel implements Runnable {
         switch (levelNumber) {
             case 1 -> tileM.loadMap("/maps/Level1Layout.txt");
             case 2 -> tileM.loadMap("/maps/Level2Layout.txt");
+            case 3 -> tileM.loadMap("/maps/Level3Layout.txt");
+
         }
         //player reset
         player.setLivesLeft(3);

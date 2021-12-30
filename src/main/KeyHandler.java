@@ -67,8 +67,8 @@ public class KeyHandler implements KeyListener {
                             //End of level reset
                             gp.gameState = GamePanel.PLAY_STATE;
                         } else if (gp.gameState == GamePanel.LEVEL_SELECTION_STATE) { //LEVEL 1 SELECTED
-                            gp.resetGame(1);
                             gp.currentLevel = 1;
+                            gp.resetGame(1);
                             gp.gameState = GamePanel.PLAY_STATE;
                         }
                         break;
@@ -92,8 +92,8 @@ public class KeyHandler implements KeyListener {
                         break;
                     case 2 : //3RD CHOICE
                         if(gp.gameState == GamePanel.LEVEL_SELECTION_STATE) { //LEVEL 3 SELECTED
-                            gp.resetGame(3);
                             gp.currentLevel = 3;
+                            gp.resetGame(3);
                             gp.gameState = GamePanel.PLAY_STATE;
                         } else {
                             System.exit(0);
