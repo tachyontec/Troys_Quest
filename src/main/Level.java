@@ -8,8 +8,8 @@ import java.util.Random;
 public class Level {
 
     public String txtPath;
-    public String[] obstacleName;
-    public String[] enemyName;
+    public String [] obstacleName;
+    public String [] enemyName;
     GamePanel gamePanel;
     TileManager tileM;
     public int enemyCounter;
