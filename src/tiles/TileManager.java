@@ -17,16 +17,16 @@ public class TileManager {
 
     int[][] mapTileNumber; //a 2D array that witch represents our mapLayout
 
-    public TileManager(GamePanel gp, int levelNumber) {
+    public TileManager(GamePanel gp) {
         this.gp = gp;
         tile = new Tile[30];
         mapTileNumber = new int[gp.maxWorldCol][gp.maxWorldRow];//we initialise the array that represents our map so that its size is the same as our level
         getTileImage();//we load the images of the tiles from the /res folder
-        switch (levelNumber) {
+        /*switch (levelNumber) {
             case 1 -> loadMap("/maps/Level1Layout.txt");
             case 2 -> loadMap("/maps/Level2Layout.txt");
             case 3 -> loadMap("/maps/Level3Layout.txt");
-        }
+        }*/
 
     }
 
@@ -127,7 +127,7 @@ public class TileManager {
             int worldX = worldCol * gp.tileSize;
             int worldY = worldRow * gp.tileSize;
             double screenX = worldX - gp.player.getX() + gp.player.screenX; //centers the player in relation to the screen in x axis,gp.player.screenX is used to offset the difference
-            double screenY = worldY - gp.player.getY() + gp.player.screenY; //centers the player in relation to the screen in y axis,gp.player.screenY is used to offset the difference
+            double screenY = worldY; //centers the player in relation to the screen in y axis,gp.player.screenY is used to offset the difference
 
 
             //Make camera not go out of bounds

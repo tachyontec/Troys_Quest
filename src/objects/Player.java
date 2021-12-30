@@ -152,13 +152,13 @@ public class Player extends GameObject {
             state = State.LEFT;
             this.setX(this.getX() - this.getSpeedx());//moves the player along the x axis to the left
             attackHitbox.x = (int) (this.getX() + gamePanel.tileSize);//moves the attack hitbox to follow players' hitbox
-            attackHitbox.y = (int) this.getY();//moves the attack hitbox to follow players' hitbox
+           // attackHitbox.y = (int) this.getY();//moves the attack hitbox to follow players' hitbox
             leftanimation.runAnimation();
         } else if (keyHandler.rightPressed) {
             state = State.RIGHT;
             this.setX(this.getX() + getSpeedx());//moves the player along the x axis to the right
             attackHitbox.x = (int) (this.getX() + gamePanel.tileSize);//moves the attack hitbox to follow players' hitbox
-            attackHitbox.y = (int) this.getY();//moves the attack hitbox to follow players' hitbox
+            //attackHitbox.y = (int) this.getY();//moves the attack hitbox to follow players' hitbox
             rightanimation.runAnimation();
         }
 
@@ -243,7 +243,6 @@ public class Player extends GameObject {
         if (bottomDiff > gamePanel.worldHeight - getY()) {
             screenY = gamePanel.screenHeight - (gamePanel.worldHeight - (int) getY()); //and we subtract the difference from the current tile from the bottom edge of the screen
         }
-
 
     }
 

@@ -43,7 +43,6 @@ public class Enemy extends GameObject {
         this.gamePanel = gamePanel;
         this.livesLeft = 1;
         this.collision = true;
-
     }
 
     public void setAnimation() {
@@ -64,7 +63,7 @@ public class Enemy extends GameObject {
     public void render(Graphics2D g) {
         super.render(g);
         double screenX = this.getX() - gamePanel.player.getX() + gamePanel.player.screenX; //centers the player in relation to the screen in x axis,gp.player.screenX is used to offset the difference
-        double screenY = this.getY() - gamePanel.player.getY() + gamePanel.player.screenY; //centers the player in relation to the screen in y axis,gp.player.screenY is used to offset the difference
+        double screenY = this.getY(); //centers the player in relation to the screen in y axis,gp.player.screenY is used to offset the difference
 
         switch (state) {
             case DEAD -> deathAnimation.drawAnimation(g, (int) screenX, (int) screenY, this.width, this.height);

@@ -43,7 +43,7 @@ public class MovingObstacle extends GameObject {
         double screenX = this.getX() - gamePanel.player.getX() + gamePanel.player.screenX;
         /*centers the player in relation to the screen in y axis,
         gp.player.screenY is used to offset the difference*/
-        double screenY = this.getY() - gamePanel.player.getY() + gamePanel.player.screenY;
+        double screenY = this.getY();
         animation.drawAnimation(g , (int) screenX, (int) screenY, gamePanel.tileSize, gamePanel.tileSize);
     }
 

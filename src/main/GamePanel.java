@@ -33,7 +33,6 @@ public class GamePanel extends JPanel implements Runnable {
 
     public int gameState;
 
-    TileManager tileM;
 
     KeyHandler keyHandler = new KeyHandler(this);
     Sound music = new Sound();// used for background music
@@ -42,11 +41,27 @@ public class GamePanel extends JPanel implements Runnable {
 
 
     public Player player = new Player(7 * tileSize, floor, 3, 4, keyHandler, this);
-    public GameObjectSetter obstacleSetter = new GameObjectSetter(this);
+    //public GameObjectSetter obstacleSetter = new GameObjectSetter(this);
     public HUD hud = new HUD(this);
     public Menu menu = new Menu(this);
     public Handler handler = new Handler(player);
     public Bound bound = new Bound(player, this);
+
+    //Level initialization
+    String [] obstacle = {"spikesRoller"};
+    String [] enemies = {"Minotaur"};
+    public Level level1 = new Level(this, "/maps/Level1Layout.txt",
+            new TileManager(this), obstacle,enemies,false );
+    String [] obstacle1 = {"Fire"};
+    String [] enemies1 = {"Minotaur"};
+    public Level level2 = new Level(this, "/maps/Level2Layout.txt",
+            new TileManager(this), obstacle1,enemies1,true );
+    String [] obstacle2 = {"Fire"};
+    String [] enemies2 = {"Minotaur"};
+    public Level level3 = new Level(this, "/maps/Level3Layout.txt",
+            new TileManager(this), obstacle1,enemies1,true );
+
+    public Level CurrentLevel; // stores the Level that player has chosed
 
 
     public GamePanel() {
@@ -134,13 +149,13 @@ public class GamePanel extends JPanel implements Runnable {
         if (gameState == PLAY_STATE) {
             bound.update();
             player.update();
-            handler.update();
+            CurrentLevel.handler.update();
             hud.update();
             if(GamePanel.currentLevel != 2) {
                 obstacleSetter.addArrow();
             }
-            handler.checkEnemyCollision();
-            if (handler.checkPlayerCollision()) {
+            CurrentLevel.handler.checkEnemyCollision();
+            if (CurrentLevel.handler.checkPlayerCollision()) {
                 if (player.getLivesLeft() > 0) {
                     player.setLivesLeft(player.getLivesLeft() - 1);
                     se.playSE(2);
@@ -173,9 +188,9 @@ public class GamePanel extends JPanel implements Runnable {
         } else if (gameState == LEVEL_SELECTION_STATE){
             menu.drawLevelSelectionMenu(g2);
         } else {
-            tileM.render(g2);
+            CurrentLevel.tileM.render(g2);
+            CurrentLevel.handler.render(g2);
             player.render(g2);
-            handler.render(g2);
             bound.render(g2);
             hud.render(g2);
         }

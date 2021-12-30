@@ -44,7 +44,7 @@ public class Coin extends GameObject {
         //centers the player in relation to the screen in x axis,gp.player.screenX is used to offset the difference
         double screenX = this.getX() - gamePanel.player.getX() + gamePanel.player.screenX;
         //centers the player in relat
-        double screenY = this.getY() - gamePanel.player.getY() + gamePanel.player.screenY;
+        double screenY = this.getY();
         g2.setColor(Color.BLACK);
         if(state == State.IDLE){
             idleanimation.drawAnimation(g2, (int) screenX, (int) screenY,

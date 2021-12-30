@@ -21,8 +21,9 @@ public class Bound {
         /*we change start worldX because we need tha flag
         to spawn down next to the player but the rectangle to be taller */
         start.worldY = (9 * gamePanel.tileSize);
-        end = new Obstacle(110 * gamePanel.tileSize, gamePanel.tileSize * 5,
-                0, 0, gamePanel.tileSize, gamePanel.tileSize * 5, "Flag", gamePanel);
+        end = new Obstacle((gamePanel.maxWorldCol - 2) * gamePanel.tileSize ,
+                gamePanel.tileSize * 5, 0, 0,
+                gamePanel.tileSize, gamePanel.tileSize * 5, "Flag", gamePanel);
         /* we change end worldX because we need tha flag
         to spawn down next to the player but the rectangle to be taller */
         end.worldY = (9 * gamePanel.tileSize);

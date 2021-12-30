@@ -9,7 +9,7 @@ public class GameObjectSetter {
     GamePanel gamePanel;
     String[] str = new String[2];//string array that contains the names of the obstacles
     Random rand = new Random();
-
+    int enemycounter;
     public GameObjectSetter(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
     }
@@ -43,7 +43,8 @@ public class GameObjectSetter {
                 // we spawn coins after an obstacle or enemy for reward
                 Handler.coinlist.add(new Coin(spawnX + 2 * gamePanel.tileSize, gamePanel.floor,
                         0, 0, gamePanel.tileSize, gamePanel.tileSize, gamePanel));
-                startingpoint += 5 * gamePanel.tileSize;
+                startingpoint += 6 * gamePanel.tileSize;
+                enemycounter =0;
             }
             Bird bird = new Bird(18 * gamePanel.tileSize, 5 * gamePanel.tileSize,
                     4, 0, gamePanel.tileSize, gamePanel.tileSize, gamePanel, "Bird");
@@ -59,6 +60,7 @@ public class GameObjectSetter {
                     // so that the enemy touches the ground , because minotaur png's are not the resolution we need
                     //enemy.y = (int) enemy.worldY + gamePanel.tileSize / 2;
                     Handler.enemies.add(enemy);
+                    enemycounter++;
                 } else {
                     // used to choose randomly
                     // one of the 2 obstacles(Fire or spikesRoller)
@@ -85,6 +87,7 @@ public class GameObjectSetter {
             enemy.y = (int) enemy.worldY + gamePanel.tileSize / 2;
             Handler.enemies.add(enemy);
         }
+        System.out.println(enemycounter);
     }
 
     //since arrow spawning is dynamic , we need to handle it separately from level obstacle layout and call it repetitively from gamepanel.update()

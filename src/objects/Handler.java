@@ -5,11 +5,11 @@ import java.text.DecimalFormat;
 import java.util.LinkedList;
 
 public class Handler {
-    static LinkedList<GameObject> obstacles=new LinkedList<>();
-    static LinkedList<Enemy> enemies=new LinkedList<>();
-    static LinkedList<Coin> coinlist=new LinkedList<>();
+    public LinkedList<GameObject> obstacles = new LinkedList<>();
+    public  LinkedList<Enemy> enemies = new LinkedList<>();
+    public LinkedList<Coin> coinlist = new LinkedList<>();
     //Create an Array to irretate over all lists at once
-    private final LinkedList [] all = new LinkedList[]{obstacles,enemies, coinlist};
+    private final LinkedList[] all = new LinkedList[]{obstacles, enemies, coinlist};
     Player player;
     DecimalFormat decFormat = new DecimalFormat("#0.00");
     double timer;
@@ -17,22 +17,22 @@ public class Handler {
     double enemyDeathTime = 0;
 
     public Handler(Player player) {
-        this.player=player;
+        this.player = player;
     }
 
     public void update() {
-        for (LinkedList l:all){
-            for (Object x:l){
-                ((GameObject)x).update();
+        for (LinkedList l : all) {
+            for (Object x : l) {
+                ((GameObject) x).update();
             }
         }
     }
 
     public void render(Graphics2D g2) {
         g2.setColor(Color.RED);
-        for (LinkedList l:all){
-            for (Object x:l){
-                ((GameObject)x).render(g2);
+        for (LinkedList l : all) {
+            for (Object x : l) {
+                ((GameObject) x).render(g2);
             }
         }
     }
@@ -65,40 +65,40 @@ public class Handler {
             }
         }
 
-            for (Enemy enemy : enemies) {
-                if (enemy.intersects(player) && player.isCollision() && enemy.isCollision()) {
-                    b = true;
-                    player.setCollision(false);
-                    collisionTime = timer;
-                    player.setX(player.getX() - 20);//so as not to go "into" enemies
-                    break;
-                }
+        for (Enemy enemy : enemies) {
+            if (enemy.intersects(player) && player.isCollision() && enemy.isCollision()) {
+                b = true;
+                player.setCollision(false);
+                collisionTime = timer;
+                player.setX(player.getX() - 20);//so as not to go "into" enemies
+                break;
             }
-                //handling the collision of all the coins in game
-                for (Coin coin : coinlist) {
-                    if (coin.checkCollision()) {
-                        coinlist.remove(coin);
-                        break;
-                    }
-                }
-
-            return b;
+        }
+        //handling the collision of all the coins in game
+        for (Coin coin : coinlist) {
+            if (coin.checkCollision()) {
+                coinlist.remove(coin);
+                break;
+            }
         }
 
-        public void checkEnemyCollision () {
-            for (Enemy enemy : enemies) {
-                if (enemy.intersects(player.attackHitbox) &&
-                        player.isAttackCollision && enemy.livesLeft > 0 && enemy.isCollision()) {
-                    enemy.livesLeft = 0;
-                    this.enemyDeathTime = this.timer;
-                    enemy.setCollision(false);
+        return b;
+    }
 
-                }
-                if (this.timer - this.enemyDeathTime > 1 && enemy.livesLeft == 0) {
-                    enemies.remove(enemy);
-                    break;//so that when an enemy is removes the for loop doesn't crash
-                }
+    public void checkEnemyCollision() {
+        for (Enemy enemy : enemies) {
+            if (enemy.intersects(player.attackHitbox) &&
+                    player.isAttackCollision && enemy.livesLeft > 0 && enemy.isCollision()) {
+                enemy.livesLeft = 0;
+                this.enemyDeathTime = this.timer;
+                enemy.setCollision(false);
+
+            }
+            if (this.timer - this.enemyDeathTime > 1 && enemy.livesLeft == 0) {
+                enemies.remove(enemy);
+                break;//so that when an enemy is removes the for loop doesn't crash
             }
         }
     }
+}
 
