@@ -59,13 +59,19 @@ public class KeyHandler implements KeyListener {
                             gp.gameState = GamePanel.PLAY_STATE;
                             gp.music.stopMusic();
                             gp.music.playMusic(0); //GAME SONG
-                        } else if(gp.gameState == GamePanel.WIN_LOSE_STATE){ //REPLAY LEVEL
-                            gp.music.stopMusic();
-                            gp.music.playMusic(0); //GAME SONG
-                            //Start of level reset
-                            gp.resetGame(gp.currentLevel);
-                            //End of level reset
-                            gp.gameState = GamePanel.PLAY_STATE;
+                        } else if(gp.gameState == GamePanel.WIN_LOSE_STATE){
+                            if(gp.player.getLivesLeft() == 0) { //REPLAY LEVEL
+                                gp.music.stopMusic();
+                                gp.music.playMusic(0); //GAME SONG
+                                //Start of level reset
+                                gp.resetGame(gp.currentLevel);
+                                //End of level reset
+                                gp.gameState = GamePanel.PLAY_STATE;
+                            } else {
+                                GamePanel.currentLevel++;
+                                gp.resetGame(GamePanel.currentLevel);
+                                gp.gameState = GamePanel.PLAY_STATE;
+                            }
                         } else if (gp.gameState == GamePanel.LEVEL_SELECTION_STATE) { //LEVEL 1 SELECTED
                             gp.currentLevel = 1;
                             gp.resetGame(1);

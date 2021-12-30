@@ -6,10 +6,6 @@ import tiles.*;
 
 import javax.swing.JPanel;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.LinkedList;
-
-import static java.lang.Thread.sleep;
 
 public class GamePanel extends JPanel implements Runnable {
     //Screen settings
@@ -49,10 +45,7 @@ public class GamePanel extends JPanel implements Runnable {
     public GameObjectSetter obstacleSetter = new GameObjectSetter(this);
     public HUD hud = new HUD(this);
     public Menu menu = new Menu(this);
-    public LinkedList<GameObject> obstacles = new LinkedList<>();
-    public ArrayList<Enemy> enemies = new ArrayList<>();
-    public LinkedList<Coin> coinlist = new LinkedList<>(); // list that contains all the coins in game
-    public Handler handler = new Handler(obstacles, player, enemies, coinlist);
+    public Handler handler = new Handler(player);
     public Bound bound = new Bound(player, this);
 
 
@@ -66,7 +59,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setUpGame() {
         obstacleSetter.setObject();
-        tileM = new TileManager(this,1);
+        tileM = new TileManager(this);
         currentLevel = 1;
         gameState = MENU_STATE;
         music.playMusic(5);// we play the 5th sound file which is the starting menu music
