@@ -23,6 +23,7 @@ public class Enemy extends GameObject {
     GamePanel gamePanel;
 
     public int livesLeft;
+
     enum State {DEAD, RUN, ATTACK, IDLE}
     //variables used to calculate enemies' death time
 
@@ -52,10 +53,10 @@ public class Enemy extends GameObject {
         idle = Resource.getFilesInDir("res/Enemies/" + this.name + "/Idle");
         death = Resource.getFilesInDir("res/Enemies/" + this.name + "/Death");
         //Create the animations
-        walkingAnimation = new Animation(0 , run);
-        idleAnimation = new Animation(-3 , idle);
-        attackAnimation = new Animation(3 , attack);
-        deathAnimation = new Animation(-3 , death);
+        walkingAnimation = new Animation(0, run);
+        idleAnimation = new Animation(-3, idle);
+        attackAnimation = new Animation(3, attack);
+        deathAnimation = new Animation(-3, death);
     }
 
     //renders the animations of the enemy
@@ -64,12 +65,15 @@ public class Enemy extends GameObject {
         super.render(g);
         double screenX = this.getX() - gamePanel.player.getX() + gamePanel.player.screenX; //centers the player in relation to the screen in x axis,gp.player.screenX is used to offset the difference
         double screenY = this.getY(); //centers the player in relation to the screen in y axis,gp.player.screenY is used to offset the difference
-
         switch (state) {
-            case DEAD -> deathAnimation.drawAnimation(g, (int) screenX, (int) screenY, this.width, this.height);
-            case RUN -> walkingAnimation.drawAnimation(g, (int) screenX, (int) screenY, this.width, this.height);
-            case IDLE -> idleAnimation.drawAnimation(g, (int) screenX, (int) screenY, this.width, this.height);
-            case ATTACK -> attackAnimation.drawAnimation(g, (int) screenX, (int) screenY, this.width, this.height);
+            case DEAD -> deathAnimation.drawAnimation(g, (int) screenX, (int) screenY,
+                    this.width, this.height);
+            case RUN -> walkingAnimation.drawAnimation(g, (int) screenX, (int) screenY,
+                    this.width, this.height);
+            case IDLE -> idleAnimation.drawAnimation(g, (int) screenX, (int) screenY,
+                    this.width, this.height);
+            case ATTACK -> attackAnimation.drawAnimation(g, (int) screenX, (int) screenY,
+                    this.width, this.height);
         }
     }
 
@@ -78,14 +82,14 @@ public class Enemy extends GameObject {
     @Override
     public void update() {
         //System.out.println(this.enemyDeathTime);
-         if(this.livesLeft <= 0) {
+        if (this.livesLeft <= 0) {
             this.state = State.DEAD;
             deathAnimation.runAnimation();
-        }else if (Math.abs(this.getX()-this.gamePanel.player.getX()) <= gamePanel.tileSize/2 + gamePanel.tileSize/4) {//when player x coordinate in [minotaurX*3/4*tilesize,minotaurX]
+        } else if (Math.abs(this.getX() - this.gamePanel.player.getX()) <= gamePanel.tileSize / 2 + gamePanel.tileSize / 4) {//when player x coordinate in [minotaurX*3/4*tilesize,minotaurX]
             this.state = State.ATTACK;
             attackAnimation.runAnimation();
-        } else if(Math.abs(this.getX()-this.gamePanel.player.getX()) < 3 * gamePanel.tileSize //when player x coordinate in (minotaurX*3*tilesize,minotaurX*3/4*tilesize)
-                    && (Math.abs(this.getX()-this.gamePanel.player.getX()) > gamePanel.tileSize/2 + gamePanel.tileSize/4)) {
+        } else if (Math.abs(this.getX() - this.gamePanel.player.getX()) < 3 * gamePanel.tileSize //when player x coordinate in (minotaurX*3*tilesize,minotaurX*3/4*tilesize)
+                && (Math.abs(this.getX() - this.gamePanel.player.getX()) > gamePanel.tileSize / 2 + gamePanel.tileSize / 4)) {
             this.state = State.RUN;
             walkingAnimation.runAnimation();
             this.setX(this.getX() - 1);
@@ -94,7 +98,6 @@ public class Enemy extends GameObject {
             idleAnimation.runAnimation();
         }
     }
-
 
 
     public String getName() {

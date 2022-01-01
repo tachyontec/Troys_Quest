@@ -145,7 +145,7 @@ public class TileManager {
             //Then we calculate the length between player screenX and the right edge of the frame
             int rightDiff = gp.screenWidth - gp.player.screenX;
             if (rightDiff > gp.worldWidth - gp.player.getX()) {
-                screenX = gp.screenWidth - (gp.worldWidth - worldX); //and we subtract the difference from the current tile from the edge of the screen
+                 screenX = gp.screenWidth - (gp.worldWidth - worldX); //and we subtract the difference from the current tile from the edge of the screen
             }
             //Then we calculate the length between player screenY and the right edge of the frame
             int bottomDiff = gp.screenHeight - (gp.worldHeight - worldY);

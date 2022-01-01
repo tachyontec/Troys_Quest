@@ -2,14 +2,16 @@ package objects;
 
 import java.awt.*;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Handler {
     public LinkedList<GameObject> obstacles = new LinkedList<>();
     public  LinkedList<Enemy> enemies = new LinkedList<>();
     public LinkedList<Coin> coinlist = new LinkedList<>();
+    public LinkedList<Block> blockArrayList = new LinkedList<>();
     //Create an Array to irretate over all lists at once
-    private final LinkedList[] all = new LinkedList[]{obstacles, enemies, coinlist};
+    private final LinkedList[] all = new LinkedList[]{obstacles, enemies, coinlist ,blockArrayList};
     Player player;
     DecimalFormat decFormat = new DecimalFormat("#0.00");
     double timer;
