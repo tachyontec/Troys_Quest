@@ -51,15 +51,15 @@ public class GamePanel extends JPanel implements Runnable {
     String [] obstacle = {"spikesRoller"};
     String [] enemies = {"Minotaur"};
     public Level level1 = new Level(this, "/maps/Level1Layout.txt",
-            new TileManager(this), obstacle,enemies,false );
+            new TileManager(this), obstacle,enemies,false, false);
     String [] obstacle1 = {"Fire"};
     String [] enemies1 = {"Minotaur"};
     public Level level2 = new Level(this, "/maps/Level2Layout.txt",
-            new TileManager(this), obstacle1,enemies1,true );
-    String [] obstacle2 = {"Fire"};
-    String [] enemies2 = {"Minotaur"};
+            new TileManager(this), obstacle1, enemies1,true, false );
+    String [] obstacle2 = {"Fire","spikesRoller"};
+    String [] enemies2 = {"FinalBoss","Minotaur"};
     public Level level3 = new Level(this, "/maps/Level3Layout.txt",
-            new TileManager(this), obstacle1,enemies1,true );
+            new TileManager(this), obstacle1, enemies2,true, true);
 
     public Level CurrentLevel; // stores the Level that player has chosen
 
@@ -156,9 +156,8 @@ public class GamePanel extends JPanel implements Runnable {
             player.update();
             CurrentLevel.handler.update();
             hud.update();
-            if(GamePanel.currentLevel != 2) {
-                level1.addArrow();
-            }
+            level1.addArrow();
+            level3.addArrow();
             CurrentLevel.handler.checkEnemyCollision();
             if (CurrentLevel.handler.checkPlayerCollision()) {
                 if (player.getLivesLeft() > 0) {

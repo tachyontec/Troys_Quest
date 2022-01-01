@@ -30,18 +30,19 @@ public class Enemy extends GameObject {
     //Animation instances for everything that our enemy does
     Animation walkingAnimation, idleAnimation, deathAnimation, attackAnimation;
     private boolean collision;
+    public double colissionTime;
 
 
     //the three bufferedImage tables run,jump,idle contain the photos that are needed in animations
     public BufferedImage[] run, idle, death, attack;
 
-    public Enemy(double worldX, double worldY, double speedX, double speedY, int width, int height, String name, GamePanel gamePanel) {
+    public Enemy(double worldX, double worldY, double speedX, double speedY, int width, int height, String name, GamePanel gamePanel, int livesLeft) {
         super(worldX, worldY, speedX, speedY, width, height);
         this.name = name;
         this.state = State.IDLE; //starting with Idle
         this.setAnimation();
         this.gamePanel = gamePanel;
-        this.livesLeft = 1;
+        this.livesLeft = livesLeft;
         this.collision = true;
     }
 
@@ -81,11 +82,11 @@ public class Enemy extends GameObject {
          if(this.livesLeft <= 0) {
             this.state = State.DEAD;
             deathAnimation.runAnimation();
-        }else if (Math.abs(this.getX()-this.gamePanel.player.getX()) <= gamePanel.tileSize/2 + gamePanel.tileSize/4) {//when player x coordinate in [minotaurX*3/4*tilesize,minotaurX]
+        }else if (Math.abs(this.getX()-this.gamePanel.player.getX()) <= gamePanel.tileSize/2 + gamePanel.tileSize/10) {//when player x coordinate in [minotaurX*3/4*tilesize,minotaurX]
             this.state = State.ATTACK;
             attackAnimation.runAnimation();
         } else if(Math.abs(this.getX()-this.gamePanel.player.getX()) < 3 * gamePanel.tileSize //when player x coordinate in (minotaurX*3*tilesize,minotaurX*3/4*tilesize)
-                    && (Math.abs(this.getX()-this.gamePanel.player.getX()) > gamePanel.tileSize/2 + gamePanel.tileSize/4)) {
+                    && (Math.abs(this.getX()-this.gamePanel.player.getX()) > gamePanel.tileSize/2 + gamePanel.tileSize/10)) {
             this.state = State.RUN;
             walkingAnimation.runAnimation();
             this.setX(this.getX() - 1);

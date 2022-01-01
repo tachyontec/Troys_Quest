@@ -23,7 +23,6 @@ public class KeyHandler implements KeyListener {
     @Override
     public void keyPressed(KeyEvent k) {
         int key = k.getKeyCode(); //get the code of key pressed
-
         //MENU_STATE and PAUSE_STATE KEY INPUT
         //Each key has a different function in each game state
         if(gp.gameState == GamePanel.MENU_STATE || gp.gameState == GamePanel.PAUSE_STATE
