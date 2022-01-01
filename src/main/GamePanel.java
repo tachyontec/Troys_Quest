@@ -6,7 +6,6 @@ import tiles.*;
 
 import javax.swing.JPanel;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class GamePanel extends JPanel implements Runnable {
     //Screen settings
@@ -53,17 +52,17 @@ public class GamePanel extends JPanel implements Runnable {
     String[] obstacle = {"spikesRoller"};
     String[] enemies = {"Minotaur"};
     public Level level1 = new Level(this, "/maps/Level1Layout.txt",
-            new TileManager(this), obstacle, enemies, false);
-    String[] obstacle1 = {"Fire"};
-    String[] enemies1 = {"Minotaur"};
+            new TileManager(this), obstacle,enemies,false, false);
+    String [] obstacle1 = {"Fire"};
+    String [] enemies1 = {"Minotaur"};
     public Level level2 = new Level(this, "/maps/Level2Layout.txt",
-            new TileManager(this), obstacle1, enemies1, true);
-    String[] obstacle2 = {"Fire"};
-    String[] enemies2 = {"Minotaur"};
+            new TileManager(this), obstacle1, enemies1,true, false );
+    String [] obstacle2 = {"Fire","spikesRoller"};
+    String [] enemies2 = {"FinalBoss","Minotaur"};
     public Level level3 = new Level(this, "/maps/Level3Layout.txt",
-            new TileManager(this), obstacle2, enemies2, true);
+            new TileManager(this), obstacle1, enemies2,true, true);
 
-    public Level CurrentLevel; // stores the Level that player has chosed
+    public Level CurrentLevel; // stores the Level that player has chosen
 
 
     public GamePanel() {
@@ -83,15 +82,15 @@ public class GamePanel extends JPanel implements Runnable {
     public void resetGame(int levelNumber) {
         //level reset
         switch (levelNumber) {
-            case 1:
+            case 1 :
                 level1.setupLevel();
                 CurrentLevel = level1;
                 break;
-            case 2:
+            case 2 :
                 level2.setupLevel();
                 CurrentLevel = level2;
                 break;
-            case 3:
+            case 3 :
                 level3.setupLevel();
                 CurrentLevel = level3;
                 break;
@@ -99,17 +98,18 @@ public class GamePanel extends JPanel implements Runnable {
         //player reset
         player.setLivesLeft(3);
         player.setCoinsCollected(0);
+        player.setEnemiesKilled(0);
         player.setX(7 * tileSize);
         player.setY(9 * tileSize);
-        player.screenX = tileSize * 7;
-        player.screenY = tileSize * 9;
+        player.screenX = 7 * tileSize;
+        player.screenY = 9 * tileSize;
         //object reset
         CurrentLevel.clearObjects();
         CurrentLevel.setupGameObjects();
         //misc resets
         GamePanel.i = 0;
         hud.levelTimer = 0;
-        hud.counter = 0;
+        hud.counter =0;
     }
 
 
@@ -160,9 +160,8 @@ public class GamePanel extends JPanel implements Runnable {
             player.update();
             CurrentLevel.handler.update();
             hud.update();
-            if (GamePanel.currentLevel != 2) {
-                level1.addArrow();
-            }
+            level1.addArrow();
+            level3.addArrow();
             CurrentLevel.handler.checkEnemyCollision();
             if (CurrentLevel.handler.checkPlayerCollision()) {
                 if (player.getLivesLeft() > 0) {

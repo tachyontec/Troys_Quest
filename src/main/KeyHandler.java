@@ -23,7 +23,6 @@ public class KeyHandler implements KeyListener {
     @Override
     public void keyPressed(KeyEvent k) {
         int key = k.getKeyCode(); //get the code of key pressed
-
         //MENU_STATE and PAUSE_STATE KEY INPUT
         //Each key has a different function in each game state
         if(gp.gameState == GamePanel.MENU_STATE || gp.gameState == GamePanel.PAUSE_STATE
@@ -67,7 +66,7 @@ public class KeyHandler implements KeyListener {
                                 gp.resetGame(gp.currentLevel);
                                 //End of level reset
                                 gp.gameState = GamePanel.PLAY_STATE;
-                            } else {
+                            } else { //NEXT LEVEL
                                 GamePanel.currentLevel++;
                                 gp.resetGame(GamePanel.currentLevel);
                                 gp.gameState = GamePanel.PLAY_STATE;
@@ -76,6 +75,8 @@ public class KeyHandler implements KeyListener {
                             gp.currentLevel = 1;
                             gp.resetGame(1);
                             gp.gameState = GamePanel.PLAY_STATE;
+                            gp.music.stopMusic();
+                            gp.music.playMusic(0);
                         }
                         break;
                     case 1: //SECOND CHOICE
@@ -94,6 +95,8 @@ public class KeyHandler implements KeyListener {
                             gp.currentLevel = 2;
                             gp.resetGame(2);
                             gp.gameState = GamePanel.PLAY_STATE;
+                            gp.music.stopMusic();
+                            gp.music.playMusic(0);
                         }
                         break;
                     case 2 : //3RD CHOICE
@@ -101,6 +104,8 @@ public class KeyHandler implements KeyListener {
                             gp.currentLevel = 3;
                             gp.resetGame(3);
                             gp.gameState = GamePanel.PLAY_STATE;
+                            gp.music.stopMusic();
+                            gp.music.playMusic(0);
                         } else {
                             System.exit(0);
                         }

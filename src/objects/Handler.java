@@ -61,7 +61,7 @@ public class Handler {
                 collisionTime = timer;
                 break;
             }
-            if (object.intersects(player) && !object.getClass().equals(Bird.class)) {
+            if (object.intersects(player) && !object.getClass().equals(Bird.class) && !object.getClass().equals(MovingObstacle.class)) {
                 player.setX(player.getX() - 20);//so as not to go "into" obstacles
 
             }
@@ -72,7 +72,7 @@ public class Handler {
                 b = true;
                 player.setCollision(false);
                 collisionTime = timer;
-                player.setX(player.getX() - 20);//so as not to go "into" enemies
+                player.setX(player.getX() - 20);//so as not to go "into" obstacles
                 break;
             }
         }
@@ -89,12 +89,20 @@ public class Handler {
 
     public void checkEnemyCollision() {
         for (Enemy enemy : enemies) {
+            if (this.timer - enemy.colissionTime > 1) {
+                enemy.setCollision(true);
+            }
             if (enemy.intersects(player.attackHitbox) &&
                     player.isAttackCollision && enemy.livesLeft > 0 && enemy.isCollision()) {
-                enemy.livesLeft = 0;
-                this.enemyDeathTime = this.timer;
+                enemy.livesLeft -= 1;
                 enemy.setCollision(false);
-
+                enemy.colissionTime = this.timer;
+                System.out.println(enemy.livesLeft);
+                if (enemy.livesLeft==0) {
+                    this.enemyDeathTime = this.timer;
+                    enemy.setCollision(false);
+                    player.setEnemiesKilled(player.getEnemiesKilled() + 1);
+                }
             }
             if (this.timer - this.enemyDeathTime > 1 && enemy.livesLeft == 0) {
                 enemies.remove(enemy);
