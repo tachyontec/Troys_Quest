@@ -30,9 +30,9 @@ public class Player extends GameObject {
     public BufferedImage[] attack;
     public final int axisX = 400;
     public final int axisY = 400;
-    private int livesLeft = 3;
-
+    private int livesLeft = 3; //at the start of each level , our player has 3 lives by default
     private int coinsCollected; // counts the coins that have been collected
+    private int enemiesKilled;
     public int screenX;
     public int screenY;
     //used so that we do not have the death sound used recursively when the player dies and the state is dead
@@ -296,6 +296,10 @@ public class Player extends GameObject {
     public void setCoinsCollected(int coinsCollected) {
         this.coinsCollected = coinsCollected;
     }
+
+    public int getEnemiesKilled() {return enemiesKilled;}
+
+    public void setEnemiesKilled(int enemiesKilled) {this.enemiesKilled = enemiesKilled;}
 
 }
 

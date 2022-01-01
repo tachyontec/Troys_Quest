@@ -12,7 +12,6 @@ public class Level {
     public String [] enemyName;
     GamePanel gamePanel;
     TileManager tileM;
-    public int enemyCounter;
     public int coinCounter;
     public boolean hasEnemies;
     public Handler handler;
@@ -118,5 +117,30 @@ public class Level {
         handler.obstacles.clear();
         handler.coinlist.clear();
     }
+
+    public int calculateScore( double levelCompletionTime, int livesLeft , int coinsCollected , int enemiesKilled) {
+        //In order to calculate points based on time , we set 4 time zones
+        //As we move up in time , points from completing the level in each time zone decrease
+        //rewarding the player for making it to the end faster
+        int pointsFromTime;
+        if (levelCompletionTime <= 15) {
+            pointsFromTime = 800;
+        } else if (levelCompletionTime <= 30){
+            pointsFromTime = 600;
+        } else if (levelCompletionTime <= 45){
+            pointsFromTime = 400;
+        } else if (levelCompletionTime <= 60){
+            pointsFromTime = 200;
+        } else{
+            pointsFromTime = 100;
+        }
+        //We reward the player with 100 points for each heart he has left
+        //We reward the player with 10 points for each coin he has collected
+        //We reward the player with 50 points for each enemy he has killed
+        return pointsFromTime + 100 * livesLeft + 10 * coinsCollected + 50 * enemiesKilled;
+
+
+    }
+
 
 }

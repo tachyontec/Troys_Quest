@@ -92,7 +92,7 @@ public class Handler {
                 enemy.livesLeft = 0;
                 this.enemyDeathTime = this.timer;
                 enemy.setCollision(false);
-
+                player.setEnemiesKilled(player.getEnemiesKilled() + 1);
             }
             if (this.timer - this.enemyDeathTime > 1 && enemy.livesLeft == 0) {
                 enemies.remove(enemy);

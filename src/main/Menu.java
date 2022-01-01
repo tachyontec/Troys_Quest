@@ -164,7 +164,31 @@ public class Menu {
                 title = "YOU LOSE!";
             } else {
                 title = "YOU WIN!";
-                g2.drawImage(wreath , 250 , 107 , gamepanel.tileSize * 5 , gamepanel.tileSize * 3 , null);
+                int levelScore = gamepanel.CurrentLevel.calculateScore(gamepanel.hud.levelTimer ,
+                        gamepanel.player.getLivesLeft() , gamepanel.player.getCoinsCollected() , gamepanel.player.getEnemiesKilled());
+                int numOfStars;
+                    g2.setColor(Color.BLACK);
+                    g2.drawString("TOTAL SCORE: " + levelScore, 170 + shadowOffset , 480 + shadowOffset);
+                    g2.setColor(new Color(181, 179, 92));
+                    g2.drawString("TOTAL SCORE: " + levelScore , 170 , 480);
+                    if(levelScore <= 850){
+                        g2.drawImage(wreath , 250 , 107 , gamepanel.tileSize * 5 , gamepanel.tileSize * 3 , null);
+                        numOfStars = 1;
+                    } else if (levelScore <= 1150){
+                        g2.drawImage(wreath , 130 , 150 , gamepanel.tileSize * 4 , gamepanel.tileSize * 2 , null);
+                        g2.drawImage(wreath , 250 , 107 , gamepanel.tileSize * 5 , gamepanel.tileSize * 3 , null);
+                        numOfStars = 2;
+                    } else {
+                        g2.drawImage(wreath , 130 , 150 , gamepanel.tileSize * 4 , gamepanel.tileSize * 2 , null);
+                        g2.drawImage(wreath , 250 , 107 , gamepanel.tileSize * 5 , gamepanel.tileSize * 3 , null);
+                        g2.drawImage(wreath , 420 , 150 , gamepanel.tileSize * 4 , gamepanel.tileSize * 2 , null);
+                        numOfStars = 3;
+                    }
+                g2.setColor(Color.BLACK);
+                g2.drawString("YOU RECEIVE " + numOfStars + " WREATH(S)!", 170 + shadowOffset , 510 + shadowOffset);
+                g2.setColor(new Color(181, 179, 92));
+                g2.drawString("YOU RECEIVE " + numOfStars + " WREATH(S)!" , 170 , 510);
+
 
             }
             //Title
@@ -206,14 +230,6 @@ public class Menu {
             if (choice == 2) {
                 g2.drawString(">", defaultX + 20, defaultY + 120);
             }
-
-            if(gamepanel.player.getLivesLeft() > 0) {
-                g2.setColor(Color.BLACK);
-                g2.drawString("TIME: " + decFormat.format(gamepanel.hud.levelTimer) + "sec", 10 + shadowOffset , 500 + shadowOffset);
-                g2.setColor(new Color(181, 179, 92));
-                g2.drawString("TIME: " + decFormat.format(gamepanel.hud.levelTimer) + "sec", 10 , 500);
-            }
-
     }
 
     public void drawLevelSelectionMenu(Graphics2D g2){

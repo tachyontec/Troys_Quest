@@ -96,10 +96,11 @@ public class GamePanel extends JPanel implements Runnable {
         //player reset
         player.setLivesLeft(3);
         player.setCoinsCollected(0);
+        player.setEnemiesKilled(0);
         player.setX(7 * tileSize);
         player.setY(9 * tileSize);
-        player.screenX = tileSize * 7;
-        player.screenY = tileSize * 9;
+        player.screenX = 7 * tileSize;
+        player.screenY = 9 * tileSize;
         //object reset
         CurrentLevel.clearObjects();
         CurrentLevel.setupGameObjects();
