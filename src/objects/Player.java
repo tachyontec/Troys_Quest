@@ -7,11 +7,13 @@ import main.Resource;
 import sounds.Sound;
 
 import java.awt.*;
+import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 
 //Subclass of Game Object responsible for the moving and drawing the character of the game
 public class Player extends GameObject {
     public double floor; //floor of every platform
+    public double platfloor;
     public boolean jumped = true;
     public float jumpingTime = 100;
     //player gets keyhandler to implement keyboard input
@@ -284,5 +286,10 @@ public class Player extends GameObject {
 
     public void setEnemiesKilled(int enemiesKilled) {this.enemiesKilled = enemiesKilled;}
 
+
+    public boolean playerBlockCollision(Line2D l) {
+        //System.out.println(this.intersectsLine(l));
+        return this.intersectsLine(l);
+    }
 }
 

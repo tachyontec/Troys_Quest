@@ -1,6 +1,8 @@
 package objects;
 
+import javax.sound.sampled.Line;
 import java.awt.*;
+import java.awt.geom.Line2D;
 
 //superclass for all the object of the game
 public abstract class GameObject extends Rectangle {
@@ -41,6 +43,8 @@ public abstract class GameObject extends Rectangle {
         this.speedY = speedY;
         this.id = counter;
     }
+
+
 
     public void render(Graphics2D g2) {
         g2.setColor(Color.RED);
