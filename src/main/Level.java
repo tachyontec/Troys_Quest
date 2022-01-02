@@ -17,10 +17,11 @@ public class Level {
     public boolean hasFinalBoss;
     public Handler handler;
     Random rand = new Random();
+    public boolean hasBlocks;
 
 
     public Level(GamePanel gamePanel, String txtPath,
-                        TileManager tileM, String[] obstacleName, String[] enemyName , boolean hasEnemies, boolean hasFinalBoss) {
+                        TileManager tileM, String[] obstacleName, String[] enemyName , boolean hasEnemies, boolean hasFinalBoss, boolean hasBlocks) {
         this.gamePanel = gamePanel;
         this.txtPath = txtPath;
         this.obstacleName = obstacleName;
@@ -29,6 +30,7 @@ public class Level {
         this.hasEnemies = hasEnemies;
         handler = new Handler(gamePanel.player);
         this.hasFinalBoss = hasFinalBoss;
+        this.hasBlocks = hasBlocks;
     }
 
     public void setupLevel() {
@@ -42,7 +44,7 @@ public class Level {
         tileM.loadMap(txtPath);
     }
 
-    /*this method will load the gameObjects(Enemies,Coins,Obstacles)*/
+    /*this method will load the gameObjects(Enemies,Coins,Obstacles,Blocks)*/
     public void setupGameObjects() {
         int startingpoint = 9 * gamePanel.tileSize; //starting point in map is where the player spawns
         //we spawn 4 times in a row an obstacle and the we spawn an enemy for our player to fight
@@ -59,12 +61,17 @@ public class Level {
                 // used to choose randomly
                 // one of the 2 obstacles(Fire or spikesRoller)
                 handler.obstacles.add(new Obstacle(spawnX, gamePanel.floor, 0,
-                        0, 30, gamePanel.tileSize, obstacleName[GamePanel.currentLevel == 3 ? rand.nextInt(0,1) : 0 ], gamePanel));
+                        0, 30, gamePanel.tileSize, obstacleName[GamePanel.currentLevel == 3 ? rand.nextInt(2) : 0 ], gamePanel));
                 /* we spawn a coin above an obstacle with a random way to make player
                 jump a little or a lot to reach it and also make game harder*/
                 int randomY = (rand.nextInt(3) + 1);
                 handler.coinlist.add(new Coin(spawnX, gamePanel.floor - (randomY * gamePanel.tileSize),
                         0, 0, gamePanel.tileSize, gamePanel.tileSize, gamePanel));
+            }
+            if(this.hasBlocks) {
+                //we spawn blocks on top of obstacles or enemies
+                handler.blockArrayList.add(new Block(spawnX + gamePanel.tileSize, 6.5 * gamePanel.tileSize, 0,0,
+                        gamePanel.tileSize, gamePanel.tileSize,gamePanel));
             }
             // we spawn coins after an obstacle or enemy for reward
             handler.coinlist.add(new Coin(spawnX + 2 * gamePanel.tileSize, gamePanel.floor,

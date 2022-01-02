@@ -4,14 +4,13 @@ import main.Animation;
 import main.GamePanel;
 import main.KeyHandler;
 import main.Resource;
-import sounds.Sound;
+//import sounds.Sound;
 
 import java.awt.*;
-import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 
 //Subclass of Game Object responsible for the moving and drawing the character of the game
-public class Player extends GameObject {
+public class    Player extends GameObject {
     public double floor; //floor of every platform
     public double platfloor;
     public boolean jumped = true;
@@ -23,7 +22,7 @@ public class Player extends GameObject {
     //Buffered Images are the ones that contain our main character
     //they look when they move left,right and jump etc.
     //the three bufferedImage tables run,jump,idle contain the photos that are needed in animations
-    public Sound soundEffect = new Sound();
+    //public Sound soundEffect = new Sound();
     public BufferedImage[] right;
     public BufferedImage[] left;
     public BufferedImage[] jump;
@@ -86,7 +85,6 @@ public class Player extends GameObject {
         getPlayerImage();
 
         floor = 9 * gamePanel.tileSize;//sets the floor on which player is for every platform he stands on
-        platfloor = gamePanel.block.worldY - this.height - 75;
         rightanimation = new Animation(0, right);
         leftanimation = new Animation(0, left);
         jumpinganimation = new Animation(0, jump);
@@ -118,80 +116,11 @@ public class Player extends GameObject {
     //moves the player by altering the x,y coordinates with keyboard arrows
     @Override
     public synchronized void update() { //synchronized because we involve another thread for jumping and we don't want it to collide with our main game thread
-        if ((!keyHandler.rightPressed) && (!keyHandler.leftPressed) &&
-                (!keyHandler.upPressed) && (!keyHandler.attackPressed)) {
-            idleanimation.runAnimation();
-            state = State.ALIVE;
-        }
-        if (keyHandler.attackPressed) {
-            state = State.ATTACK;
-            attackanimation.runAnimation();
-        }
+        still();
         gravity();
-
-        //right collision with platform
-        if (this.playerBlockCollision(gamePanel.block.rightLine)&& counter < 1) {
-            counter++;
-            this.setSpeedy(0);
-            this.setSpeedx(0);
-        }
-        //left collision with platform
-        if (playerBlockCollision(gamePanel.block.leftLine) && counter < 1) {
-            counter++;
-            this.setSpeedy(0);
-            this.setSpeedx(0);
-        }
-        //bottom collision with platform
-        if (playerBlockCollision(gamePanel.block.bottomLine) && counter < 1) {
-            counter++;
-            this.setSpeedy(0);
-            System.out.println("Hello");
-        }
-       //top collision with platform
-        if (this.playerBlockCollision(gamePanel.block.topLine)) {
-            counter++;
-            floor = gamePanel.block.platformfloor - this.height;
-            this.worldY = gamePanel.block.platformfloor - this.height;
-            this.screenY = (int) (gamePanel.block.platformfloor - this.height);
-
-            //right and left hand side of the block
-
-        }else {
-            floor = gamePanel.floor;
-        }
-
-        if (keyHandler.upPressed && !jumped) {
-            jumped = true;
-            state = State.JUMP;
-            this.setSpeedy(10);
-            jumpinganimation.runAnimation();
-            //soundEffect.playSE(3);
-            //t.start();//initiating a new thread to perform the jump act
-        }
-
-        if (keyHandler.leftPressed) {
-            state = State.LEFT;
-            this.setX(this.getX() - this.getSpeedx());//moves the player along the x axis to the left
-            attackHitbox.x = (int) (this.getX() + gamePanel.tileSize);//moves the attack hitbox to follow players' hitbox
-            // attackHitbox.y = (int) this.getY();//moves the attack hitbox to follow players' hitbox
-            leftanimation.runAnimation();
-        } else if (keyHandler.rightPressed) {
-            state = State.RIGHT;
-            this.setX(this.getX() + getSpeedx());//moves the player along the x axis to the right
-            attackHitbox.x = (int) (this.getX() + gamePanel.tileSize);//moves the attack hitbox to follow players' hitbox
-            //attackHitbox.y = (int) this.getY();//moves the attack hitbox to follow players' hitbox
-            rightanimation.runAnimation();
-        }
-
-
-        if (this.getLivesLeft() == 0) {
-            this.state = State.DEAD;
-            deathanimation.runAnimation();
-            if (!deathSoundIsDone) {
-                soundEffect.playSE(1);
-                deathSoundIsDone = true;// so that we stop the death sound
-            }
-        }
+        jump();
+        run();
+        death();
         // when space is pressed , isAttackCollision indicates that enemies can collide with the sword's hitbox
         isAttackCollision = keyHandler.attackPressed;
     }
@@ -255,7 +184,6 @@ public class Player extends GameObject {
         screenY -= getSpeedy();
         this.setSpeedy(this.getSpeedy() - GRAVITY);
         //collision with floors
-
         if (this.getY() > (floor - 1) ) {
             this.setSpeedx(3);
             counter = 0;
@@ -263,6 +191,53 @@ public class Player extends GameObject {
             this.setY(floor - 1);
             screenY = (int) floor;
             this.setSpeedy(0);
+        }
+    }
+    public void still() {
+        if ((!keyHandler.rightPressed) && (!keyHandler.leftPressed) &&
+                (!keyHandler.upPressed) && (!keyHandler.attackPressed)) {
+            idleanimation.runAnimation();
+            state = State.ALIVE;
+        }
+        if (keyHandler.attackPressed) {
+            state = State.ATTACK;
+            attackanimation.runAnimation();
+        }
+    }
+
+    public void jump(){
+        if (keyHandler.upPressed && !jumped) {
+            jumped = true;
+            state = State.JUMP;
+            this.setSpeedy(10);
+            jumpinganimation.runAnimation();
+            //soundEffect.playSE(3);
+        }
+    }
+    public void run(){
+        if (keyHandler.leftPressed) {
+            state = State.LEFT;
+            this.setX(this.getX() - this.getSpeedx());//moves the player along the x axis to the left
+            attackHitbox.x = (int) (this.getX() + gamePanel.tileSize);//moves the attack hitbox to follow players' hitbox
+            // attackHitbox.y = (int) this.getY();//moves the attack hitbox to follow players' hitbox
+            leftanimation.runAnimation();
+        } else if (keyHandler.rightPressed) {
+            state = State.RIGHT;
+            this.setX(this.getX() + getSpeedx());//moves the player along the x axis to the right
+            attackHitbox.x = (int) (this.getX() + gamePanel.tileSize);//moves the attack hitbox to follow players' hitbox
+            //attackHitbox.y = (int) this.getY();//moves the attack hitbox to follow players' hitbox
+            rightanimation.runAnimation();
+        }
+    }
+
+    public void death(){
+        if (this.getLivesLeft() == 0) {
+            this.state = State.DEAD;
+            deathanimation.runAnimation();
+            if (!deathSoundIsDone) {
+                //soundEffect.playSE(1);
+                deathSoundIsDone = true;// so that we stop the death sound
+            }
         }
     }
 
@@ -286,10 +261,5 @@ public class Player extends GameObject {
 
     public void setEnemiesKilled(int enemiesKilled) {this.enemiesKilled = enemiesKilled;}
 
-
-    public boolean playerBlockCollision(Line2D l) {
-        //System.out.println(this.intersectsLine(l));
-        return this.intersectsLine(l);
-    }
 }
 

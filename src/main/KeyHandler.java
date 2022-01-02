@@ -52,16 +52,16 @@ public class KeyHandler implements KeyListener {
                             gp.resetGame(1);
                             //End of level reset
                             gp.gameState = GamePanel.PLAY_STATE;
-                            gp.music.stopMusic();
-                            gp.music.playMusic(0); //And PLAY_STATE music is the first track in the array
+                            //gp.music.stopMusic();
+                            //gp.music.playMusic(0); //And PLAY_STATE music is the first track in the array
                         } else if(gp.gameState == GamePanel.PAUSE_STATE) { //RESUME
                             gp.gameState = GamePanel.PLAY_STATE;
-                            gp.music.stopMusic();
-                            gp.music.playMusic(0); //GAME SONG
+                            //gp.music.stopMusic();
+                            //gp.music.playMusic(0); //GAME SONG
                         } else if(gp.gameState == GamePanel.WIN_LOSE_STATE){
                             if(gp.player.getLivesLeft() == 0) { //REPLAY LEVEL
-                                gp.music.stopMusic();
-                                gp.music.playMusic(0); //GAME SONG
+                                //gp.music.stopMusic();
+                                //gp.music.playMusic(0); //GAME SONG
                                 //Start of level reset
                                 gp.resetGame(gp.currentLevel);
                                 //End of level reset
@@ -75,8 +75,8 @@ public class KeyHandler implements KeyListener {
                             gp.currentLevel = 1;
                             gp.resetGame(1);
                             gp.gameState = GamePanel.PLAY_STATE;
-                            gp.music.stopMusic();
-                            gp.music.playMusic(0);
+                            //gp.music.stopMusic();
+                            //gp.music.playMusic(0);
                         }
                         break;
                     case 1: //SECOND CHOICE
@@ -84,19 +84,19 @@ public class KeyHandler implements KeyListener {
                             gp.gameState = GamePanel.LEVEL_SELECTION_STATE;
                         } else if(gp.gameState == GamePanel.PAUSE_STATE) { //BACK TO MAIN MENU
                             gp.gameState = GamePanel.MENU_STATE;
-                            gp.music.stopMusic();
-                            gp.music.playMusic(5); //INTRO SONG
+                            //gp.music.stopMusic();
+                            //gp.music.playMusic(5); //INTRO SONG
                         } else if(gp.gameState == GamePanel.WIN_LOSE_STATE){ //BACK TO MAIN MENU
-                            gp.music.stopMusic();
-                            gp.music.playMusic(5); //INTRO SONG
+                            //gp.music.stopMusic();
+                            //gp.music.playMusic(5); //INTRO SONG
                             gp.resetGame(GamePanel.currentLevel);
                             gp.gameState = GamePanel.MENU_STATE;
                         } else if (gp.gameState == GamePanel.LEVEL_SELECTION_STATE) { //LEVEL 2 SELECTED
                             gp.currentLevel = 2;
                             gp.resetGame(2);
                             gp.gameState = GamePanel.PLAY_STATE;
-                            gp.music.stopMusic();
-                            gp.music.playMusic(0);
+                            //gp.music.stopMusic();
+                            //gp.music.playMusic(0);
                         }
                         break;
                     case 2 : //3RD CHOICE
@@ -104,8 +104,8 @@ public class KeyHandler implements KeyListener {
                             gp.currentLevel = 3;
                             gp.resetGame(3);
                             gp.gameState = GamePanel.PLAY_STATE;
-                            gp.music.stopMusic();
-                            gp.music.playMusic(0);
+                            //gp.music.stopMusic();
+                            //gp.music.playMusic(0);
                         } else {
                             System.exit(0);
                         }
@@ -128,7 +128,7 @@ public class KeyHandler implements KeyListener {
                 upPressed = true;
             } else if (key == KeyEvent.VK_P) {
                 gp.gameState = GamePanel.PAUSE_STATE;
-                gp.music.stopMusic();
+                //gp.music.stopMusic();
                 pausePressed = true;
             } else if (key == KeyEvent.VK_SPACE) {
                 attackPressed = true;

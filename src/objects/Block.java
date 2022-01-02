@@ -31,9 +31,9 @@ public class Block extends GameObject {
     }
 
     public void setlineBounds(double worldX, double worldY, int width, int height) {
-        rightLine.setLine(worldX + width, worldY, worldX + width, worldY + height);
-        leftLine.setLine(worldX, worldY, worldX, worldY + height);
-        topLine.setLine(worldX, worldY, worldX + width, worldY);
+        rightLine.setLine(worldX + width, worldY + 0.1, worldX + width, worldY + height + 0.1);
+        leftLine.setLine(worldX, worldY + 0.1, worldX, worldY + height + 0.1);
+        topLine.setLine(worldX+0.1, worldY, worldX + width-0.1, worldY);
         bottomLine.setLine(worldX, worldY + height, worldX + width, worldY + height);
     }
 

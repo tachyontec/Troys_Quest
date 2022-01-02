@@ -7,7 +7,7 @@ import java.util.LinkedList;
 
 public class Handler {
     public LinkedList<GameObject> obstacles = new LinkedList<>();
-    public  LinkedList<Enemy> enemies = new LinkedList<>();
+    public LinkedList<Enemy> enemies = new LinkedList<>();
     public LinkedList<Coin> coinlist = new LinkedList<>();
     public LinkedList<Block> blockArrayList = new LinkedList<>();
     //Create an Array to irretate over all lists at once
@@ -64,6 +64,35 @@ public class Handler {
             if (object.intersects(player) && !object.getClass().equals(Bird.class) && !object.getClass().equals(MovingObstacle.class)) {
                 player.setX(player.getX() - 20);//so as not to go "into" obstacles
 
+            }
+        }
+        for(Block block: blockArrayList) {
+            //right collision with platform
+            if (player.intersectsLine(block.rightLine)&& player.counter < 1) {
+                player.counter++;
+                player.setSpeedy(0);
+                player.setSpeedx(0);
+            }
+            //left collision with platform
+            if (player.intersectsLine(block.leftLine) && player.counter < 1) {
+                player.counter++;
+                player.setSpeedy(0);
+                player.setSpeedx(0);
+            }
+            //bottom collision with platform
+            if (player.intersectsLine(block.bottomLine) && player.counter < 1) {
+                player.counter++;
+                player.setSpeedy(0);
+            }
+            //top collision with platform
+            if (player.intersectsLine(block.topLine)) {
+                player.counter++;
+                player.floor = block.platformfloor - player.height;
+                player.worldY = block.platformfloor - player.height;
+                player.screenY = (int) (block.platformfloor - player.height);
+                player.jumped = false;
+            }else {
+                player.floor = player.gamePanel.floor;
             }
         }
 

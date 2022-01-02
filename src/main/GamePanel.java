@@ -1,7 +1,7 @@
 package main;
 
 import objects.*;
-import sounds.Sound;
+//import sounds.Sound;
 import tiles.*;
 
 import javax.swing.JPanel;
@@ -35,11 +35,10 @@ public class GamePanel extends JPanel implements Runnable {
 
 
     KeyHandler keyHandler = new KeyHandler(this);
-    Sound music = new Sound();// used for background music
-    Sound se = new Sound();// created to have sound effects and at the same time music
+    //Sound music = new Sound();// used for background music
+    //Sound se = new Sound();// created to have sound effects and at the same time music
     Thread gameThread;
 
-    public Block block = new Block(7 * tileSize, 7 *tileSize, 0,0,tileSize,tileSize,this);
 
     public Player player = new Player(7 * tileSize, floor, 3, 48, keyHandler, this);
     //public GameObjectSetter obstacleSetter = new GameObjectSetter(this);
@@ -52,13 +51,13 @@ public class GamePanel extends JPanel implements Runnable {
     String [] enemies= {"Minotaur","FinalBoss"};
     String[] obstacle = {"spikesRoller"};
     public Level level1 = new Level(this, "/maps/Level1Layout.txt",
-            new TileManager(this), obstacle,enemies,false, false);
+            new TileManager(this), obstacle,enemies,false, false, true);
     String [] obstacle1 = {"Fire"};
     public Level level2 = new Level(this, "/maps/Level2Layout.txt",
-            new TileManager(this), obstacle1, enemies,true, false );
+            new TileManager(this), obstacle1, enemies,true, false, false );
     String [] obstacle2 = {"Fire","spikesRoller"};
     public Level level3 = new Level(this, "/maps/Level3Layout.txt",
-            new TileManager(this), obstacle1, enemies,true, true);
+            new TileManager(this), obstacle1, enemies,true, true, false);
 
     public Level CurrentLevel; // stores the Level that player has chosen
 
@@ -73,7 +72,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setUpGame() {
         gameState = MENU_STATE;
-        music.playMusic(5);// we play the 5th sound file which is the starting menu music
+        //music.playMusic(5);// we play the 5th sound file which is the starting menu music
     }
 
     //resets all the game assets to their default values
@@ -164,7 +163,7 @@ public class GamePanel extends JPanel implements Runnable {
             if (CurrentLevel.handler.checkPlayerCollision()) {
                 if (player.getLivesLeft() > 0) {
                     player.setLivesLeft(player.getLivesLeft() - 1);
-                    se.playSE(2);
+                    //se.playSE(2);
                 }
             }
 
@@ -200,7 +199,6 @@ public class GamePanel extends JPanel implements Runnable {
             player.render(g2);
             bound.render(g2);
             hud.render(g2);
-            block.render(g2);
         }
         g2.dispose();
     }
