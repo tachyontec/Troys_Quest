@@ -55,7 +55,7 @@ public class Handler {
         }
 
         for (GameObject object : obstacles) {
-            if (object.intersects(player) && player.isCollision()) {
+            if (object.intersects(player) && player.isCollision() && !object.getClass().equals(Bird.class)) {
                 b = true;
                 player.setCollision(false);
                 collisionTime = timer;
