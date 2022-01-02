@@ -23,6 +23,7 @@ public class Enemy extends GameObject {
     GamePanel gamePanel;
 
     public int livesLeft;
+
     enum State {DEAD, RUN, ATTACK, IDLE}
     //variables used to calculate enemies' death time
 
@@ -53,10 +54,10 @@ public class Enemy extends GameObject {
         idle = Resource.getFilesInDir("res/Enemies/" + this.name + "/Idle");
         death = Resource.getFilesInDir("res/Enemies/" + this.name + "/Death");
         //Create the animations
-        walkingAnimation = new Animation(0 , run);
-        idleAnimation = new Animation(-3 , idle);
-        attackAnimation = new Animation(3 , attack);
-        deathAnimation = new Animation(-3 , death);
+        walkingAnimation = new Animation(0, run);
+        idleAnimation = new Animation(-3, idle);
+        attackAnimation = new Animation(3, attack);
+        deathAnimation = new Animation(-3, death);
     }
 
     //renders the animations of the enemy
@@ -67,10 +68,14 @@ public class Enemy extends GameObject {
         double screenY = this.getY(); //centers the player in relation to the screen in y axis,gp.player.screenY is used to offset the difference
 
         switch (state) {
-            case DEAD -> deathAnimation.drawAnimation(g, (int) screenX, (int) screenY, this.width, this.height);
-            case RUN -> walkingAnimation.drawAnimation(g, (int) screenX, (int) screenY, this.width, this.height);
-            case IDLE -> idleAnimation.drawAnimation(g, (int) screenX, (int) screenY, this.width, this.height);
-            case ATTACK -> attackAnimation.drawAnimation(g, (int) screenX, (int) screenY, this.width, this.height);
+            case DEAD -> deathAnimation.drawAnimation(g, (int) screenX, (int) screenY,
+                    this.width, this.height);
+            case RUN -> walkingAnimation.drawAnimation(g, (int) screenX, (int) screenY,
+                    this.width, this.height);
+            case IDLE -> idleAnimation.drawAnimation(g, (int) screenX, (int) screenY,
+                    this.width, this.height);
+            case ATTACK -> attackAnimation.drawAnimation(g, (int) screenX, (int) screenY,
+                    this.width, this.height);
         }
     }
 
@@ -95,7 +100,6 @@ public class Enemy extends GameObject {
             idleAnimation.runAnimation();
         }
     }
-
 
 
     public String getName() {

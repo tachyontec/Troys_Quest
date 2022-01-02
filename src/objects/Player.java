@@ -7,11 +7,13 @@ import main.Resource;
 import sounds.Sound;
 
 import java.awt.*;
+import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 
 //Subclass of Game Object responsible for the moving and drawing the character of the game
 public class Player extends GameObject {
     public double floor; //floor of every platform
+    public double platfloor;
     public boolean jumped = true;
     public float jumpingTime = 100;
     //player gets keyhandler to implement keyboard input
@@ -39,6 +41,8 @@ public class Player extends GameObject {
     public boolean deathSoundIsDone;
     private boolean collision;
 
+    public int counter = 0;
+
     //a rectangle that dictates where the player attacks
     public Rectangle attackHitbox;
     public boolean isAttackCollision;//and a boolean value to say if you are attacking or not
@@ -58,6 +62,8 @@ public class Player extends GameObject {
 
     public double deathTime = 0;//the time the player dies
 
+    public static final double GRAVITY = 0.3;
+
     public boolean isCollision() {
         return collision;
     }
@@ -70,7 +76,7 @@ public class Player extends GameObject {
     public Player(double worldX, double worldY, double speedx,
                   double speedy, KeyHandler keyHandler, GamePanel gamePanel) {
 
-        super(worldX, worldY, speedx, speedy, 30, gamePanel.tileSize);
+        super(worldX, worldY, speedx, 0, 30, gamePanel.tileSize);
         this.keyHandler = keyHandler;
         this.gamePanel = gamePanel;
 
@@ -79,7 +85,8 @@ public class Player extends GameObject {
 
         getPlayerImage();
 
-        floor = this.getY();//sets the floor on which player is for every platform he stands on
+        floor = 9 * gamePanel.tileSize;//sets the floor on which player is for every platform he stands on
+        platfloor = gamePanel.block.worldY - this.height - 75;
         rightanimation = new Animation(0, right);
         leftanimation = new Animation(0, left);
         jumpinganimation = new Animation(0, jump);
@@ -111,48 +118,62 @@ public class Player extends GameObject {
     //moves the player by altering the x,y coordinates with keyboard arrows
     @Override
     public synchronized void update() { //synchronized because we involve another thread for jumping and we don't want it to collide with our main game thread
-        if ((!keyHandler.rightPressed) && (!keyHandler.leftPressed) && (!keyHandler.upPressed) && (!keyHandler.attackPressed)) {
+        if ((!keyHandler.rightPressed) && (!keyHandler.leftPressed) &&
+                (!keyHandler.upPressed) && (!keyHandler.attackPressed)) {
             idleanimation.runAnimation();
             state = State.ALIVE;
         }
-
         if (keyHandler.attackPressed) {
             state = State.ATTACK;
             attackanimation.runAnimation();
         }
+        gravity();
 
-        if (keyHandler.upPressed) {
+        //right collision with platform
+        if (this.playerBlockCollision(gamePanel.block.rightLine)&& counter < 1) {
+            counter++;
+            this.setSpeedy(0);
+            this.setSpeedx(0);
+        }
+        //left collision with platform
+        if (playerBlockCollision(gamePanel.block.leftLine) && counter < 1) {
+            counter++;
+            this.setSpeedy(0);
+            this.setSpeedx(0);
+        }
+        //bottom collision with platform
+        if (playerBlockCollision(gamePanel.block.bottomLine) && counter < 1) {
+            counter++;
+            this.setSpeedy(0);
+            System.out.println("Hello");
+        }
+       //top collision with platform
+        if (this.playerBlockCollision(gamePanel.block.topLine)) {
+            counter++;
+            floor = gamePanel.block.platformfloor - this.height;
+            this.worldY = gamePanel.block.platformfloor - this.height;
+            this.screenY = (int) (gamePanel.block.platformfloor - this.height);
 
-            Thread t = new Thread(new thread());
+            //right and left hand side of the block
 
-            if (jumped) { //if statement to ensure that jumped is invoked once every time
-                state = State.JUMP;
-                if (getY() > 300) {
-                    screenY -= 15;
-                    this.setY(this.getY() - 15);//moves the player upwards along the y axis
-                }
-                jumpinganimation.runAnimation();
-                soundEffect.playSE(3);
-                t.start();//initiating a new thread to perform the jump act
-            }
+        }else {
+            floor = gamePanel.floor;
+        }
 
-            if ((!t.isAlive()) && (floor != getY())) {
-                setY(floor);
-            }
-
-            if ((!jumped) && (floor == getY())) {
-                idleanimation.runAnimation();
-                state = State.ALIVE;
-            }
-
-
+        if (keyHandler.upPressed && !jumped) {
+            jumped = true;
+            state = State.JUMP;
+            this.setSpeedy(10);
+            jumpinganimation.runAnimation();
+            //soundEffect.playSE(3);
+            //t.start();//initiating a new thread to perform the jump act
         }
 
         if (keyHandler.leftPressed) {
             state = State.LEFT;
             this.setX(this.getX() - this.getSpeedx());//moves the player along the x axis to the left
             attackHitbox.x = (int) (this.getX() + gamePanel.tileSize);//moves the attack hitbox to follow players' hitbox
-           // attackHitbox.y = (int) this.getY();//moves the attack hitbox to follow players' hitbox
+            // attackHitbox.y = (int) this.getY();//moves the attack hitbox to follow players' hitbox
             leftanimation.runAnimation();
         } else if (keyHandler.rightPressed) {
             state = State.RIGHT;
@@ -162,9 +183,6 @@ public class Player extends GameObject {
             rightanimation.runAnimation();
         }
 
-        if ((!keyHandler.upPressed) && (floor == getY())) {
-            jumped = true;
-        }
 
         if (this.getLivesLeft() == 0) {
             this.state = State.DEAD;
@@ -184,7 +202,8 @@ public class Player extends GameObject {
         super.render(g);
         g.drawRect(this.attackHitbox.x, this.attackHitbox.y, this.attackHitbox.width,
                 this.attackHitbox.height);
-        //this if is in place so that when the player is hit , he is invulnerable and his body is shown blinking to indicate that state
+        //this if is in place so that when the player is hit ,
+        // he is invulnerable and his body is shown blinking to indicate that state
         if (this.isCollision() || this.state == State.DEAD) {//when a player is hit collision is turned off for some seconds so this.isCollision comes out false
             switch (state) {
                 case JUMP -> jumpinganimation.drawAnimation(g, screenX, screenY,
@@ -219,65 +238,31 @@ public class Player extends GameObject {
             }
         }
 
-        //FIX ME NIKOLAOS KATSIOS RENDERING GLITCH FROM UP PRESSED
-       /* int x = screenX;
-        int y = screenY;
-
-        if (screenX > getX()) {
-            x = (int) getX();
-        }
-
-
-        if (screenY > getY()) {
-            y = (int) getY();
-        }
-
-        */
-
         int rightDiff = gamePanel.screenWidth - screenX;
         if (rightDiff > gamePanel.worldWidth - getX()) {
             screenX = gamePanel.screenWidth - (gamePanel.worldWidth - (int) getX()); //and we subtract the difference from the current tile from the edge of the screen
         }
         //Then we calculate the length between player screenY and the right edge of the frame
-        int bottomDiff = gamePanel.screenHeight - (gamePanel.worldHeight - (int) getY());
-        if (bottomDiff > gamePanel.worldHeight - getY()) {
-            screenY = gamePanel.screenHeight - (gamePanel.worldHeight - (int) getY()); //and we subtract the difference from the current tile from the bottom edge of the screen
-        }
+        //int bottomDiff = gamePanel.screenHeight - (gamePanel.worldHeight - (int) getY());
+        //if (bottomDiff > gamePanel.worldHeight - getY()) {
+        //    screenY = gamePanel.screenHeight - (gamePanel.worldHeight - (int) getY()); //and we subtract the difference from the current tile from the bottom edge of the screen
+        // }
 
     }
 
-    public class thread implements Runnable {
-        @Override
-        public void run() {
-            try {
-                Thread.sleep((long) jumpingTime);
-                stalldx();//performing movement along the x axis gradually
-                if (getY() < 432) {
-                    screenY += 15;
-                    setY(getY() + 15);
-                }
-                jumped = false;
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.exit(0);
-            }
-        }
+    public void gravity() {
+        this.setY(this.getY() - getSpeedy());
+        screenY -= getSpeedy();
+        this.setSpeedy(this.getSpeedy() - GRAVITY);
+        //collision with floors
 
-
-        public void stalldx() {
-            try {
-                if (keyHandler.leftPressed) {
-                    for (int i = 0; i < 15; i++)
-                        setX(getX() - 1);//moves the player along the x axis to the left gradually
-                    Thread.sleep((long) (jumpingTime + 50)); //smooths the jump act
-                } else if (keyHandler.rightPressed) {
-                    for (int i = 0; i < 15; i++)
-                        setX(getX() + 1);//moves the player along the x axis to the right gradually
-                    Thread.sleep((long) (jumpingTime + 50)); //smooths the jump act
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        if (this.getY() > (floor - 1) ) {
+            this.setSpeedx(3);
+            counter = 0;
+            jumped = false;
+            this.setY(floor - 1);
+            screenY = (int) floor;
+            this.setSpeedy(0);
         }
     }
 
@@ -301,5 +286,10 @@ public class Player extends GameObject {
 
     public void setEnemiesKilled(int enemiesKilled) {this.enemiesKilled = enemiesKilled;}
 
+
+    public boolean playerBlockCollision(Line2D l) {
+        //System.out.println(this.intersectsLine(l));
+        return this.intersectsLine(l);
+    }
 }
 

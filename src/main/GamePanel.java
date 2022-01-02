@@ -39,8 +39,9 @@ public class GamePanel extends JPanel implements Runnable {
     Sound se = new Sound();// created to have sound effects and at the same time music
     Thread gameThread;
 
+    public Block block = new Block(7 * tileSize, 7 *tileSize, 0,0,tileSize,tileSize,this);
 
-    public Player player = new Player(7 * tileSize, floor, 3, 4, keyHandler, this);
+    public Player player = new Player(7 * tileSize, floor, 3, 48, keyHandler, this);
     //public GameObjectSetter obstacleSetter = new GameObjectSetter(this);
     public HUD hud = new HUD(this);
     public Menu menu = new Menu(this);
@@ -48,8 +49,8 @@ public class GamePanel extends JPanel implements Runnable {
     public Bound bound = new Bound(player, this);
 
     //Level initialization
-    String [] obstacle = {"spikesRoller"};
-    String [] enemies = {"Minotaur"};
+    String[] obstacle = {"spikesRoller"};
+    String[] enemies = {"Minotaur"};
     public Level level1 = new Level(this, "/maps/Level1Layout.txt",
             new TileManager(this), obstacle,enemies,false, false);
     String [] obstacle1 = {"Fire"};
@@ -66,6 +67,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
+        this.setBackground(new Color(43, 145, 193));
         this.setDoubleBuffered(true);
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
@@ -148,7 +150,9 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
     }
-    public  static int i = 0;
+
+    public static int i = 0;
+
     //in this method we update all GameObject objects
     public void update() {
         if (gameState == PLAY_STATE) {
@@ -166,7 +170,7 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
 
-        } else if (gameState == MENU_STATE){
+        } else if (gameState == MENU_STATE) {
             menu.textUpdate();
         }
         if (player.getLivesLeft() == 0) {
@@ -179,6 +183,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
     }
+
     //in this method we paint all GameObject objects
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -189,7 +194,7 @@ public class GamePanel extends JPanel implements Runnable {
             menu.drawPauseMenu(g2);
         } else if (gameState == WIN_LOSE_STATE) {
             menu.drawWinLoseMenu(g2);
-        } else if (gameState == LEVEL_SELECTION_STATE){
+        } else if (gameState == LEVEL_SELECTION_STATE) {
             menu.drawLevelSelectionMenu(g2);
         } else {
             CurrentLevel.tileM.render(g2);
@@ -197,8 +202,9 @@ public class GamePanel extends JPanel implements Runnable {
             player.render(g2);
             bound.render(g2);
             hud.render(g2);
+            block.render(g2);
         }
-            g2.dispose();
+        g2.dispose();
     }
 
 }
