@@ -49,18 +49,16 @@ public class GamePanel extends JPanel implements Runnable {
     public Bound bound = new Bound(player, this);
 
     //Level initialization
+    String [] enemies= {"Minotaur","FinalBoss"};
     String[] obstacle = {"spikesRoller"};
-    String[] enemies = {"Minotaur"};
     public Level level1 = new Level(this, "/maps/Level1Layout.txt",
             new TileManager(this), obstacle,enemies,false, false);
     String [] obstacle1 = {"Fire"};
-    String [] enemies1 = {"Minotaur"};
     public Level level2 = new Level(this, "/maps/Level2Layout.txt",
-            new TileManager(this), obstacle1, enemies1,true, false );
+            new TileManager(this), obstacle1, enemies,true, false );
     String [] obstacle2 = {"Fire","spikesRoller"};
-    String [] enemies2 = {"FinalBoss","Minotaur"};
     public Level level3 = new Level(this, "/maps/Level3Layout.txt",
-            new TileManager(this), obstacle1, enemies2,true, true);
+            new TileManager(this), obstacle1, enemies,true, true);
 
     public Level CurrentLevel; // stores the Level that player has chosen
 

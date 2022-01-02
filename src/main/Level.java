@@ -51,7 +51,7 @@ public class Level {
             int spawnX = startingpoint + randomTile * gamePanel.tileSize;
             if (i % 4 == 0 && hasEnemies) {
                 Enemy enemy = new Enemy(spawnX, 8 * gamePanel.tileSize,
-                        1, 0, 3 * gamePanel.tileSize, 3 * gamePanel.tileSize, enemyName[1], gamePanel, 1);
+                        1, 0, 3 * gamePanel.tileSize, 3 * gamePanel.tileSize, enemyName[0], gamePanel, 1);
                 // so that the enemy touches the ground , because minotaur png's are not the resolution we need
                 //enemy.y = (int) enemy.worldY + gamePanel.tileSize / 2;
                 handler.enemies.add(enemy);
@@ -79,7 +79,7 @@ public class Level {
         handler.obstacles.add(bird);
         if (this.hasFinalBoss) {
             Enemy enemy = new Enemy( (gamePanel.maxWorldCol - 10) * gamePanel.tileSize, 7 * gamePanel.tileSize,
-                    1, 0, 3 * gamePanel.tileSize, 3 * gamePanel.tileSize, enemyName[0], gamePanel, 3);
+                    1, 0, 3 * gamePanel.tileSize, 3 * gamePanel.tileSize, enemyName[1], gamePanel, 3);
             handler.enemies.add(enemy);
         }
     }
