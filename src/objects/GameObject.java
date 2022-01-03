@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.geom.Line2D;
 
 //superclass for all the object of the game
-public abstract class GameObject extends Rectangle {
+public class GameObject extends Rectangle {
     /**
      * this method extends Rectangle class from java.awt to implement collision
      * what all the objects have in common
@@ -43,7 +43,6 @@ public abstract class GameObject extends Rectangle {
         this.speedY = speedY;
         this.id = counter;
     }
-
 
 
     public void render(Graphics2D g2) {
@@ -99,11 +98,4 @@ public abstract class GameObject extends Rectangle {
         return id;
     }
 
-    //This method is used to draw a rectangle reversing it by 180 degrees
-    public void renderreverse(Graphics2D g2) {
-        g2.setColor(Color.RED);
-        g2.rotate(Math.toRadians(180));
-
-        g2.drawRect(x, y, width, height);
-    }
 }

@@ -8,8 +8,8 @@ import java.util.Random;
 public class Level {
 
     public String txtPath;
-    public String [] obstacleName;
-    public String [] enemyName;
+    public String[] obstacleName;
+    public String[] enemyName;
     GamePanel gamePanel;
     TileManager tileM;
     public int coinCounter;
@@ -21,14 +21,14 @@ public class Level {
 
 
     public Level(GamePanel gamePanel, String txtPath,
-                        TileManager tileM, String[] obstacleName, String[] enemyName , boolean hasEnemies, boolean hasFinalBoss, boolean hasBlocks) {
+                 TileManager tileM, String[] obstacleName, String[] enemyName, boolean hasEnemies, boolean hasFinalBoss, boolean hasBlocks) {
         this.gamePanel = gamePanel;
         this.txtPath = txtPath;
         this.obstacleName = obstacleName;
         this.enemyName = enemyName;
         this.tileM = tileM;
         this.hasEnemies = hasEnemies;
-        handler = new Handler(gamePanel.player);
+        handler = gamePanel.handler;
         this.hasFinalBoss = hasFinalBoss;
         this.hasBlocks = hasBlocks;
     }
@@ -56,38 +56,38 @@ public class Level {
                         1, 0, 3 * gamePanel.tileSize, 3 * gamePanel.tileSize, enemyName[0], gamePanel, 1);
                 // so that the enemy touches the ground , because minotaur png's are not the resolution we need
                 //enemy.y = (int) enemy.worldY + gamePanel.tileSize / 2;
-                handler.enemies.add(enemy);
+                handler.add(enemy);
             } else {
                 // used to choose randomly
                 // one of the 2 obstacles(Fire or spikesRoller)
-                handler.obstacles.add(new Obstacle(spawnX, gamePanel.floor, 0,
-                        0, 30, gamePanel.tileSize, obstacleName[GamePanel.currentLevelNumber == 3 ? rand.nextInt(2) : 0 ], gamePanel));
+                handler.add(new Obstacle(spawnX, gamePanel.floor, 0,
+                        0, 30, gamePanel.tileSize, obstacleName[GamePanel.currentLevelNumber == 3 ? rand.nextInt(2) : 0], gamePanel));
                 /* we spawn a coin above an obstacle with a random way to make player
                 jump a little or a lot to reach it and also make game harder*/
                 int randomY = (rand.nextInt(3) + 1);
-                handler.coinlist.add(new Coin(spawnX, gamePanel.floor - (randomY * gamePanel.tileSize),
+                handler.add(new Coin(spawnX, gamePanel.floor - (randomY * gamePanel.tileSize),
                         0, 0, gamePanel.tileSize, gamePanel.tileSize, gamePanel));
             }
-            if(this.hasBlocks) {
+            if (this.hasBlocks) {
                 //we spawn blocks on top of obstacles or enemies
-                handler.blockArrayList.add(new Block(spawnX + gamePanel.tileSize, 6.5 * gamePanel.tileSize, 0,0,
-                        gamePanel.tileSize, gamePanel.tileSize,gamePanel));
+                handler.add(new Block(spawnX + gamePanel.tileSize, 6.5 * gamePanel.tileSize, 0, 0,
+                        gamePanel.tileSize, gamePanel.tileSize, gamePanel));
             }
             // we spawn coins after an obstacle or enemy for reward
-            handler.coinlist.add(new Coin(spawnX + 2 * gamePanel.tileSize, gamePanel.floor,
+            handler.add(new Coin(spawnX + 2 * gamePanel.tileSize, gamePanel.floor,
                     0, 0, gamePanel.tileSize, gamePanel.tileSize, gamePanel));
             startingpoint += 5 * gamePanel.tileSize;
-            if(GamePanel.currentLevelNumber == 3 && i == 18) {
+            if (GamePanel.currentLevelNumber == 3 && i == 18) {
                 break;
             }
         }
         Bird bird = new Bird(18 * gamePanel.tileSize, 5 * gamePanel.tileSize,
                 4, 0, gamePanel.tileSize, gamePanel.tileSize, gamePanel, "Bird");
-        handler.obstacles.add(bird);
+        handler.add(bird);
         if (this.hasFinalBoss) {
-            Enemy enemy = new Enemy( (gamePanel.maxWorldCol - 10) * gamePanel.tileSize, 7 * gamePanel.tileSize,
+            Enemy enemy = new Enemy((gamePanel.maxWorldCol - 10) * gamePanel.tileSize, 7 * gamePanel.tileSize,
                     1, 0, 3 * gamePanel.tileSize, 3 * gamePanel.tileSize, enemyName[1], gamePanel, 3);
-            handler.enemies.add(enemy);
+            handler.add(enemy);
         }
     }
 
@@ -101,54 +101,46 @@ public class Level {
                         4, 4, gamePanel.tileSize, gamePanel.tileSize, "arrow", gamePanel);
                 arrow.height -= 30;// changed arrows rectangle height manually to match the actual shape of the arrow and adjust collision box
                 arrow.y += 14;// changed arrows rectangle y manually to match the actual shape of the arrow and adjust collision box
-                handler.obstacles.add(arrow);
+                handler.add(arrow);
             } else if (gamePanel.player.getX() < 50 * gamePanel.tileSize) { //2nd area
                 MovingObstacle arrow = new MovingObstacle(75 * gamePanel.tileSize,
                         gamePanel.floor - rand.nextInt(4) * gamePanel.tileSize,
                         4, 4, gamePanel.tileSize, gamePanel.tileSize, "arrow", gamePanel);
                 arrow.height -= 30;
                 arrow.y += 14;
-                handler.obstacles.add(arrow);
+                handler.add(arrow);
             } else if (gamePanel.player.getX() < 75 * gamePanel.tileSize) { //3rd area
                 MovingObstacle arrow = new MovingObstacle(100 * gamePanel.tileSize,
                         gamePanel.floor - rand.nextInt(4) * gamePanel.tileSize,
                         4, 4, gamePanel.tileSize, gamePanel.tileSize, "arrow", gamePanel);
                 arrow.height -= 30;
                 arrow.y += 14;
-                handler.obstacles.add(arrow);
+                handler.add(arrow);
             } else if (gamePanel.player.getX() < 95 * gamePanel.tileSize) { //4th area
                 MovingObstacle arrow = new MovingObstacle(115 * gamePanel.tileSize,
                         gamePanel.floor - rand.nextInt(4) * gamePanel.tileSize,
                         4, 4, gamePanel.tileSize, gamePanel.tileSize, "arrow", gamePanel);
                 arrow.height -= 30;
                 arrow.y += 14;
-                handler.obstacles.add(arrow);
+                handler.add(arrow);
             }
         }
     }
 
-
-    //clears all the objects created in the game by emptying the lists that contain them
-    public void clearObjects() {
-        handler.enemies.clear();
-        handler.obstacles.clear();
-        handler.coinlist.clear();
-    }
-
-    public int calculateScore( double levelCompletionTime, int livesLeft , int coinsCollected , int enemiesKilled) {
+    public int calculateScore(double levelCompletionTime, int livesLeft, int coinsCollected, int enemiesKilled) {
         //In order to calculate points based on time , we set 4 time zones
         //As we move up in time , points from completing the level in each time zone decrease
         //rewarding the player for making it to the end faster
         int pointsFromTime;
         if (levelCompletionTime <= 25) {
             pointsFromTime = 800;
-        } else if (levelCompletionTime <= 35){
+        } else if (levelCompletionTime <= 35) {
             pointsFromTime = 600;
-        } else if (levelCompletionTime <= 45){
+        } else if (levelCompletionTime <= 45) {
             pointsFromTime = 400;
-        } else if (levelCompletionTime <= 60){
+        } else if (levelCompletionTime <= 60) {
             pointsFromTime = 200;
-        } else{
+        } else {
             pointsFromTime = 100;
         }
         //We reward the player with 100 points for each heart he has left
@@ -159,8 +151,8 @@ public class Level {
 
     }
 
-    public void checkForFinalBoss(){
-        if(gamePanel.player.getX() == 80 * gamePanel.tileSize){
+    public void checkForFinalBoss() {
+        if (gamePanel.player.getX() == 80 * gamePanel.tileSize) {
             gamePanel.music.stopMusic();
             gamePanel.music.playMusic(6);
         }

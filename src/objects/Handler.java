@@ -4,16 +4,15 @@ import sounds.Sound;
 
 import java.awt.*;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Handler {
-    public LinkedList<GameObject> obstacles = new LinkedList<>();
-    public LinkedList<Enemy> enemies = new LinkedList<>();
-    public LinkedList<Coin> coinlist = new LinkedList<>();
-    public LinkedList<Block> blockArrayList = new LinkedList<>();
+    private LinkedList<GameObject> obstacles = new LinkedList<>();
+    private LinkedList<Enemy> enemies = new LinkedList<>();
+    private LinkedList<Coin> coinlist = new LinkedList<>();
+    private LinkedList<Block> blockArrayList = new LinkedList<>();
     //Create an Array to irretate over all lists at once
-    private final LinkedList[] all = new LinkedList[]{obstacles, enemies, coinlist ,blockArrayList};
+    private final LinkedList[] all = new LinkedList[]{obstacles, enemies, coinlist, blockArrayList};
     Player player;
     Sound soundEffect = new Sound();
     DecimalFormat decFormat = new DecimalFormat("#0.00");
@@ -69,9 +68,9 @@ public class Handler {
 
             }
         }
-        for(Block block: blockArrayList) {
+        for (Block block : blockArrayList) {
             //right collision with platform
-            if (player.intersectsLine(block.rightLine)&& player.counter < 1) {
+            if (player.intersectsLine(block.rightLine) && player.counter < 1) {
                 player.counter++;
                 player.setSpeedy(0);
                 player.setSpeedx(0);
@@ -94,7 +93,7 @@ public class Handler {
                 player.worldY = block.platformfloor - player.height;
                 player.screenY = (int) (block.platformfloor - player.height);
                 player.jumped = false;
-            }else {
+            } else {
                 player.floor = player.gamePanel.floor;
             }
         }
@@ -131,7 +130,7 @@ public class Handler {
                 enemy.setCollision(false);
                 enemy.colissionTime = this.timer;
                 System.out.println(enemy.livesLeft);
-                if (enemy.livesLeft==0) {
+                if (enemy.livesLeft == 0) {
                     this.enemyDeathTime = this.timer;
                     enemy.setCollision(false);
                     player.setEnemiesKilled(player.getEnemiesKilled() + 1);
@@ -141,6 +140,24 @@ public class Handler {
                 enemies.remove(enemy);
                 break;//so that when an enemy is removes the for loop doesn't crash
             }
+        }
+    }
+
+    public void add(GameObject x) {
+        if (x.getClass().equals(Coin.class)) {
+            coinlist.add((Coin) x);
+        } else if (x.getClass().equals(Enemy.class)) {
+            enemies.add((Enemy) x);
+        } else if (x.getClass().equals(Block.class)) {
+            blockArrayList.add((Block) x);
+        } else {
+            obstacles.add(x);
+        }
+    }
+
+    public void clear() {
+        for (LinkedList l : all) {
+            l.clear();
         }
     }
 }

@@ -229,6 +229,7 @@ public class    Player extends GameObject {
         if (this.getLivesLeft() == 0) {
             this.state = State.DEAD;
             deathanimation.runAnimation();
+            setY(0);
             if (!deathSoundIsDone) {
                 soundEffect.playSE(1);
                 deathSoundIsDone = true;// so that we stop the death sound

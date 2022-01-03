@@ -6,6 +6,7 @@ import tiles.*;
 
 import javax.swing.JPanel;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
 
 public class GamePanel extends JPanel implements Runnable {
     //Screen settings
@@ -47,14 +48,14 @@ public class GamePanel extends JPanel implements Runnable {
     public Bound bound = new Bound(player, this);
 
     //Level initialization
-    String [] enemies= {"Minotaur","FinalBoss"};
-    String[] obstacle = {"spikesRoller","Fire"};
+    String[] enemies = {"Minotaur", "FinalBoss"};
+    String[] obstacle = {"spikesRoller", "Fire"};
     public Level level1 = new Level(this, "/maps/Level1Layout.txt",
-            new TileManager(this), obstacle,enemies,false, false, true);
+            new TileManager(this), obstacle, enemies, false, false, true);
     public Level level2 = new Level(this, "/maps/Level2Layout.txt",
-            new TileManager(this), obstacle, enemies,true, false, false );
+            new TileManager(this), obstacle, enemies, true, false, false);
     public Level level3 = new Level(this, "/maps/Level3Layout.txt",
-            new TileManager(this), obstacle, enemies,true, true, false);
+            new TileManager(this), obstacle, enemies, true, true, false);
 
     public Level currentLevel; // stores the Level that player has chosen
 
@@ -69,25 +70,25 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setUpGame() {
         gameState = MENU_STATE;
-        music.playMusic(5 , true);// we play the 5th sound file which is the starting menu music
+        music.playMusic(5, true);// we play the 5th sound file which is the starting menu music
     }
 
     //resets all the game assets to their default values
     public void resetGame(int levelNumber) {
         //level reset
         switch (levelNumber) {
-            case 1 :
+            case 1 -> {
                 level1.setupLevel();
                 currentLevel = level1;
-                break;
-            case 2 :
+            }
+            case 2 -> {
                 level2.setupLevel();
                 currentLevel = level2;
-                break;
-            case 3 :
+            }
+            case 3 -> {
                 level3.setupLevel();
                 currentLevel = level3;
-                break;
+            }
         }
         //player reset
         player.setLivesLeft(3);
@@ -99,12 +100,12 @@ public class GamePanel extends JPanel implements Runnable {
         player.screenX = 7 * tileSize;
         player.screenY = 9 * tileSize;
         //object reset
-        currentLevel.clearObjects();
+        handler.clear();
         currentLevel.setupGameObjects();
         //misc resets
         GamePanel.i = 0;
         hud.levelTimer = 0;
-        hud.counter =0;
+        hud.counter = 0;
     }
 
 
@@ -156,11 +157,11 @@ public class GamePanel extends JPanel implements Runnable {
             currentLevel.handler.update();
             hud.update();
             //Gameplay differentiation between the 3 levels
-            if(currentLevelNumber == 1){ //LEVEL1
+            if (currentLevelNumber == 1) { //LEVEL1
                 level1.addArrow();
-            } else if(currentLevelNumber == 2) { //LEVEL2
+            } else if (currentLevelNumber == 2) { //LEVEL2
 
-            } else if (currentLevelNumber == 3){ //LEVEL 3
+            } else if (currentLevelNumber == 3) { //LEVEL 3
                 level3.checkForFinalBoss();
             }
             currentLevel.handler.checkEnemyCollision();
