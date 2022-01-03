@@ -16,39 +16,13 @@ public class Animation {
 
     //constructor that gets a list or a table of BufferedImage
     //its initializes the images table
-    public Animation(int speed , BufferedImage... args ) {
+    public Animation(int speed, BufferedImage... args) {
         images = new BufferedImage[args.length];
         //The speed will depend on how many images we have
-        this.speed = 60 / args.length - speed ; // bigger speed -> slower animation and vice versa
+        this.speed = 60 / args.length - speed; // bigger speed -> slower animation and vice versa
         //Copy args array into images:
         System.arraycopy(args, 0, images, 0, args.length);
         this.frames = args.length;
-    }
-
-    public Animation reverseAnimation(){
-        BufferedImage[] reverse = new BufferedImage[this.images.length];
-        AffineTransform affineTransform = new AffineTransform();
-        for (int i=0;i<this.images.length;i++) {
-            BufferedImage bimg = this.images[i];
-            //We want the object to be looking right instead of left (or the opposite)
-            /*int angle=180;
-            double sin = Math.abs(Math.sin(Math.toRadians(angle))),
-                    cos = Math.abs(Math.cos(Math.toRadians(angle)));
-            int w = bimg.getWidth();
-            int h = bimg.getHeight();
-            int neww = (int) Math.floor(w*cos + h*sin);
-            int newh = (int) Math.floor(h*cos + w*sin);
-            reverse[i] = new BufferedImage(neww, newh, bimg.getType());*/
-            //affineTransform.translate(bimg.getWidth() / 2, bimg.getHeight() / 2);
-            affineTransform.rotate(180);
-            //affineTransform.translate(-bimg.getWidth() / 2, -bimg.getHeight() / 2);
-            AffineTransformOp affineTransformOp = new AffineTransformOp(affineTransform, AffineTransformOp.TYPE_BILINEAR);
-
-            reverse[i]=new BufferedImage(bimg.getHeight(), bimg.getWidth(), bimg.getType());
-
-            affineTransformOp.filter(bimg, reverse[i]);
-        }
-        return new Animation(0,reverse);
     }
 
     //calling this method makes the animation run in backend
