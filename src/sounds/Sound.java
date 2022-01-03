@@ -1,4 +1,4 @@
-/*package sounds;
+package sounds;
 
 import javax.sound.sampled.*;
 import java.io.IOException;
@@ -19,6 +19,10 @@ public class Sound {
         musicURL[3] = getClass().getResource("/Sound/JUMP.wav");
         musicURL[4] = getClass().getResource("/Sound/coinSound.wav");
         musicURL[5] = getClass().getResource("/Sound/bensound-anewbeginning.wav");
+        musicURL[6] = getClass().getResource("/Sound/FINAL BOSS MUSIC.wav");
+        musicURL[7] = getClass().getResource("/Sound/LEVEL COMPLETED.wav");
+        musicURL[8] = getClass().getResource("/Sound/SWORD HIT.wav");
+        musicURL[9] = getClass().getResource("/Sound/YOU LOSE.wav");
     }
 
     //setFile is used to signal which sound is going to be played, that's why we have an index as an argument
@@ -37,11 +41,19 @@ public class Sound {
 
     // in order to play the background music we need to select the file, start the clip, and loop it continuously
     public void playMusic(int i) {
-
         this.setFile(i);
         clip.start();
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
+
+    public void playMusic(int i , boolean loop) {
+        this.setFile(i);
+        clip.start();
+        if(loop){
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+        }
+    }
+
 
     //we shut it up
     public void stopMusic() {
@@ -51,11 +63,11 @@ public class Sound {
 
     //the only difference with playMusic is that we do not loop it
     public void playSE(int i) {
-
         this.setFile(i);
         clip.start();
     }
+
+
 }
 
- */
 

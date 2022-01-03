@@ -40,7 +40,7 @@ public class HUD {
         g2.drawString("x " + gamepanel.player.getLivesLeft(), 74, 50);
         g2.drawImage(coinImage,(gamepanel.tileSize / 2) + 3 * gamepanel.tileSize, gamepanel.tileSize / 2 - 10, gamepanel.tileSize, gamepanel.tileSize,null);
         g2.drawString("x " + gamepanel.player.getCoinsCollected(), (int) ((gamepanel.tileSize / 2) + 4.5 * gamepanel.tileSize), 50);
-        if(counter < 200 && GamePanel.currentLevel == 1){
+        if(counter < 200 && GamePanel.currentLevelNumber == 1){
             g2.setColor(Color.BLACK);
             g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20));
             g2.drawString("MOVE" , 630 , 90);

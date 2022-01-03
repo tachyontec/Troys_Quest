@@ -35,15 +35,19 @@ public class Bound {
     public void update() {
         start.update();
         end.update();
-
-        if (start.worldX - player.getX() <= 10) {
-            if (start.intersects(player)) {
-                player.setX(player.getX() + 5);
+        if(gamepanel.gameState == GamePanel.PLAY_STATE) {
+            if (start.worldX - player.getX() <= 10) {
+                if (start.intersects(player)) {
+                    player.setX(player.getX() + 5);
+                }
             }
-        }
-        if (end.worldX - player.getX() <= 10) {
-            if (end.intersects(player)) {
-                gamepanel.gameState = GamePanel.WIN_LOSE_STATE;
+            if (end.worldX - player.getX() <= 10) {
+                if (end.intersects(player)) {
+                    gamepanel.music.stopMusic();
+                    gamepanel.music.playMusic(7 , false);
+                    gamepanel.player.setCollision(false);
+                    gamepanel.gameState = GamePanel.WIN_LOSE_STATE;
+                }
             }
         }
     }

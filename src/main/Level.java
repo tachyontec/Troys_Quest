@@ -61,7 +61,7 @@ public class Level {
                 // used to choose randomly
                 // one of the 2 obstacles(Fire or spikesRoller)
                 handler.obstacles.add(new Obstacle(spawnX, gamePanel.floor, 0,
-                        0, 30, gamePanel.tileSize, obstacleName[GamePanel.currentLevel == 3 ? rand.nextInt(2) : 0 ], gamePanel));
+                        0, 30, gamePanel.tileSize, obstacleName[GamePanel.currentLevelNumber == 3 ? rand.nextInt(2) : 0 ], gamePanel));
                 /* we spawn a coin above an obstacle with a random way to make player
                 jump a little or a lot to reach it and also make game harder*/
                 int randomY = (rand.nextInt(3) + 1);
@@ -77,7 +77,7 @@ public class Level {
             handler.coinlist.add(new Coin(spawnX + 2 * gamePanel.tileSize, gamePanel.floor,
                     0, 0, gamePanel.tileSize, gamePanel.tileSize, gamePanel));
             startingpoint += 5 * gamePanel.tileSize;
-            if(GamePanel.currentLevel == 3 && i == 18) {
+            if(GamePanel.currentLevelNumber == 3 && i == 18) {
                 break;
             }
         }
@@ -140,9 +140,9 @@ public class Level {
         //As we move up in time , points from completing the level in each time zone decrease
         //rewarding the player for making it to the end faster
         int pointsFromTime;
-        if (levelCompletionTime <= 15) {
+        if (levelCompletionTime <= 25) {
             pointsFromTime = 800;
-        } else if (levelCompletionTime <= 30){
+        } else if (levelCompletionTime <= 35){
             pointsFromTime = 600;
         } else if (levelCompletionTime <= 45){
             pointsFromTime = 400;
@@ -159,5 +159,11 @@ public class Level {
 
     }
 
+    public void checkForFinalBoss(){
+        if(gamePanel.player.getX() == 80 * gamePanel.tileSize){
+            gamePanel.music.stopMusic();
+            gamePanel.music.playMusic(6);
+        }
+    }
 
 }

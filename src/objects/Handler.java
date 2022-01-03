@@ -1,5 +1,7 @@
 package objects;
 
+import sounds.Sound;
+
 import java.awt.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -13,6 +15,7 @@ public class Handler {
     //Create an Array to irretate over all lists at once
     private final LinkedList[] all = new LinkedList[]{obstacles, enemies, coinlist ,blockArrayList};
     Player player;
+    Sound soundEffect = new Sound();
     DecimalFormat decFormat = new DecimalFormat("#0.00");
     double timer;
     double collisionTime = 0;
@@ -55,13 +58,13 @@ public class Handler {
         }
 
         for (GameObject object : obstacles) {
-            if (object.intersects(player) && player.isCollision() && !object.getClass().equals(Bird.class)) {
+            if (object.intersects(player) && player.isCollidable() && !object.getClass().equals(Bird.class)) {
                 b = true;
                 player.setCollision(false);
                 collisionTime = timer;
                 break;
             }
-            if (object.intersects(player) && !object.getClass().equals(Bird.class) && !object.getClass().equals(MovingObstacle.class)) {
+            if (object.intersects(player) && !object.getClass().equals(Bird.class)) {
                 player.setX(player.getX() - 20);//so as not to go "into" obstacles
 
             }
@@ -97,7 +100,7 @@ public class Handler {
         }
 
         for (Enemy enemy : enemies) {
-            if (enemy.intersects(player) && player.isCollision() && enemy.isCollision()) {
+            if (enemy.intersects(player) && player.isCollidable() && enemy.isCollision()) {
                 b = true;
                 player.setCollision(false);
                 collisionTime = timer;
@@ -108,6 +111,7 @@ public class Handler {
         //handling the collision of all the coins in game
         for (Coin coin : coinlist) {
             if (coin.checkCollision()) {
+                soundEffect.playSE(4);
                 coinlist.remove(coin);
                 break;
             }

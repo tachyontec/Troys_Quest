@@ -164,7 +164,7 @@ public class Menu {
                 title = "YOU LOSE!";
             } else {
                 title = "YOU WIN!";
-                int levelScore = gamepanel.CurrentLevel.calculateScore(gamepanel.hud.levelTimer ,
+                int levelScore = gamepanel.currentLevel.calculateScore(gamepanel.hud.levelTimer ,
                         gamepanel.player.getLivesLeft() , gamepanel.player.getCoinsCollected() , gamepanel.player.getEnemiesKilled());
                 int numOfStars;
                     g2.setColor(Color.BLACK);

@@ -4,7 +4,7 @@ import main.Animation;
 import main.GamePanel;
 import main.KeyHandler;
 import main.Resource;
-//import sounds.Sound;
+import sounds.Sound;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -22,7 +22,7 @@ public class    Player extends GameObject {
     //Buffered Images are the ones that contain our main character
     //they look when they move left,right and jump etc.
     //the three bufferedImage tables run,jump,idle contain the photos that are needed in animations
-    //public Sound soundEffect = new Sound();
+    public Sound soundEffect = new Sound();
     public BufferedImage[] right;
     public BufferedImage[] left;
     public BufferedImage[] jump;
@@ -63,7 +63,7 @@ public class    Player extends GameObject {
 
     public static final double GRAVITY = 0.3;
 
-    public boolean isCollision() {
+    public boolean isCollidable() {
         return collision;
     }
 
@@ -115,7 +115,7 @@ public class    Player extends GameObject {
 
     //moves the player by altering the x,y coordinates with keyboard arrows
     @Override
-    public synchronized void update() { //synchronized because we involve another thread for jumping and we don't want it to collide with our main game thread
+    public void update() { 
         still();
         gravity();
         jump();
@@ -133,7 +133,7 @@ public class    Player extends GameObject {
                 this.attackHitbox.height);
         //this if is in place so that when the player is hit ,
         // he is invulnerable and his body is shown blinking to indicate that state
-        if (this.isCollision() || this.state == State.DEAD) {//when a player is hit collision is turned off for some seconds so this.isCollision comes out false
+        if (this.isCollidable() || this.state == State.DEAD) {//when a player is hit collision is turned off for some seconds so this.isCollision comes out false
             switch (state) {
                 case JUMP -> jumpinganimation.drawAnimation(g, screenX, screenY,
                         gamePanel.tileSize, gamePanel.tileSize);
@@ -149,7 +149,7 @@ public class    Player extends GameObject {
                         gamePanel.tileSize + 50, gamePanel.tileSize);
             }
         } else {
-            if ((int) (this.gamePanel.CurrentLevel.handler.timer * 50) % 2 == 0) {
+            if ((int) (this.gamePanel.currentLevel.handler.timer * 50) % 2 == 0) {
                 switch (state) {
                     case JUMP -> jumpinganimation.drawAnimation(g, screenX, screenY,
                             gamePanel.tileSize, gamePanel.tileSize);
@@ -166,17 +166,11 @@ public class    Player extends GameObject {
                 }
             }
         }
-
+        //Only when player reaches the right edge of the screen , his screenX and screenY need to be adjusted
         int rightDiff = gamePanel.screenWidth - screenX;
         if (rightDiff > gamePanel.worldWidth - getX()) {
             screenX = gamePanel.screenWidth - (gamePanel.worldWidth - (int) getX()); //and we subtract the difference from the current tile from the edge of the screen
         }
-        //Then we calculate the length between player screenY and the right edge of the frame
-        //int bottomDiff = gamePanel.screenHeight - (gamePanel.worldHeight - (int) getY());
-        //if (bottomDiff > gamePanel.worldHeight - getY()) {
-        //    screenY = gamePanel.screenHeight - (gamePanel.worldHeight - (int) getY()); //and we subtract the difference from the current tile from the bottom edge of the screen
-        // }
-
     }
 
     public void gravity() {
@@ -202,6 +196,7 @@ public class    Player extends GameObject {
         if (keyHandler.attackPressed) {
             state = State.ATTACK;
             attackanimation.runAnimation();
+            //soundEffect.playSE(8); //FIX ME PLAYS REPETITIVELY
         }
     }
 
@@ -211,7 +206,7 @@ public class    Player extends GameObject {
             state = State.JUMP;
             this.setSpeedy(10);
             jumpinganimation.runAnimation();
-            //soundEffect.playSE(3);
+            soundEffect.playSE(3);
         }
     }
     public void run(){
@@ -235,7 +230,7 @@ public class    Player extends GameObject {
             this.state = State.DEAD;
             deathanimation.runAnimation();
             if (!deathSoundIsDone) {
-                //soundEffect.playSE(1);
+                soundEffect.playSE(1);
                 deathSoundIsDone = true;// so that we stop the death sound
             }
         }

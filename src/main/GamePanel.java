@@ -1,7 +1,7 @@
 package main;
 
 import objects.*;
-//import sounds.Sound;
+import sounds.Sound;
 import tiles.*;
 
 import javax.swing.JPanel;
@@ -22,7 +22,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int screenWidth = tileSize * maxScreenCol; // screen width 768
     public final int screenHeight = tileSize * maxScreenRow; // screen height 576
     public int deathCounter = 0;
-    public static int currentLevel;
+    public static int currentLevelNumber;
 
     //GAME STATES : Informs us about what is happening currently in the game
     public static final int PLAY_STATE = 0;//When game is running
@@ -35,10 +35,9 @@ public class GamePanel extends JPanel implements Runnable {
 
 
     KeyHandler keyHandler = new KeyHandler(this);
-    //Sound music = new Sound();// used for background music
-    //Sound se = new Sound();// created to have sound effects and at the same time music
+    public Sound music = new Sound();// used for background music
+    Sound se = new Sound();// created to have sound effects and at the same time music
     Thread gameThread;
-
 
     public Player player = new Player(7 * tileSize, floor, 3, 48, keyHandler, this);
     //public GameObjectSetter obstacleSetter = new GameObjectSetter(this);
@@ -57,7 +56,7 @@ public class GamePanel extends JPanel implements Runnable {
     public Level level3 = new Level(this, "/maps/Level3Layout.txt",
             new TileManager(this), obstacle, enemies,true, true, false);
 
-    public Level CurrentLevel; // stores the Level that player has chosen
+    public Level currentLevel; // stores the Level that player has chosen
 
 
     public GamePanel() {
@@ -70,7 +69,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setUpGame() {
         gameState = MENU_STATE;
-        //music.playMusic(5);// we play the 5th sound file which is the starting menu music
+        music.playMusic(5 , true);// we play the 5th sound file which is the starting menu music
     }
 
     //resets all the game assets to their default values
@@ -79,28 +78,29 @@ public class GamePanel extends JPanel implements Runnable {
         switch (levelNumber) {
             case 1 :
                 level1.setupLevel();
-                CurrentLevel = level1;
+                currentLevel = level1;
                 break;
             case 2 :
                 level2.setupLevel();
-                CurrentLevel = level2;
+                currentLevel = level2;
                 break;
             case 3 :
                 level3.setupLevel();
-                CurrentLevel = level3;
+                currentLevel = level3;
                 break;
         }
         //player reset
         player.setLivesLeft(3);
         player.setCoinsCollected(0);
         player.setEnemiesKilled(0);
+        player.setCollision(true);
         player.setX(7 * tileSize);
         player.setY(9 * tileSize);
         player.screenX = 7 * tileSize;
         player.screenY = 9 * tileSize;
         //object reset
-        CurrentLevel.clearObjects();
-        CurrentLevel.setupGameObjects();
+        currentLevel.clearObjects();
+        currentLevel.setupGameObjects();
         //misc resets
         GamePanel.i = 0;
         hud.levelTimer = 0;
@@ -153,15 +153,21 @@ public class GamePanel extends JPanel implements Runnable {
         if (gameState == PLAY_STATE) {
             bound.update();
             player.update();
-            CurrentLevel.handler.update();
+            currentLevel.handler.update();
             hud.update();
-            level1.addArrow();
-            level3.addArrow();
-            CurrentLevel.handler.checkEnemyCollision();
-            if (CurrentLevel.handler.checkPlayerCollision()) {
+            //Gameplay differentiation between the 3 levels
+            if(currentLevelNumber == 1){ //LEVEL1
+                level1.addArrow();
+            } else if(currentLevelNumber == 2) { //LEVEL2
+
+            } else if (currentLevelNumber == 3){ //LEVEL 3
+                level3.checkForFinalBoss();
+            }
+            currentLevel.handler.checkEnemyCollision();
+            if (currentLevel.handler.checkPlayerCollision()) {
                 if (player.getLivesLeft() > 0) {
                     player.setLivesLeft(player.getLivesLeft() - 1);
-                    //se.playSE(2);
+                    se.playSE(2);
                 }
             }
 
@@ -192,8 +198,8 @@ public class GamePanel extends JPanel implements Runnable {
         } else if (gameState == LEVEL_SELECTION_STATE) {
             menu.drawLevelSelectionMenu(g2);
         } else {
-            CurrentLevel.tileM.render(g2);
-            CurrentLevel.handler.render(g2);
+            currentLevel.tileM.render(g2);
+            currentLevel.handler.render(g2);
             player.render(g2);
             bound.render(g2);
             hud.render(g2);
