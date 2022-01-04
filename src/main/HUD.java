@@ -21,13 +21,13 @@ public class HUD {
     public HUD(GamePanel gamepanel) {
         this.gamepanel = gamepanel;
         this.gameFont = new Font("MV Boli", Font.PLAIN, 35);
-        this.heartImage = Resource.getResourceImage("HUD","pixelated-heart");
-        this.coinImage = Resource.getResourceImage("objects/Coin","tile000");
-        this.buttons = Resource.getResourceImage("HUD" , "arrowKeys Transparet");
-        this.spacebar = Resource.getResourceImage("HUD" , "SpaceInstructions ");
+        this.heartImage = Resource.getResourceImage("HUD", "pixelated-heart.png");
+        this.coinImage = Resource.getResourceImage("objects/Coin", "tile000.png");
+        this.buttons = Resource.getResourceImage("HUD", "arrowKeys Transparet.png");
+        this.spacebar = Resource.getResourceImage("HUD", "SpaceInstructions .png");
     }
 
-    public void update(){
+    public void update() {
         levelTimer += (double) 1 / 60;
         counter++;
     }
@@ -38,15 +38,15 @@ public class HUD {
         g2.setColor(Color.WHITE);
         g2.drawImage(heartImage, gamepanel.tileSize / 2, gamepanel.tileSize / 2 - 10, gamepanel.tileSize, gamepanel.tileSize, null);
         g2.drawString("x " + gamepanel.player.getLivesLeft(), 74, 50);
-        g2.drawImage(coinImage,(gamepanel.tileSize / 2) + 3 * gamepanel.tileSize, gamepanel.tileSize / 2 - 10, gamepanel.tileSize, gamepanel.tileSize,null);
+        g2.drawImage(coinImage, (gamepanel.tileSize / 2) + 3 * gamepanel.tileSize, gamepanel.tileSize / 2 - 10, gamepanel.tileSize, gamepanel.tileSize, null);
         g2.drawString("x " + gamepanel.player.getCoinsCollected(), (int) ((gamepanel.tileSize / 2) + 4.5 * gamepanel.tileSize), 50);
-        if(counter < 200 && GamePanel.currentLevelNumber == 1){
+        if (counter < 200 && GamePanel.currentLevelNumber == 1) {
             g2.setColor(Color.BLACK);
             g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20));
-            g2.drawString("MOVE" , 630 , 90);
-            g2.drawImage(buttons , 545 , 60 , 120 , 80 , null );
-            g2.drawString("ATTACK" , 680 , 160);
-            g2.drawImage(spacebar , 490 , 85 , 5 * gamepanel.tileSize , 3 * gamepanel.tileSize , null );
+            g2.drawString("MOVE", 630, 90);
+            g2.drawImage(buttons, 545, 60, 120, 80, null);
+            g2.drawString("ATTACK", 680, 160);
+            g2.drawImage(spacebar, 490, 85, 5 * gamepanel.tileSize, 3 * gamepanel.tileSize, null);
         }
         g2.setColor(Color.WHITE);
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 35));

@@ -11,7 +11,7 @@ public class Resource {
     public static BufferedImage getResourceImage(String folder, String name) {
         BufferedImage img = null;
         try {
-            img = ImageIO.read(new File("res/" + folder + "/" + name + ".png"));
+            img = ImageIO.read(new File("res/" + folder + "/" + name));
         } catch (IOException e) {
             e.printStackTrace();
         }

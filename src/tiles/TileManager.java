@@ -1,6 +1,7 @@
 package tiles;
 
 import main.GamePanel;
+import main.Resource;
 
 import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
@@ -38,37 +39,16 @@ public class TileManager {
      with tile[i] on our gamesmenu
     */
     public void getTileImage() {
-        try {
-            for (int i = 0; i < 30; i++) {
-                tile[i] = new Tile();
-            }//if there are no tiles placed at a certain spot , the background shows
-            //we input 0 on the .txt file where we want the background to show
-            tile[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("sandRocksTop.png")));
-            tile[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("seaFull.png")));
-            tile[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("seaDown.png")));
-            tile[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("cloud1.png")));
-            tile[5].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("sky.png")));
-            tile[6].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("bush.png")));
-            tile[7].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("CrossBoxFill.png")));
-            tile[8].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("crossBox.png")));
-            tile[9].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("RockGround.png")));
-            tile[10].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("rockBackground.png")));
-            tile[11].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("rockRedBG.png")));
-            tile[12].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("torch_bg.png")));
-            tile[13].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("RockCeiling.png")));
-            tile[14].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("gravelCeiling.png")));
-            tile[15].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("stalagmiteCeiling.png")));
-            tile[16].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("CasteWallBg.png")));
-            tile[17].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("grillFireWallBg.png")));
-            tile[18].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("grillWallBg.png")));
-            tile[19].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("plankOnWaterGround.png")));
-            tile[20].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("WaterfallEnd.png")));
-            tile[21].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("CastleWallTop.png")));
-
-        } catch (IOException e) {
-
-            e.printStackTrace();
-
+        for (int i = 0; i < 30; i++) {
+            tile[i] = new Tile();
+        }//if there are no tiles placed at a certain spot , the background shows
+        //we input 0 on the .txt file where we want the background to show
+        String[] tilename = new String[]{"sandRocksTop.png", "seaFull.png", "seaDown.png", "cloud1.png", "sky.png", "bush.png", "CrossBoxFill.png", "crossBox.png",
+                "RockGround.png", "rockBackground.png", "rockRedBG.png", "torch_bg.png", "RockCeiling.png", "gravelCeiling.png", "stalagmiteCeiling.png",
+                "CasteWallBg.png", "grillFireWallBg.png", "grillWallBg.png", "plankOnWaterGround.png", "WaterfallEnd.png", "CastleWallTop.png"};
+        int size = tilename.length;
+        for (int i = 1; i <= size; i++) {
+            tile[i].image = Resource.getResourceImage("tiles", tilename[i - 1]);
         }
     }
 
@@ -145,7 +125,7 @@ public class TileManager {
             //Then we calculate the length between player screenX and the right edge of the frame
             int rightDiff = gp.screenWidth - gp.player.screenX;
             if (rightDiff > gp.worldWidth - gp.player.getX()) {
-                 screenX = gp.screenWidth - (gp.worldWidth - worldX); //and we subtract the difference from the current tile from the edge of the screen
+                screenX = gp.screenWidth - (gp.worldWidth - worldX); //and we subtract the difference from the current tile from the edge of the screen
             }
             //Then we calculate the length between player screenY and the right edge of the frame
             int bottomDiff = gp.screenHeight - (gp.worldHeight - worldY);
@@ -159,7 +139,6 @@ public class TileManager {
                     || bottomDiff > gp.worldHeight - gp.player.getY()) {
                 g2.drawImage(tile[tileNum].image, (int) screenX, (int) screenY, gp.tileSize, gp.tileSize, null);
             }
-
 
 
             g2.drawImage(tile[tileNum].image, (int) screenX, (int) screenY, gp.tileSize, gp.tileSize, null); //draws the tile in the specified screenX and screenY
