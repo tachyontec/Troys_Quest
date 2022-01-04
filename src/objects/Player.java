@@ -41,6 +41,7 @@ public class    Player extends GameObject {
     private boolean collision;
 
     public int counter = 0;
+    public int friction = 0;
 
     //a rectangle that dictates where the player attacks
     public Rectangle attackHitbox;
@@ -211,17 +212,45 @@ public class    Player extends GameObject {
     }
     public void run(){
         if (keyHandler.leftPressed) {
+            setSpeedx(3);
             state = State.LEFT;
             this.setX(this.getX() - this.getSpeedx());//moves the player along the x axis to the left
             attackHitbox.x = (int) (this.getX() + gamePanel.tileSize);//moves the attack hitbox to follow players' hitbox
             // attackHitbox.y = (int) this.getY();//moves the attack hitbox to follow players' hitbox
             leftanimation.runAnimation();
-        } else if (keyHandler.rightPressed) {
+        }
+        if (keyHandler.rightPressed) {
+            setSpeedx(3);
             state = State.RIGHT;
             this.setX(this.getX() + getSpeedx());//moves the player along the x axis to the right
             attackHitbox.x = (int) (this.getX() + gamePanel.tileSize);//moves the attack hitbox to follow players' hitbox
             //attackHitbox.y = (int) this.getY();//moves the attack hitbox to follow players' hitbox
             rightanimation.runAnimation();
+        }
+        if(keyHandler.rightReleased){
+            friction++;
+            this.setSpeedx(getSpeedx()*0.85);
+            this.setX(this.getX() + getSpeedx());
+            attackHitbox.x = (int) (this.getX() + gamePanel.tileSize);//moves the attack hitbox to follow players' hitbox
+            rightanimation.runAnimation();
+            if(friction == 17) {
+                System.out.println("im in");
+                friction = 0;
+                setSpeedx(0);
+                 keyHandler.rightReleased = false;
+            }
+        }
+        if (keyHandler.leftReleased){
+            friction++;
+            this.setSpeedx(getSpeedx()*0.85);
+            this.setX(this.getX() - getSpeedx());
+            attackHitbox.x = (int) (this.getX() + gamePanel.tileSize);//moves the attack hitbox to follow players' hitbox
+            leftanimation.runAnimation();
+            if(friction == 17) {
+                friction = 0;
+                setSpeedx(0);
+                keyHandler.leftReleased = false;
+            }
         }
     }
 
