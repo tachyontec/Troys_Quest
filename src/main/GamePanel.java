@@ -154,7 +154,7 @@ public class GamePanel extends JPanel implements Runnable {
         if (gameState == PLAY_STATE) {
             bound.update();
             player.update();
-            currentLevel.handler.update();
+            currentLevel.update();
             hud.update();
             //Gameplay differentiation between the 3 levels
             if (currentLevelNumber == 1) { //LEVEL1
@@ -164,13 +164,7 @@ public class GamePanel extends JPanel implements Runnable {
             } else if (currentLevelNumber == 3) { //LEVEL 3
                 level3.checkForFinalBoss();
             }
-            currentLevel.handler.checkEnemyCollision();
-            if (currentLevel.handler.checkPlayerCollision()) {
-                if (player.getLivesLeft() > 0) {
-                    player.setLivesLeft(player.getLivesLeft() - 1);
-                    se.playSE(2);
-                }
-            }
+
 
         } else if (gameState == MENU_STATE) {
             menu.textUpdate();
@@ -199,8 +193,7 @@ public class GamePanel extends JPanel implements Runnable {
         } else if (gameState == LEVEL_SELECTION_STATE) {
             menu.drawLevelSelectionMenu(g2);
         } else {
-            currentLevel.tileM.render(g2);
-            currentLevel.handler.render(g2);
+            currentLevel.render(g2);
             player.render(g2);
             bound.render(g2);
             hud.render(g2);

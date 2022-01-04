@@ -3,6 +3,7 @@ package main;
 import objects.*;
 import tiles.TileManager;
 
+import java.awt.*;
 import java.util.Random;
 
 public class Level {
@@ -36,6 +37,21 @@ public class Level {
     public void setupLevel() {
         setupBackground();
         setupGameObjects();
+    }
+    public void update() {
+        handler.update();
+        handler.checkEnemyCollision();
+        if (handler.checkPlayerCollision()) {
+            if (gamePanel.player.getLivesLeft() > 0) {
+                gamePanel.player.setLivesLeft(gamePanel.player.getLivesLeft() - 1);
+                gamePanel.se.playSE(2);
+            }
+        }
+    }
+
+    public void render(Graphics2D g2) {
+        tileM.render(g2);
+        handler.render(g2);
     }
 
 

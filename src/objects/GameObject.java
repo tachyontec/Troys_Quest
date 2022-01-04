@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.geom.Line2D;
 
 //superclass for all the object of the game
-public class GameObject extends Rectangle {
+public abstract class GameObject extends Rectangle {
     /**
      * this method extends Rectangle class from java.awt to implement collision
      * what all the objects have in common
@@ -18,12 +18,8 @@ public class GameObject extends Rectangle {
 
     public double worldX;
     public double worldY;
-    //private final double screenx;
-    //private final double screeny;
-    private int id;
     private double speedX;
     private double speedY;
-    public static int counter;
     public boolean collision = false;
 
     //sprites are smaller rectangles that make up the whole window
@@ -36,12 +32,10 @@ public class GameObject extends Rectangle {
     //generic constructor , spawns game objects at x ,y coordinates , sets the speed in x,y axis 
     public GameObject(double worldX, double worldY, double speedX, double speedY, int width, int height) {
         super((int) worldX, (int) worldY, width, height);
-        counter++;
         this.worldX = worldX;
         this.worldY = worldY;
         this.speedX = speedX;
         this.speedY = speedY;
-        this.id = counter;
     }
 
 
@@ -88,14 +82,6 @@ public class GameObject extends Rectangle {
 
     public void setSpeedy(double speedy) {
         this.speedY = speedy;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getId() {
-        return id;
     }
 
 }
