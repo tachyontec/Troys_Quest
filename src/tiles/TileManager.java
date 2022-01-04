@@ -3,13 +3,10 @@ package tiles;
 import main.GamePanel;
 import main.Resource;
 
-import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Objects;
 
 public class TileManager {
 
@@ -31,7 +28,7 @@ public class TileManager {
 
     }
 
-    /*
+    /**
     This method initialises our tile[] array so that every cell contains a single png
     we do that because the map is constructed with a .txt file (e.g. mapLayout) which contains a bunch of integers 1-10
     we want to take that .txt file and replace all ints with a tile of our choice

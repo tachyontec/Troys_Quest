@@ -6,20 +6,30 @@ import java.awt.*;
 import java.text.DecimalFormat;
 import java.util.LinkedList;
 
+/**
+ * This class Handles all game objects and ticks and renders them
+ * It organizes objects in different lists to achieve this and
+ * in the end of every level all lists are cleared to get ready
+ * for the next level and save RAM space
+ */
 public class Handler {
     private LinkedList<GameObject> obstacles = new LinkedList<>();
     private LinkedList<Enemy> enemies = new LinkedList<>();
     private LinkedList<Coin> coinlist = new LinkedList<>();
     private LinkedList<Block> blockArrayList = new LinkedList<>();
     //Create an Array to irretate over all lists at once
-    private final LinkedList[] all = new LinkedList[]{obstacles, enemies, coinlist, blockArrayList};
+    private final LinkedList[] all = new LinkedList[]{obstacles, enemies,
+            coinlist, blockArrayList};
     Player player;
     Sound soundEffect = new Sound();
     DecimalFormat decFormat = new DecimalFormat("#0.00");
     double timer;
     double collisionTime = 0;
     double enemyDeathTime = 0;
-
+    /**
+     * We only pass Player as a parameter because all the other objects
+     * are added with the add() method in each Level class
+     */
     public Handler(Player player) {
         this.player = player;
     }
@@ -41,7 +51,7 @@ public class Handler {
         }
     }
 
-    /*
+    /**
     Checks for collision of the player with any obstacles
     if a player collides,he is invulnerable for a couple of seconds
     */
@@ -143,6 +153,11 @@ public class Handler {
         }
     }
 
+    /**
+     * Accepts a game object (x) and decides in what list to put it in
+     * So we check collisions in the right way
+     * @param x: Game object that we want to add
+     */
     public void add(GameObject x) {
         if (x.getClass().equals(Coin.class)) {
             coinlist.add((Coin) x);
@@ -155,6 +170,10 @@ public class Handler {
         }
     }
 
+    /**
+     * Clears all objects in all lists
+     * This is used before initializing a new level
+     */
     public void clear() {
         for (LinkedList l : all) {
             l.clear();

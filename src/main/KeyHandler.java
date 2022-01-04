@@ -3,13 +3,16 @@ package main;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-//This is class is called whenever we press a key
-//So it will EXTEND KeyAdapter
+/**
+ * This is class is called whenever we press a key
+ * So it will EXTEND KeyAdapter
+ * It handles all user's input from keyboard
+ */
 public class KeyHandler implements KeyListener {
     //This class is referred only at a player
     //User will only be able to move its player
     public boolean upPressed, downPressed, leftPressed, rightPressed, pausePressed, attackPressed;
-    public boolean  leftReleased = false;
+    public boolean leftReleased = false;
     public boolean rightReleased = false;
 
     GamePanel gp;
@@ -27,28 +30,28 @@ public class KeyHandler implements KeyListener {
         int key = k.getKeyCode(); //get the code of key pressed
         //MENU_STATE and PAUSE_STATE KEY INPUT
         //Each key has a different function in each game state
-        if(gp.gameState == GamePanel.MENU_STATE || gp.gameState == GamePanel.PAUSE_STATE
-                || gp.gameState == GamePanel.WIN_LOSE_STATE || gp.gameState == GamePanel.LEVEL_SELECTION_STATE){
+        if (gp.gameState == GamePanel.MENU_STATE || gp.gameState == GamePanel.PAUSE_STATE
+                || gp.gameState == GamePanel.WIN_LOSE_STATE || gp.gameState == GamePanel.LEVEL_SELECTION_STATE) {
             //Since there are 3 choices in each menu we handle them similarly
             if (key == KeyEvent.VK_UP) { //UP
                 gp.menu.choice--;
                 //menu arrow cycling between the 3 choices and never going out of bounds
-                if (gp.menu.choice < 0){
+                if (gp.menu.choice < 0) {
                     gp.menu.choice = 2;
                 }
             }
-            if (key == KeyEvent.VK_DOWN){ //DOWN
+            if (key == KeyEvent.VK_DOWN) { //DOWN
                 gp.menu.choice++;
                 //menu arrow cycling between the 3 choices and never going out of bounds
-                if (gp.menu.choice > 2){
+                if (gp.menu.choice > 2) {
                     gp.menu.choice = 0;
                 }
             }
 
-            if (key == KeyEvent.VK_ENTER){ //if enter is pressed to select a choice //ENTER
-                switch (gp.menu.choice){
+            if (key == KeyEvent.VK_ENTER) { //if enter is pressed to select a choice //ENTER
+                switch (gp.menu.choice) {
                     case 0: //FIRST CHOICE
-                        if(gp.gameState == GamePanel.MENU_STATE){ //NEW GAME
+                        if (gp.gameState == GamePanel.MENU_STATE) { //NEW GAME
                             //Start of level reset
                             GamePanel.currentLevelNumber = 1;
                             gp.resetGame(1);
@@ -56,11 +59,11 @@ public class KeyHandler implements KeyListener {
                             //End of level reset
                             gp.gameState = GamePanel.PLAY_STATE;
                             switchSound(0); //And PLAY_STATE music is the first track in the array
-                        } else if(gp.gameState == GamePanel.PAUSE_STATE) { //RESUME
+                        } else if (gp.gameState == GamePanel.PAUSE_STATE) { //RESUME
                             gp.gameState = GamePanel.PLAY_STATE;
                             switchSound(0);  //GAME SONG
-                        } else if(gp.gameState == GamePanel.WIN_LOSE_STATE){
-                            if(gp.player.getLivesLeft() == 0) { //REPLAY LEVEL
+                        } else if (gp.gameState == GamePanel.WIN_LOSE_STATE) {
+                            if (gp.player.getLivesLeft() == 0) { //REPLAY LEVEL
                                 switchSound(0); //GAME SONG
                                 //Start of level reset
                                 gp.resetGame(GamePanel.currentLevelNumber);
@@ -80,12 +83,12 @@ public class KeyHandler implements KeyListener {
                         }
                         break;
                     case 1: //SECOND CHOICE
-                        if(gp.gameState == GamePanel.MENU_STATE){ //SELECT LEVEL
+                        if (gp.gameState == GamePanel.MENU_STATE) { //SELECT LEVEL
                             gp.gameState = GamePanel.LEVEL_SELECTION_STATE;
-                        } else if(gp.gameState == GamePanel.PAUSE_STATE) { //BACK TO MAIN MENU
+                        } else if (gp.gameState == GamePanel.PAUSE_STATE) { //BACK TO MAIN MENU
                             gp.gameState = GamePanel.MENU_STATE;
                             switchSound(5);  //INTRO SONG
-                        } else if(gp.gameState == GamePanel.WIN_LOSE_STATE){ //BACK TO MAIN MENU
+                        } else if (gp.gameState == GamePanel.WIN_LOSE_STATE) { //BACK TO MAIN MENU
                             switchSound(5);  //INTRO SONG
                             gp.resetGame(GamePanel.currentLevelNumber);
                             gp.gameState = GamePanel.MENU_STATE;
@@ -96,8 +99,8 @@ public class KeyHandler implements KeyListener {
                             switchSound(0);
                         }
                         break;
-                    case 2 : //3RD CHOICE
-                        if(gp.gameState == GamePanel.LEVEL_SELECTION_STATE) { //LEVEL 3 SELECTED
+                    case 2: //3RD CHOICE
+                        if (gp.gameState == GamePanel.LEVEL_SELECTION_STATE) { //LEVEL 3 SELECTED
                             GamePanel.currentLevelNumber = 3;
                             gp.resetGame(3);
                             gp.gameState = GamePanel.PLAY_STATE;
@@ -110,12 +113,12 @@ public class KeyHandler implements KeyListener {
         }
 
 
-
         //GAME STATE KEY INPUT
         //The speed that we will be moving objects.Player
         //We need to check after every button click because it is increasing through time
 
-        if (gp.gameState == GamePanel.PLAY_STATE){
+
+        if (gp.gameState == GamePanel.PLAY_STATE) {
             if (key == KeyEvent.VK_RIGHT) {
                 rightReleased = false;
                 rightPressed = true;
@@ -134,7 +137,12 @@ public class KeyHandler implements KeyListener {
         }
     }
 
-
+    /**
+     * This method update our main boolean variables
+     * Which will change the status of the player
+     *
+     * @param k :Represents the key that was released
+     */
     @Override
     public void keyReleased(KeyEvent k) {
         int key = k.getKeyCode();
@@ -152,7 +160,7 @@ public class KeyHandler implements KeyListener {
 
     }
 
-    public void switchSound(int soundNumber){
+    public void switchSound(int soundNumber) {
         gp.music.stopMusic();
         gp.music.playMusic(soundNumber);
     }
