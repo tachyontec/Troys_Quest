@@ -7,8 +7,10 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
 
+/**
+ * Implements menu system screens
+ */
 public class Menu {
-    //Implementing start and pause menu navigation
     GamePanel gamepanel;
     Font menuFont;
     BufferedImage helmetImage;
@@ -21,11 +23,17 @@ public class Menu {
     int dynamicTextX;
 
     public int choice = 0; //option selection default
-    int defaultX = 200;
-    int defaultY = 300;
-    int shadowOffset = 3;
+    int defaultX = 200; //reference point used for drawing
+    int defaultY = 300; //reference point used for drawing
+    int shadowOffset = 3; //offset used to create the shadow effect behind text
     DecimalFormat decFormat = new DecimalFormat("#0.00");
 
+    /**
+     * Menu constructor
+     * Initializes various images used in menu system
+     * Initializes menu font
+     * @param gamePanel
+     */
     public Menu(GamePanel gamePanel) {
         this.gamepanel = gamePanel;
         this.menuFont = new Font("MV Boli", Font.PLAIN, 35);
@@ -43,7 +51,9 @@ public class Menu {
         }
     }
 
-    //update the moving text in main menu
+    /**
+     *  Updates the moving text coordinates in main menu
+     */
     public void textUpdate() {
         dynamicTextX-= 2;
         if(dynamicTextX == -2000){
@@ -51,7 +61,10 @@ public class Menu {
         }
     }
 
-    //Graphic drawing of main menu
+    /**
+     * Graphic drawing of main menu
+     * @param g2 main game graphics
+     */
     public void drawMainMenu(Graphics2D g2) {
         g2.setFont(menuFont);
         //Background
@@ -72,7 +85,7 @@ public class Menu {
         //Menu options
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 50));
         String option;
-        option = "NEW GAME";
+        option = "NEW GAME"; //1st option
         g2.setColor(Color.BLACK);
         g2.drawString(option, defaultX + shadowOffset, defaultY + shadowOffset );
         g2.setColor(new Color(181, 179, 92));
@@ -80,7 +93,7 @@ public class Menu {
         if (choice == 0) {
             g2.drawString(">", defaultX - 30, defaultY); //arrow shows each option instead of buttons . It is placed slightly to the left
         }
-        option = "SELECT LEVEL";
+        option = "SELECT LEVEL"; //2nd option
         g2.setColor(Color.BLACK);
         g2.drawString(option, defaultX + shadowOffset, defaultY + shadowOffset + 60);
         g2.setColor(new Color(181, 179, 92));
@@ -88,7 +101,7 @@ public class Menu {
         if (choice == 1) {
             g2.drawString(">", defaultX - 30, defaultY + 60);
         }
-        option = "EXIT";
+        option = "EXIT"; //3rd option
         g2.setColor(Color.BLACK);
         g2.drawString(option, defaultX + shadowOffset + 50, defaultY + shadowOffset + 120  );
         g2.setColor(new Color(181, 179, 92));
@@ -103,7 +116,10 @@ public class Menu {
         g2.drawString("Tip:Use arrow keys to move the player and navigate the Menu ,ENTER to select an option,P to pause the game" , dynamicTextX , 500) ;
     }
 
-    //Graphic drawing of pause menu
+    /**
+     * Graphic drawing of pause menu
+     * @param g2 main game graphics
+     */
     public void drawPauseMenu(Graphics2D g2) {
         g2.setFont(menuFont);
         //Background
@@ -148,10 +164,13 @@ public class Menu {
         }
     }
 
+    /**
+     * Graphic drawing of win or lose menu according to player state
+     * @param g2 main game graphics
+     */
     public void drawWinLoseMenu(Graphics2D g2) {
         //check if player is alive to decide if he has won or lost when the game state switches to WIN_LOSE_STATE
         //if he has lives left we draw the win menu
-        //to be optimized for less lines of code
         g2.setFont(menuFont);
             //BACKGROUND
             g2.drawImage(backgroundImage , 0  , 0 ,gamepanel.tileSize * 16 , gamepanel.tileSize * 12  , null );
@@ -232,9 +251,13 @@ public class Menu {
             }
     }
 
+    /**
+     * Graphic drawing of level selection menu
+     * @param g2 main game graphics
+     */
     public void drawLevelSelectionMenu(Graphics2D g2){
         g2.setFont(menuFont);
-        int defaultXs = 100;
+        int defaultXs = 100; // change reference points to adjust to new menu environment
         int defaultYs = 200;
         //Background
         g2.drawImage(backgroundImage , 0  , 0 ,gamepanel.tileSize * 16 , gamepanel.tileSize * 12  , null);
@@ -248,7 +271,7 @@ public class Menu {
         //OPTIONS
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 40));
         String option;
-        option = "LEVEL 1";
+        option = "LEVEL 1"; //1st option
         g2.setColor(Color.BLACK);
         g2.drawString(option, defaultXs + shadowOffset, defaultYs + shadowOffset );
         g2.setColor(new Color(181, 179, 92));
@@ -258,7 +281,7 @@ public class Menu {
         if (choice == 0) {
             g2.drawString(">", defaultXs - 30 , defaultYs);
         }
-        option = "LEVEL 2";
+        option = "LEVEL 2"; //2nd option
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 40));
         g2.drawString(option, defaultXs + shadowOffset , defaultYs + shadowOffset + 130 );
         g2.setColor(new Color(181, 179, 92));
@@ -269,7 +292,7 @@ public class Menu {
         if (choice == 1) {
             g2.drawString(">", defaultXs - 30, defaultYs + 130);
         }
-        option = "LEVEL 3";
+        option = "LEVEL 3"; //3rd option
         g2.drawString(option, defaultXs + shadowOffset, defaultYs + shadowOffset + 260);
         g2.setColor(new Color(181, 179, 92));
         g2.drawString(option, defaultXs , defaultYs + 260);
@@ -278,7 +301,5 @@ public class Menu {
             g2.drawString(">", defaultXs -30, defaultYs + 260);
         }
     }
-
-
 
 }

@@ -3,10 +3,19 @@ package tiles;
 import main.GamePanel;
 import main.Resource;
 
+import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Objects;
+
+/**
+ * This class manages Background Tiles by
+ * initializing them and drawing them according to the mapLayout.
+ *
+ */
 
 public class TileManager {
 
@@ -15,25 +24,23 @@ public class TileManager {
 
     int[][] mapTileNumber; //a 2D array that witch represents our mapLayout
 
+    /**
+     * Tile Manager Constructor
+     * Sets the size of the array containing the tiles
+     * thus representing how many different style tiles exist in our game
+     * @param gp Our main Game Panel on witch all our components are combined and drawn
+     */
     public TileManager(GamePanel gp) {
         this.gp = gp;
         tile = new Tile[30];
         mapTileNumber = new int[gp.maxWorldCol][gp.maxWorldRow];//we initialise the array that represents our map so that its size is the same as our level
         getTileImage();//we load the images of the tiles from the /res folder
-        /*switch (levelNumber) {
-            case 1 -> loadMap("/maps/Level1Layout.txt");
-            case 2 -> loadMap("/maps/Level2Layout.txt");
-            case 3 -> loadMap("/maps/Level3Layout.txt");
-        }*/
-
     }
 
     /**
-    This method initialises our tile[] array so that every cell contains a single png
-    we do that because the map is constructed with a .txt file (e.g. mapLayout) which contains a bunch of integers 1-10
-    we want to take that .txt file and replace all ints with a tile of our choice
-    every int i in the .txt file is going to be replaced
-     with tile[i] on our gamesmenu
+     * This method initialises our tile[] array so that every cell contains a single tile represented by a .png
+     * We do that because the map is constructed based on a .txt file (e.g. mapLayout) which contains integers ranging from 1 to tile.length()
+     * Instead of initializing the tiles one by one we pass all the tile names to an array, and we use a for loop to specify each tile image
     */
     public void getTileImage() {
         for (int i = 0; i < 30; i++) {
@@ -49,14 +56,17 @@ public class TileManager {
         }
     }
 
-    /*This method receives the map as a .txt file in the mapPath
-     and fills up our mapTileNumber array accordingly so that the numbers in the txt file match those in the array
+    /**
+     *  This method receives the map as a .txt file in the mapPath
+     *  and fills up our mapTileNumber array accordingly so that the numbers in array match those in the txt file
+     * @param mapPath the map Layout .txt path from the res folder
      */
+
     public void loadMap(String mapPath) {
         try {
 
             InputStream inputStream = getClass().getResourceAsStream(mapPath);
-            assert inputStream != null;//Make sure directory is not empty, or we will have NullPointerException
+            assert inputStream != null; //Make sure directory is not empty, or a NullPointerException is thrown
             BufferedReader br = new BufferedReader(new InputStreamReader(inputStream)); // initialization of the file reader tool
 
             int col = 0;
@@ -67,17 +77,18 @@ public class TileManager {
                 String line = br.readLine(); //read each line separately and create a String variable for each one
                 while (col < gp.maxWorldCol) { // loop through all columns of the current line
 
-                    String[] numbers = line.split(" "); // make a 1D array witch contains all the numbers of the specific line REGEX PAPAPAPAPAP
+                    String[] numbers = line.split(" "); // make a 1D String array witch contains all the numbers of the specific line
+                    // by splitting each element of the line based on spaces
 
                     int number = Integer.parseInt(numbers[col]); //detaches the element numbers[col] from the array and saves it in number variable
 
                     mapTileNumber[col][row] = number; // fills the specified cell of the array with the corresponding number from the file
-                    col++;
+                    col++; //changes column
 
                 }
-                if (col == gp.maxWorldCol) {
+                if (col == gp.maxWorldCol) { //when last column of each line is checked
                     col = 0;
-                    row++;
+                    row++; // we finally change the row
                 }
 
             }
@@ -87,12 +98,13 @@ public class TileManager {
         }
     }
 
-    /*
-    via the loadmap method we end up with the array mapTileNumber[][] filled with the data of our level ,
-    mapTileNumber[i][j] contains the int k of the .txt map file , so basically we take tile[k] and draw it on the (i,j) coordinates on the level
-    that is done for every tile on the grid
-    we end up with a fully drawn map
-    */
+    /**
+     * via the loadMap() method we end up with the array mapTileNumber[][] filled with the data concerning the tiles of our level ,
+     * mapTileNumber[i][j] contains the int k of the .txt map file , so we take tile[k] and draw it on the (i,j) coordinates on the level
+     * This process repeats itself until every tile is drawn on the grid (i.e. gamepanel)
+     * we end up with a fully drawn map
+     */
+
     public void render(Graphics2D g2) {
         int worldCol = 0;
         int worldRow = 0;
@@ -124,7 +136,7 @@ public class TileManager {
             if (rightDiff > gp.worldWidth - gp.player.getX()) {
                 screenX = gp.screenWidth - (gp.worldWidth - worldX); //and we subtract the difference from the current tile from the edge of the screen
             }
-            //Then we calculate the length between player screenY and the right edge of the frame
+            //Then we calculate the length between player screenY and the bottom edge of the frame
             int bottomDiff = gp.screenHeight - (gp.worldHeight - worldY);
             if (bottomDiff > gp.worldHeight - gp.player.getY()) {
                 screenY = gp.screenHeight - (gp.worldHeight - worldY); //and we subtract the difference from the current tile from the bottom edge of the screen
