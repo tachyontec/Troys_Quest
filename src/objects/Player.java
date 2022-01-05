@@ -57,13 +57,6 @@ public class Player extends MovingObject {
 
     public static final double GRAVITY = 0.3;
 
-    public boolean isCollidable() {
-        return collision;
-    }
-
-    public void setCollision(boolean collision) {
-        this.collision = collision;
-    }
 
     //Constructor using fields and initializing the animations objects
     public Player(double worldX, double worldY, int width, int height, String name,

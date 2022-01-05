@@ -30,19 +30,6 @@ public class Obstacle extends StaticObject {
      */
     public void render(Graphics2D graphics2D) {
         super.render(graphics2D);
-        /*centers the player in relation to the screen in x axis,
-        gp.player.screenX is used to offset the difference*/
-        double screenX = this.getX() - gamePanel.player.getX() + gamePanel.player.screenX;
-        /*centers the player in relation to the screen in y axis,
-         gp.player.screenY is used to offset the difference*/
-        double screenY = this.getY();
-        if (movement.length == 1) {
-            graphics2D.drawImage(movement[0], (int) screenX, (int) screenY,
-                    gamePanel.tileSize, gamePanel.tileSize, null);
-        } else {
-            animation.drawAnimation(graphics2D, (int) screenX, (int) screenY,
-                    gamePanel.tileSize, gamePanel.tileSize);
-        }
     }
 
     @Override
