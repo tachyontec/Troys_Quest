@@ -87,7 +87,8 @@ public class Enemy extends GameObject {
          if(this.livesLeft <= 0) {
             this.state = State.DEAD;
             deathAnimation.runAnimation();
-        }else if (Math.abs(this.getX()-this.gamePanel.player.getX()) <= gamePanel.tileSize/2 + gamePanel.tileSize/9) {//when player x coordinate in [minotaurX*3/4*tilesize,minotaurX]
+        }else if ((Math.abs(this.getX()-this.gamePanel.player.getX()) <= gamePanel.tileSize/2 + gamePanel.tileSize/9)
+                 && (Math.abs(this.gamePanel.player.getX() - this.getX()) < 1)) {//when player x coordinate in [minotaurX*3/4*tilesize,minotaurX]
             this.state = State.ATTACK;
             attackAnimation.runAnimation();
         } else if(Math.abs(this.getX()-this.gamePanel.player.getX()) < 3 * gamePanel.tileSize //when player x coordinate in (minotaurX*3*tilesize,minotaurX*3/4*tilesize)

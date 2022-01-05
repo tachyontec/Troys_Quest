@@ -16,9 +16,10 @@ public class Block extends GameObject {
     public Line2D topLine;
     public Line2D bottomLine;
     public double platformfloor;
+    public int blockno;
 
     public Block(double worldX, double worldY, double speedX,
-                 double speedY, int width, int height, GamePanel gamePanel) {
+                 double speedY, int width, int height, GamePanel gamePanel, int blockno) {
         super(worldX, worldY, speedX, speedY, width, height);
         this.gamePanel = gamePanel;
         this.platformImg = Resource.getFilesInDir("res/Platforms");
@@ -28,6 +29,7 @@ public class Block extends GameObject {
         bottomLine = new Line2D.Double();
         setlineBounds(getX(), getY(), this.width, this.height);
         this.platformfloor = worldY;
+        this.blockno = blockno;
     }
 
     public void setlineBounds(double worldX, double worldY, int width, int height) {
@@ -42,6 +44,6 @@ public class Block extends GameObject {
         super.render(g);
         double screenX = this.getX() - gamePanel.player.getX() + gamePanel.player.screenX; //centers the player in relation to the screen in x axis,gp.player.screenX is used to offset the difference
         double screenY = this.getY(); //centers the player in relation to the screen in y axis,gp.player.screenY is used to offset the difference
-        g.drawImage(platformImg[0], (int) screenX, (int) screenY, gamePanel.tileSize, gamePanel.tileSize, null);
+        g.drawImage(platformImg[blockno], (int) screenX, (int) screenY, gamePanel.tileSize, gamePanel.tileSize, null);
     }
 }

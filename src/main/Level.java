@@ -34,7 +34,6 @@ public class Level {
      * @param hasEnemies boolean value that states whether a level has enemies present or not
      * @param hasFinalBoss boolean value that states whether a level has a final bos or not
      * @param hasBlocks boolean value that states whether a level has blocks present or not
-     * @return level instance
      */
     public Level(GamePanel gamePanel, String txtPath,
                  TileManager tileM, String[] obstacleName, String[] enemyName, boolean hasEnemies, boolean hasFinalBoss, boolean hasBlocks) {
@@ -127,9 +126,26 @@ public class Level {
                         0, 0, gamePanel.tileSize, gamePanel.tileSize, gamePanel));
             }
             if (this.hasBlocks) {
-                //we spawn blocks on top of obstacles or enemies
-                handler.add(new Block(spawnX + gamePanel.tileSize, 6.5 * gamePanel.tileSize, 0, 0,
-                        gamePanel.tileSize, gamePanel.tileSize, gamePanel));
+                if(rand.nextInt(11) < 8) {// 9/11 times the obstacle has a block above it
+                    //we spawn blocks on top of obstacles or enemies
+                    handler.add(new Block(spawnX + gamePanel.tileSize, 6.5 * gamePanel.tileSize, 0, 0,
+                            gamePanel.tileSize, gamePanel.tileSize, gamePanel, GamePanel.currentLevelNumber - 1));
+                    if (rand.nextInt(11) < 6) {// 50% of blocks spawn a block next to them
+                        handler.add(new Block(spawnX + 2 * gamePanel.tileSize, 6.5 * gamePanel.tileSize, 0, 0,
+                                gamePanel.tileSize, gamePanel.tileSize, gamePanel, GamePanel.currentLevelNumber - 1));
+                            if(rand.nextInt(6) < 3) {
+                                handler.add(new Block(spawnX + 3 * gamePanel.tileSize, 5.5 * gamePanel.tileSize, 0, 0,
+                                        gamePanel.tileSize, gamePanel.tileSize, gamePanel, GamePanel.currentLevelNumber - 1));
+                                if(rand.nextInt(4) >= 2) {
+                                    handler.add(new Coin(spawnX + 3 * gamePanel.tileSize, 4.8 * gamePanel.tileSize,
+                                            0, 0, gamePanel.tileSize, gamePanel.tileSize, gamePanel));
+                                } else {
+                                    handler.add(new Obstacle(spawnX + 3 * gamePanel.tileSize, 4.5 * gamePanel.tileSize, 0,
+                                            0, 30, gamePanel.tileSize, obstacleName[GamePanel.currentLevelNumber == 3 ? rand.nextInt(2) : 0], gamePanel));
+                                }
+                            }
+                    }
+                }
             }
             // we spawn coins after an obstacle or enemy for reward
             handler.add(new Coin(spawnX + 2 * gamePanel.tileSize, gamePanel.floor,
