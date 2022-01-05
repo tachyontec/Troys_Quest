@@ -10,7 +10,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 //Subclass of Game Object responsible for the moving and drawing the character of the game
-public class    Player extends GameObject {
+public class Player extends GameObject {
     public double floor; //floor of every platform
     public double platfloor;
     public boolean jumped = true;

@@ -73,7 +73,7 @@ public class Handler {
                 collisionTime = timer;
                 break;
             }
-            if (object.intersects(player) && !object.getClass().equals(Bird.class)) {
+            if (object.intersects(player) && !object.getClass().equals(Bird.class) && !object.getClass().equals(MovingObstacle.class)) {
                 player.setX(player.getX() - 20);//so as not to go "into" obstacles
 
             }
