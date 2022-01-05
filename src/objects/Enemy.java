@@ -1,11 +1,12 @@
 package objects;
 
 import main.Animation;
-import main.GamePanel;
 import main.Resource;
+import main.GamePanel;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.lang.Math;
 
 /**
  * public class Enemy
@@ -58,7 +59,7 @@ public class Enemy extends MovingObject {
     //renders the animations of the enemy
     @Override
     public void render(Graphics2D g) {
-        //super.render(g);
+        super.render(g);
         double screenX = this.getX() - gamePanel.player.getX() + gamePanel.player.screenX; //centers the player in relation to the screen in x axis,gp.player.screenX is used to offset the difference
         double screenY = this.getY(); //centers the player in relation to the screen in y axis,gp.player.screenY is used to offset the difference
 
@@ -82,7 +83,7 @@ public class Enemy extends MovingObject {
         if (this.livesLeft <= 0) {
             this.state = State.DEAD;
             deathAnimation.runAnimation();
-        } else if (Math.abs(this.getX() - this.gamePanel.player.getX()) <= gamePanel.tileSize / 2 + gamePanel.tileSize / 10) {//when player x coordinate in [minotaurX*3/4*tilesize,minotaurX]
+        } else if (Math.abs(this.getX() - this.gamePanel.player.getX()) <= gamePanel.tileSize / 2 + gamePanel.tileSize / 9) {//when player x coordinate in [minotaurX*3/4*tilesize,minotaurX]
             this.state = State.ATTACK;
             attackAnimation.runAnimation();
         } else if (Math.abs(this.getX() - this.gamePanel.player.getX()) < 3 * gamePanel.tileSize //when player x coordinate in (minotaurX*3*tilesize,minotaurX*3/4*tilesize)

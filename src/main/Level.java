@@ -6,6 +6,11 @@ import tiles.TileManager;
 import java.awt.*;
 import java.util.Random;
 
+/**
+ * class Level
+ * used to create instances for every level of our game
+ * instances of Level contain data for the map Layout , the obstacles , the enemies and additional data for other usages
+ */
 public class Level {
 
     public String txtPath;
@@ -20,7 +25,18 @@ public class Level {
     Random rand = new Random();
     public boolean hasBlocks;
 
-
+    /**
+     * Creates instances for levels
+     * @param gamePanel passes the instance of gamepanel that we use to play the game and handles the level in the bounds of that instance
+     * @param txtPath the file path for the .txt file containing the data for the background data layout
+     * @param tileM the 2d array containng the data of the aforementioned txtPath .txt file
+     * @param obstacleName an array containing the names of every obstacle that is present on the specific level
+     * @param enemyName an array containing the names of every enemy that is present on the specific level
+     * @param hasEnemies boolean value that states whether a level has enemies present or not
+     * @param hasFinalBoss boolean value that states whether a level has a final bos or not
+     * @param hasBlocks boolean value that states whether a level has blocks present or not
+     * @return level instance
+     */
     public Level(GamePanel gamePanel, String txtPath,
                  TileManager tileM, String[] obstacleName, String[] enemyName, boolean hasEnemies, boolean hasFinalBoss, boolean hasBlocks) {
         this.gamePanel = gamePanel;
@@ -34,11 +50,14 @@ public class Level {
         this.hasBlocks = hasBlocks;
     }
 
+    /**
+     * sets up the background tiles of the level the instance represents
+     * sets up everything in our handler lists enemies/tiles/obstacles/coins
+     */
     public void setupLevel() {
         setupBackground();
         setupGameObjects();
     }
-
     public void update() {
         handler.update();
         handler.checkEnemyCollision();
@@ -50,18 +69,33 @@ public class Level {
         }
     }
 
+    /**
+     * renders anything present on our level
+     * tileM.render(g2) renders the tiles of the background
+     * handler.render(g2) renders any enemies/obstacles/coins contained in the lists where every game object is stored
+     * @param g2 graphics instance used to draw
+     */
     public void render(Graphics2D g2) {
         tileM.render(g2);
         handler.render(g2);
     }
 
 
-    /*this method will setup the Background image of the Level*/
+    /**
+     * sets up the background for our level
+     * takes the .txt file o our specific level , parses the data via loadmap()
+     * and decides what tiles are drawn where
+     */
     public void setupBackground() {
-        tileM.loadMap(txtPath);
+        this.tileM.loadMap(txtPath);
     }
 
-    /*this method will load the gameObjects(Enemies,Coins,Obstacles,Blocks)*/
+    /**
+     * Sets up the objects that a player encounters in each level
+     * obstacles are placed differently depending on the level number ,
+     * whether it has enemies/final boss
+     * no parameters passed , different levels handled internally via values of instance variables
+     */
     public void setupGameObjects() {
         int startingpoint = 9 * gamePanel.tileSize; //starting point in map is where the player spawns
         //we spawn 4 times in a row an obstacle and the we spawn an enemy for our player to fight
@@ -108,7 +142,10 @@ public class Level {
         }
     }
 
-    //since arrow spawning is dynamic , we need to handle it separately from level obstacle layout and call it repetitively from gamepanel.update()
+    /**
+     * Adds an arrow on the level from the instance of which the method is called
+     * since arrow spawning is dynamic , we need to handle it separately from level obstacle layout and call it repetitively from gamepanel.update()
+     */
     public void addArrow() {
         if (gamePanel.hud.counter % 180 == 0) { //every 3 seconds we spawn an arrow since our game updates itself 60 times per second (FPS)
             //We cut up the level into 4 areas so that arrows spawn throughout the whole map and the player never sees them appear out of thin air
@@ -144,6 +181,15 @@ public class Level {
         }
     }
 
+    /**
+     * Calculates the score that a player has achieved when he finishes a level
+     *
+     * @param levelCompletionTime = the time that a player took to complete a level
+     * @param livesLeft = the numbers of lives left that the plyer had when level ended
+     * @param coinsCollected = the number of coins player collected
+     * @param enemiesKilled = the number of enemies player killed in the level
+     * @return int value of the calculated score , computed in line @see 195
+     */
     public int calculateScore(double levelCompletionTime, int livesLeft, int coinsCollected, int enemiesKilled) {
         //In order to calculate points based on time , we set 4 time zones
         //As we move up in time , points from completing the level in each time zone decrease
@@ -168,6 +214,9 @@ public class Level {
 
     }
 
+    /**
+     * minor method that commences boss music when player meets final boss
+     */
     public void checkForFinalBoss() {
         if (gamePanel.player.getX() == 80 * gamePanel.tileSize) {
             gamePanel.music.stopMusic();

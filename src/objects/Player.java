@@ -57,6 +57,13 @@ public class Player extends MovingObject {
 
     public static final double GRAVITY = 0.3;
 
+    public boolean isCollidable() {
+        return collision;
+    }
+
+    public void setCollision(boolean collision) {
+        this.collision = collision;
+    }
 
     //Constructor using fields and initializing the animations objects
     public Player(double worldX, double worldY, int width, int height, String name,
@@ -226,13 +233,13 @@ public class Player extends MovingObject {
                 keyHandler.rightReleased = false;
             }
         }
-        if (keyHandler.leftReleased) {
+        if (keyHandler.leftReleased){
             friction++;
-            this.setSpeedx(getSpeedx() * 0.85);
+            this.setSpeedx(getSpeedx()*0.85);
             this.setX(this.getX() - getSpeedx());
             attackHitbox.x = (int) (this.getX() + gamePanel.tileSize);//moves the attack hitbox to follow players' hitbox
             leftanimation.runAnimation();
-            if (friction == 17) {
+            if(friction == 17) {
                 friction = 0;
                 setSpeedx(0);
                 keyHandler.leftReleased = false;

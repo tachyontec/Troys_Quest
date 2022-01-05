@@ -8,6 +8,14 @@ import javax.swing.JPanel;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 
+/**
+ * class GamePanel
+ *  creates an instance where our game takes place
+ *  pre-determined height , width both for the window and the map
+ *  different states depending on what state our game is currently (playing , menu , paused)
+ *  many objects to handle threads , sounds , menus , bounds and key inputs
+ *  3 level instances for 3 levels
+ */
 public class GamePanel extends JPanel implements Runnable {
     //Screen settings
     public final int originalTileSize = 16; // size of tile
@@ -59,7 +67,9 @@ public class GamePanel extends JPanel implements Runnable {
 
     public Level currentLevel; // stores the Level that player has chosen
 
-
+    /**
+     * Creates the gamepanel where our game takes place
+     */
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(new Color(43, 145, 193));
@@ -68,12 +78,20 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);
     }
 
+    /**
+     * sets up our game , initialises it on Menu state
+     * plays menu music
+     */
     public void setUpGame() {
         gameState = MENU_STATE;
         music.playMusic(5, true);// we play the 5th sound file which is the starting menu music
     }
 
-    //resets all the game assets to their default values
+    /**
+     * resets our game to the initial state
+     * restores all player/enemy/level values to their defaults
+     * @param levelNumber the level from where the game is restarted from
+     */
     public void resetGame(int levelNumber) {
         //level reset
         switch (levelNumber) {
@@ -109,18 +127,29 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
 
-    //this method starts the thread and automatically calls method run
+    /**
+     * initialises the game thread
+     * starts our game and calls run() method
+     */
     public void startGameThread() {
         gameThread = new Thread(this);
         gameThread.start();
     }
 
+    /**
+     * stops the game , nulls the thread
+     */
     public void stopGameThread() {
         gameThread = null;
     }
 
     @Override
-    //implementing game loop algorithm
+    /**
+     * implements the game loop
+     * counts framerate , time passed and other metrics
+     * updates and repaints the gamepanel 60 times/sec (update() and repaint())
+     *
+     */
     public void run() {
         long lastTime = System.nanoTime();
         double amountOfTicks = 60.0;
@@ -146,10 +175,15 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
     }
-
+    //MHN TO PEIRAZETE STO LOGO MOU
     public static int i = 0;
 
-    //in this method we update all GameObject objects
+    /**
+     * updates everything present on our gamepanel instance
+     * changes gamestate according to whats happening on the game
+     * adds arrows when needed
+     * updates hud text on menu
+     */
     public void update() {
         if (gameState == PLAY_STATE) {
             bound.update();
@@ -163,6 +197,7 @@ public class GamePanel extends JPanel implements Runnable {
 
             } else if (currentLevelNumber == 3) { //LEVEL 3
                 level3.checkForFinalBoss();
+                level3.addArrow();
             }
 
 
@@ -180,7 +215,11 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
-    //in this method we paint all GameObject objects
+    /**
+     * draws everything on our gamepanel
+     * hud/players/enemies/bounds all drawn here
+     * @param g graphics instance needed to paint our enviroment
+     */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
