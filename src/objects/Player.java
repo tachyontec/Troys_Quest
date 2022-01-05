@@ -88,14 +88,14 @@ public class Player extends MovingObject {
 
     // in this method we are loading the images for each animation from resources folder res
     //this needs to be implemented in another class named Resources later
-    public void getPlayerImage() {
+    @Override
+    public void getMovingObjectImage() {
         right = Resource.getFilesInDir("res/Player/Walk/Right");
         left = Resource.getFilesInDir("res/Player/Walk/Left");
         jump = Resource.getFilesInDir("res/Player/Jump");
         idle = Resource.getFilesInDir("res/Player/Idle");
         death = Resource.getFilesInDir("res/Player/Die");
         attack = Resource.getFilesInDir("res/Player/Attack");
-
     }
 
     //moves the player by altering the x,y coordinates with keyboard arrows

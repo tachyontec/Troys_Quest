@@ -8,7 +8,7 @@ import main.Resource;
 import java.awt.*;
 
 //A game object that is moving towards the Player
-public class Bird extends GameObject {
+public class Bird extends MovingObject {
     //MovingObstacle needs Game Panel to spawn on it
     public enum Direction {LEFT, RIGHT}
 

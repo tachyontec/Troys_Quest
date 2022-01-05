@@ -48,7 +48,7 @@ public class GamePanel extends JPanel implements Runnable {
     Sound se = new Sound();// created to have sound effects and at the same time music
     Thread gameThread;
 
-    public Player player = new Player(7 * tileSize, floor, 3, 48, keyHandler, this);
+    public Player player = new Player(7 * tileSize, floor, 30, tileSize, "Greek_warrior",this,1,1,keyHandler);
     //public GameObjectSetter obstacleSetter = new GameObjectSetter(this);
     public HUD hud = new HUD(this);
     public Menu menu = new Menu(this);
