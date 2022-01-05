@@ -129,23 +129,23 @@ public class Level {
             if (this.hasBlocks) {
                 //we spawn blocks on top of obstacles or enemies
                 handler.add(new Block(spawnX + gamePanel.tileSize, 6.5 * gamePanel.tileSize,
-                        gamePanel.tileSize, gamePanel.tileSize,"Platform", gamePanel));
+                        gamePanel.tileSize, gamePanel.tileSize,"platform" + GamePanel.currentLevelNumber, gamePanel));
                 if(rand.nextInt(11) < 8) {// 9/11 times the obstacle has a block above it
                     //we spawn blocks on top of obstacles or enemies
-                    handler.add(new Block(spawnX + gamePanel.tileSize, 6.5 * gamePanel.tileSize, 0, 0,
-                            gamePanel.tileSize, gamePanel.tileSize, gamePanel, GamePanel.currentLevelNumber - 1));
+                    handler.add(new Block(spawnX + gamePanel.tileSize, 6.5 * gamePanel.tileSize,
+                            gamePanel.tileSize, gamePanel.tileSize,"platform" + GamePanel.currentLevelNumber, gamePanel));
                     if (rand.nextInt(11) < 6) {// 50% of blocks spawn a block next to them
-                        handler.add(new Block(spawnX + 2 * gamePanel.tileSize, 6.5 * gamePanel.tileSize, 0, 0,
-                                gamePanel.tileSize, gamePanel.tileSize, gamePanel, GamePanel.currentLevelNumber - 1));
+                        handler.add(new Block(spawnX + 2 * gamePanel.tileSize, 6.5 * gamePanel.tileSize,
+                                gamePanel.tileSize, gamePanel.tileSize,"platform" + GamePanel.currentLevelNumber, gamePanel));
                             if(rand.nextInt(6) < 3) {
-                                handler.add(new Block(spawnX + 3 * gamePanel.tileSize, 5.5 * gamePanel.tileSize, 0, 0,
-                                        gamePanel.tileSize, gamePanel.tileSize, gamePanel, GamePanel.currentLevelNumber - 1));
+                                handler.add(new Block(spawnX + 3 * gamePanel.tileSize, 5.5 * gamePanel.tileSize,
+                                        gamePanel.tileSize, gamePanel.tileSize,"platform" + GamePanel.currentLevelNumber, gamePanel));
                                 if(rand.nextInt(4) >= 2) {
                                     handler.add(new Coin(spawnX + 3 * gamePanel.tileSize, 4.8 * gamePanel.tileSize,
-                                            0, 0, gamePanel.tileSize, gamePanel.tileSize, gamePanel));
+                                             gamePanel.tileSize / 2 , gamePanel.tileSize / 2 ,"Coin", gamePanel));
                                 } else {
-                                    handler.add(new Obstacle(spawnX + 3 * gamePanel.tileSize, 4.5 * gamePanel.tileSize, 0,
-                                            0, 30, gamePanel.tileSize, obstacleName[GamePanel.currentLevelNumber == 3 ? rand.nextInt(2) : 0], gamePanel));
+                                    handler.add(new Obstacle(spawnX + 3 * gamePanel.tileSize, 4.5 * gamePanel.tileSize,
+                                            30, gamePanel.tileSize, obstacleName[GamePanel.currentLevelNumber == 3 ? rand.nextInt(2) : 0], gamePanel));
                                 }
                             }
                     }

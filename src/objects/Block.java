@@ -29,7 +29,7 @@ public class Block extends StaticObject {
 
     @Override
     public void getStaticObjectImage() {
-        images = Resource.getFilesInDir("res/Platforms/");
+        images = Resource.getFilesInDir("res/Platforms/" + name);
         animation = new Animation(0, images);
     }
 
