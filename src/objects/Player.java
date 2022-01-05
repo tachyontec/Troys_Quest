@@ -10,7 +10,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 //Subclass of Game Object responsible for the moving and drawing the character of the game
-public class Player extends GameObject {
+public class Player extends MovingObject {
     public double floor; //floor of every platform
     public double platfloor;
     public boolean jumped = true;
@@ -18,19 +18,14 @@ public class Player extends GameObject {
     //player gets keyhandler to implement keyboard input
     public KeyHandler keyHandler;
     //player needs Game Panel to spawn on it
-    public GamePanel gamePanel;
     //Buffered Images are the ones that contain our main character
     //they look when they move left,right and jump etc.
     //the three bufferedImage tables run,jump,idle contain the photos that are needed in animations
     public Sound soundEffect = new Sound();
-    public BufferedImage[] right;
-    public BufferedImage[] left;
     public BufferedImage[] jump;
     public BufferedImage[] idle;
     public BufferedImage[] death;
     public BufferedImage[] attack;
-    public final int axisX = 400;
-    public final int axisY = 400;
     private int livesLeft = 3; //at the start of each level , our player has 3 lives by default
     private int coinsCollected; // counts the coins that have been collected
     private int enemiesKilled;
@@ -48,8 +43,6 @@ public class Player extends GameObject {
     public boolean isAttackCollision;//and a boolean value to say if you are attacking or not
 
     //creating for each animation needed for the player an object of Animation class
-    Animation leftanimation;
-    Animation rightanimation;
     Animation jumpinganimation;
     Animation idleanimation;
     Animation deathanimation;
@@ -64,26 +57,17 @@ public class Player extends GameObject {
 
     public static final double GRAVITY = 0.3;
 
-    public boolean isCollidable() {
-        return collision;
-    }
-
-    public void setCollision(boolean collision) {
-        this.collision = collision;
-    }
 
     //Constructor using fields and initializing the animations objects
-    public Player(double worldX, double worldY, double speedx,
-                  double speedy, KeyHandler keyHandler, GamePanel gamePanel) {
+    public Player(double worldX, double worldY, int width, int height, String name,
+                  GamePanel gamePanel, double speedx, double speedy, KeyHandler keyHandler) {
 
-        super(worldX, worldY, speedx, 0, 30, gamePanel.tileSize);
+        super(worldX, worldY, width, height, name, gamePanel, speedx, speedy);
         this.keyHandler = keyHandler;
-        this.gamePanel = gamePanel;
 
         screenX = gamePanel.tileSize * 7;
         screenY = gamePanel.tileSize * 9;
 
-        getPlayerImage();
 
         floor = 9 * gamePanel.tileSize;//sets the floor on which player is for every platform he stands on
         rightanimation = new Animation(0, right);
@@ -104,19 +88,19 @@ public class Player extends GameObject {
 
     // in this method we are loading the images for each animation from resources folder res
     //this needs to be implemented in another class named Resources later
-    public void getPlayerImage() {
+    @Override
+    public void getMovingObjectImage() {
         right = Resource.getFilesInDir("res/Player/Walk/Right");
         left = Resource.getFilesInDir("res/Player/Walk/Left");
         jump = Resource.getFilesInDir("res/Player/Jump");
         idle = Resource.getFilesInDir("res/Player/Idle");
         death = Resource.getFilesInDir("res/Player/Die");
         attack = Resource.getFilesInDir("res/Player/Attack");
-
     }
 
     //moves the player by altering the x,y coordinates with keyboard arrows
     @Override
-    public void update() { 
+    public void update() {
         still();
         gravity();
         jump();
@@ -179,7 +163,7 @@ public class Player extends GameObject {
         screenY -= getSpeedy();
         this.setSpeedy(this.getSpeedy() - GRAVITY);
         //collision with floors
-        if (this.getY() > (floor - 1) ) {
+        if (this.getY() > (floor - 1)) {
             this.setSpeedx(3);
             counter = 0;
             jumped = false;
@@ -188,6 +172,7 @@ public class Player extends GameObject {
             this.setSpeedy(0);
         }
     }
+
     public void still() {
         if ((!keyHandler.rightPressed) && (!keyHandler.leftPressed) &&
                 (!keyHandler.upPressed) && (!keyHandler.attackPressed)) {
@@ -201,7 +186,7 @@ public class Player extends GameObject {
         }
     }
 
-    public void jump(){
+    public void jump() {
         if (keyHandler.upPressed && !jumped) {
             jumped = true;
             state = State.JUMP;
@@ -210,7 +195,8 @@ public class Player extends GameObject {
             soundEffect.playSE(3);
         }
     }
-    public void run(){
+
+    public void run() {
         if (keyHandler.leftPressed) {
             setSpeedx(3);
             state = State.LEFT;
@@ -227,17 +213,17 @@ public class Player extends GameObject {
             //attackHitbox.y = (int) this.getY();//moves the attack hitbox to follow players' hitbox
             rightanimation.runAnimation();
         }
-        if(keyHandler.rightReleased){
+        if (keyHandler.rightReleased) {
             friction++;
-            this.setSpeedx(getSpeedx()*0.85);
+            this.setSpeedx(getSpeedx() * 0.85);
             this.setX(this.getX() + getSpeedx());
             attackHitbox.x = (int) (this.getX() + gamePanel.tileSize);//moves the attack hitbox to follow players' hitbox
             rightanimation.runAnimation();
-            if(friction == 17) {
+            if (friction == 17) {
                 System.out.println("im in");
                 friction = 0;
                 setSpeedx(0);
-                 keyHandler.rightReleased = false;
+                keyHandler.rightReleased = false;
             }
         }
         if (keyHandler.leftReleased){
@@ -254,11 +240,10 @@ public class Player extends GameObject {
         }
     }
 
-    public void death(){
+    public void death() {
         if (this.getLivesLeft() == 0) {
             this.state = State.DEAD;
             deathanimation.runAnimation();
-            setY(0);
             if (!deathSoundIsDone) {
                 soundEffect.playSE(1);
                 deathSoundIsDone = true;// so that we stop the death sound
@@ -282,9 +267,21 @@ public class Player extends GameObject {
         this.coinsCollected = coinsCollected;
     }
 
-    public int getEnemiesKilled() {return enemiesKilled;}
+    public int getEnemiesKilled() {
+        return enemiesKilled;
+    }
 
-    public void setEnemiesKilled(int enemiesKilled) {this.enemiesKilled = enemiesKilled;}
+    public void setEnemiesKilled(int enemiesKilled) {
+        this.enemiesKilled = enemiesKilled;
+    }
+
+    public boolean isCollidable() {
+        return collision;
+    }
+
+    public void setCollision(boolean collision) {
+        this.collision = collision;
+    }
 
 }
 

@@ -35,6 +35,7 @@ public class TileManager {
         tile = new Tile[30];
         mapTileNumber = new int[gp.maxWorldCol][gp.maxWorldRow];//we initialise the array that represents our map so that its size is the same as our level
         getTileImage();//we load the images of the tiles from the /res folder
+
     }
 
     /**
@@ -61,7 +62,6 @@ public class TileManager {
      *  and fills up our mapTileNumber array accordingly so that the numbers in array match those in the txt file
      * @param mapPath the map Layout .txt path from the res folder
      */
-
     public void loadMap(String mapPath) {
         try {
 

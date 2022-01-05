@@ -17,13 +17,12 @@ public class Bound {
         this.player = player;
         this.gamepanel = gamePanel;
         start = new Obstacle(5 * gamePanel.tileSize, gamePanel.tileSize * 5,
-                0, 0, gamePanel.tileSize, gamePanel.tileSize * 5, "Flag", gamePanel);
+                gamePanel.tileSize, gamePanel.tileSize * 5, "Flag", gamePanel);
         /*we change start worldX because we need tha flag
         to spawn down next to the player but the rectangle to be taller */
         start.worldY = (9 * gamePanel.tileSize);
         end = new Obstacle((gamePanel.maxWorldCol - 2) * gamePanel.tileSize ,
-                gamePanel.tileSize * 5, 0, 0,
-                gamePanel.tileSize, gamePanel.tileSize * 5, "Flag", gamePanel);
+                gamePanel.tileSize * 5, gamePanel.tileSize, gamePanel.tileSize * 5, "Flag", gamePanel);
         /* we change end worldX because we need tha flag
         to spawn down next to the player but the rectangle to be taller */
         end.worldY = (9 * gamePanel.tileSize);

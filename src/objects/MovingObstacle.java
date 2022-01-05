@@ -15,23 +15,11 @@ import java.awt.image.BufferedImage;
  */
 
 //A game object that is moving towards the Player
-public class MovingObstacle extends GameObject {
-    //MovingObstacle needs Game Panel to spawn on it
-    public GamePanel gamePanel;
-    public BufferedImage[] movement;
-
-    Animation animation;
-    public String name;
-    //Buffered Images are the ones that contain our main character
-    //they look when they move left,right etc.
+public class MovingObstacle extends MovingObject {
 
     public MovingObstacle(double worldX, double worldY, double speedx,
                           double speedy, int width, int height, String name, GamePanel gamePanel) {
-        super(worldX, worldY, speedx, speedy, width, height);
-        this.gamePanel = gamePanel;
-        this.name = name;
-        //While making the object we also determine its speed
-        getMovingObstacleImage();
+        super(worldX, worldY, width, height,name,gamePanel,speedx,speedy);
     }
 
     @Override
@@ -44,17 +32,12 @@ public class MovingObstacle extends GameObject {
         /*centers the player in relation to the screen in y axis,
         gp.player.screenY is used to offset the difference*/
         double screenY = this.getY();
-        animation.drawAnimation(g , (int) screenX, (int) screenY, gamePanel.tileSize, gamePanel.tileSize);
-    }
-
-    public void getMovingObstacleImage() {
-        movement = Resource.getFilesInDir("res/objects/Arrow/Left");
-        animation = new Animation(0, movement);
+        leftanimation.drawAnimation(g , (int) screenX, (int) screenY, gamePanel.tileSize, gamePanel.tileSize);
     }
 
     @Override
     public void update() {
-        animation.runAnimation();
+        leftanimation.runAnimation();
         setX(getX() - getSpeedx());
     }
 }

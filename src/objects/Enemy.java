@@ -17,10 +17,7 @@ import java.lang.Math;
  * render() sets the player at a fixed location constantly and renders the animations
  * tick() dictates what our enemy does at any given moment
  */
-public class Enemy extends GameObject {
-
-    private String name;
-    GamePanel gamePanel;
+public class Enemy extends MovingObject {
 
     public int livesLeft;
 
@@ -37,17 +34,16 @@ public class Enemy extends GameObject {
     //the three bufferedImage tables run,jump,idle contain the photos that are needed in animations
     public BufferedImage[] run, idle, death, attack;
 
-    public Enemy(double worldX, double worldY, double speedX, double speedY, int width, int height, String name, GamePanel gamePanel, int livesLeft) {
-        super(worldX, worldY, speedX, speedY, width, height);
-        this.name = name;
+    public Enemy(double worldX, double worldY, int width, int height, String name,
+                 GamePanel gamePanel, double speedx, double speedy, int livesLeft) {
+        super(worldX, worldY, width, height, name, gamePanel, speedx, speedy);
         this.state = State.IDLE; //starting with Idle
-        this.setAnimation();
-        this.gamePanel = gamePanel;
         this.livesLeft = livesLeft;
         this.collision = true;
     }
 
-    public void setAnimation() {
+    @Override
+    public void getMovingObjectImage() {
         //get all Images with the animation from the relevant folder
         run = Resource.getFilesInDir("res/Enemies/" + this.name + "/Run");
         attack = Resource.getFilesInDir("res/Enemies/" + this.name + "/Attack");
@@ -84,15 +80,14 @@ public class Enemy extends GameObject {
     @Override
     public void update() {
         //System.out.println(this.enemyDeathTime);
-         if(this.livesLeft <= 0) {
+        if (this.livesLeft <= 0) {
             this.state = State.DEAD;
             deathAnimation.runAnimation();
-        }else if ((Math.abs(this.getX()-this.gamePanel.player.getX()) <= gamePanel.tileSize/2 + gamePanel.tileSize/9)
-                 && (Math.abs(this.gamePanel.player.getX() - this.getX()) < 1)) {//when player x coordinate in [minotaurX*3/4*tilesize,minotaurX]
+        } else if (Math.abs(this.getX() - this.gamePanel.player.getX()) <= gamePanel.tileSize / 2 + gamePanel.tileSize / 9) {//when player x coordinate in [minotaurX*3/4*tilesize,minotaurX]
             this.state = State.ATTACK;
             attackAnimation.runAnimation();
-        } else if(Math.abs(this.getX()-this.gamePanel.player.getX()) < 3 * gamePanel.tileSize //when player x coordinate in (minotaurX*3*tilesize,minotaurX*3/4*tilesize)
-                    && (Math.abs(this.getX()-this.gamePanel.player.getX()) > gamePanel.tileSize/2 + gamePanel.tileSize/9)) {
+        } else if (Math.abs(this.getX() - this.gamePanel.player.getX()) < 3 * gamePanel.tileSize //when player x coordinate in (minotaurX*3*tilesize,minotaurX*3/4*tilesize)
+                && (Math.abs(this.getX() - this.gamePanel.player.getX()) > gamePanel.tileSize / 2 + gamePanel.tileSize / 10)) {
             this.state = State.RUN;
             walkingAnimation.runAnimation();
             this.setX(this.getX() - 1);
@@ -100,11 +95,6 @@ public class Enemy extends GameObject {
             this.state = State.IDLE;
             idleAnimation.runAnimation();
         }
-    }
-
-
-    public String getName() {
-        return name;
     }
 
     public boolean isCollision() {
