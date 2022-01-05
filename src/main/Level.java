@@ -38,6 +38,7 @@ public class Level {
         setupBackground();
         setupGameObjects();
     }
+
     public void update() {
         handler.update();
         handler.checkEnemyCollision();
@@ -69,40 +70,40 @@ public class Level {
             int spawnX = startingpoint + randomTile * gamePanel.tileSize;
             if (i % 4 == 0 && hasEnemies) {
                 Enemy enemy = new Enemy(spawnX, 8 * gamePanel.tileSize,
-                        1, 0, 3 * gamePanel.tileSize, 3 * gamePanel.tileSize, enemyName[0], gamePanel, 1);
+                         3 * gamePanel.tileSize, 3 * gamePanel.tileSize, enemyName[0], gamePanel,1, 0,1);
                 // so that the enemy touches the ground , because minotaur png's are not the resolution we need
                 //enemy.y = (int) enemy.worldY + gamePanel.tileSize / 2;
                 handler.add(enemy);
             } else {
                 // used to choose randomly
                 // one of the 2 obstacles(Fire or spikesRoller)
-                handler.add(new Obstacle(spawnX, gamePanel.floor, 0,
-                        0, 30, gamePanel.tileSize, obstacleName[GamePanel.currentLevelNumber == 3 ? rand.nextInt(2) : 0], gamePanel));
+                handler.add(new Obstacle(spawnX, gamePanel.floor, 30, gamePanel.tileSize,
+                        obstacleName[GamePanel.currentLevelNumber == 3 ? rand.nextInt(2) : 0], gamePanel));
                 /* we spawn a coin above an obstacle with a random way to make player
                 jump a little or a lot to reach it and also make game harder*/
                 int randomY = (rand.nextInt(3) + 1);
                 handler.add(new Coin(spawnX, gamePanel.floor - (randomY * gamePanel.tileSize),
-                        0, 0, gamePanel.tileSize, gamePanel.tileSize, gamePanel));
+                        gamePanel.tileSize / 2, gamePanel.tileSize / 2,"Coin", gamePanel));
             }
             if (this.hasBlocks) {
                 //we spawn blocks on top of obstacles or enemies
-                handler.add(new Block(spawnX + gamePanel.tileSize, 6.5 * gamePanel.tileSize, 0, 0,
-                        gamePanel.tileSize, gamePanel.tileSize, gamePanel));
+                handler.add(new Block(spawnX + gamePanel.tileSize, 6.5 * gamePanel.tileSize,
+                        gamePanel.tileSize, gamePanel.tileSize,"Platform", gamePanel));
             }
             // we spawn coins after an obstacle or enemy for reward
             handler.add(new Coin(spawnX + 2 * gamePanel.tileSize, gamePanel.floor,
-                    0, 0, gamePanel.tileSize, gamePanel.tileSize, gamePanel));
+                    gamePanel.tileSize / 2, gamePanel.tileSize / 2,"Coin", gamePanel));
             startingpoint += 5 * gamePanel.tileSize;
             if (GamePanel.currentLevelNumber == 3 && i == 18) {
                 break;
             }
         }
         Bird bird = new Bird(18 * gamePanel.tileSize, 5 * gamePanel.tileSize,
-                4, 0, gamePanel.tileSize, gamePanel.tileSize, gamePanel, "Bird");
+                gamePanel.tileSize, gamePanel.tileSize,"Bird", gamePanel,4,0);
         handler.add(bird);
         if (this.hasFinalBoss) {
-            Enemy enemy = new Enemy((gamePanel.maxWorldCol - 10) * gamePanel.tileSize, 7 * gamePanel.tileSize,
-                    1, 0, 3 * gamePanel.tileSize, 3 * gamePanel.tileSize, enemyName[1], gamePanel, 3);
+            Enemy enemy = new Enemy((gamePanel.maxWorldCol - 10) * gamePanel.tileSize,
+                    7 * gamePanel.tileSize , 3 * gamePanel.tileSize, 3 * gamePanel.tileSize, enemyName[1], gamePanel, 1,0,3);
             handler.add(enemy);
         }
     }

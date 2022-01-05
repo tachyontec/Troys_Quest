@@ -1,12 +1,11 @@
 package objects;
 
 import main.Animation;
-import main.Resource;
 import main.GamePanel;
+import main.Resource;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.lang.Math;
 
 /**
  * public class Enemy
@@ -17,10 +16,7 @@ import java.lang.Math;
  * render() sets the player at a fixed location constantly and renders the animations
  * tick() dictates what our enemy does at any given moment
  */
-public class Enemy extends GameObject {
-
-    private String name;
-    GamePanel gamePanel;
+public class Enemy extends MovingObject {
 
     public int livesLeft;
 
@@ -37,17 +33,16 @@ public class Enemy extends GameObject {
     //the three bufferedImage tables run,jump,idle contain the photos that are needed in animations
     public BufferedImage[] run, idle, death, attack;
 
-    public Enemy(double worldX, double worldY, double speedX, double speedY, int width, int height, String name, GamePanel gamePanel, int livesLeft) {
-        super(worldX, worldY, speedX, speedY, width, height);
-        this.name = name;
+    public Enemy(double worldX, double worldY, int width, int height, String name,
+                 GamePanel gamePanel, double speedx, double speedy, int livesLeft) {
+        super(worldX, worldY, width, height, name, gamePanel, speedx, speedy);
         this.state = State.IDLE; //starting with Idle
-        this.setAnimation();
-        this.gamePanel = gamePanel;
         this.livesLeft = livesLeft;
         this.collision = true;
     }
 
-    public void setAnimation() {
+    @Override
+    public void getMovingObjectImage() {
         //get all Images with the animation from the relevant folder
         run = Resource.getFilesInDir("res/Enemies/" + this.name + "/Run");
         attack = Resource.getFilesInDir("res/Enemies/" + this.name + "/Attack");
@@ -63,7 +58,7 @@ public class Enemy extends GameObject {
     //renders the animations of the enemy
     @Override
     public void render(Graphics2D g) {
-        super.render(g);
+        //super.render(g);
         double screenX = this.getX() - gamePanel.player.getX() + gamePanel.player.screenX; //centers the player in relation to the screen in x axis,gp.player.screenX is used to offset the difference
         double screenY = this.getY(); //centers the player in relation to the screen in y axis,gp.player.screenY is used to offset the difference
 
@@ -84,14 +79,14 @@ public class Enemy extends GameObject {
     @Override
     public void update() {
         //System.out.println(this.enemyDeathTime);
-         if(this.livesLeft <= 0) {
+        if (this.livesLeft <= 0) {
             this.state = State.DEAD;
             deathAnimation.runAnimation();
-        }else if (Math.abs(this.getX()-this.gamePanel.player.getX()) <= gamePanel.tileSize/2 + gamePanel.tileSize/10) {//when player x coordinate in [minotaurX*3/4*tilesize,minotaurX]
+        } else if (Math.abs(this.getX() - this.gamePanel.player.getX()) <= gamePanel.tileSize / 2 + gamePanel.tileSize / 10) {//when player x coordinate in [minotaurX*3/4*tilesize,minotaurX]
             this.state = State.ATTACK;
             attackAnimation.runAnimation();
-        } else if(Math.abs(this.getX()-this.gamePanel.player.getX()) < 3 * gamePanel.tileSize //when player x coordinate in (minotaurX*3*tilesize,minotaurX*3/4*tilesize)
-                    && (Math.abs(this.getX()-this.gamePanel.player.getX()) > gamePanel.tileSize/2 + gamePanel.tileSize/10)) {
+        } else if (Math.abs(this.getX() - this.gamePanel.player.getX()) < 3 * gamePanel.tileSize //when player x coordinate in (minotaurX*3*tilesize,minotaurX*3/4*tilesize)
+                && (Math.abs(this.getX() - this.gamePanel.player.getX()) > gamePanel.tileSize / 2 + gamePanel.tileSize / 10)) {
             this.state = State.RUN;
             walkingAnimation.runAnimation();
             this.setX(this.getX() - 1);
@@ -99,11 +94,6 @@ public class Enemy extends GameObject {
             this.state = State.IDLE;
             idleAnimation.runAnimation();
         }
-    }
-
-
-    public String getName() {
-        return name;
     }
 
     public boolean isCollision() {

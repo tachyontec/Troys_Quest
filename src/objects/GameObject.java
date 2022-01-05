@@ -1,5 +1,7 @@
 package objects;
 
+import main.GamePanel;
+
 import javax.sound.sampled.Line;
 import java.awt.*;
 import java.awt.geom.Line2D;
@@ -16,26 +18,22 @@ public abstract class GameObject extends Rectangle {
      * we have a speed variable for each axis (x and y)
      */
 
-    public double worldX;
-    public double worldY;
-    private double speedX;
-    private double speedY;
+    double worldX;
+    double worldY;
+    GamePanel gamePanel;
     public boolean collision = false;
+    final String name;
 
-    //sprites are smaller rectangles that make up the whole window
-    //we hold the counter and the number for each of our sprites
-    public int spriteCounter = 0;
-    public int spriteNumber = 0;
 
     public Rectangle area; //creating invisible rectangle to store data
 
     //generic constructor , spawns game objects at x ,y coordinates , sets the speed in x,y axis 
-    public GameObject(double worldX, double worldY, double speedX, double speedY, int width, int height) {
+    public GameObject(double worldX, double worldY, int width, int height, String name,  GamePanel gamePanel) {
         super((int) worldX, (int) worldY, width, height);
         this.worldX = worldX;
         this.worldY = worldY;
-        this.speedX = speedX;
-        this.speedY = speedY;
+        this.name = name;
+        this.gamePanel = gamePanel;
     }
 
 
@@ -66,22 +64,6 @@ public abstract class GameObject extends Rectangle {
     public void setY(double worldy) {
         this.worldY = (int) worldy;
         this.y = (int) worldY;
-    }
-
-    public double getSpeedx() {
-        return speedX;
-    }
-
-    public void setSpeedx(double speedx) {
-        this.speedX = speedx;
-    }
-
-    public double getSpeedy() {
-        return speedY;
-    }
-
-    public void setSpeedy(double speedy) {
-        this.speedY = speedy;
     }
 
 }
