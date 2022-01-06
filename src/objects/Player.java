@@ -113,7 +113,6 @@ public class Player extends MovingObject {
     // the direction variable indicates which images are to be drawn for each animation of the player
     @Override
     public void render(Graphics2D g) {
-        super.render(g);
         g.drawRect(this.attackHitbox.x, this.attackHitbox.y, this.attackHitbox.width,
                 this.attackHitbox.height);
         //this if is in place so that when the player is hit ,
@@ -212,31 +211,6 @@ public class Player extends MovingObject {
             attackHitbox.x = (int) (this.getX() + gamePanel.tileSize);//moves the attack hitbox to follow players' hitbox
             //attackHitbox.y = (int) this.getY();//moves the attack hitbox to follow players' hitbox
             rightanimation.runAnimation();
-        }
-        if (keyHandler.rightReleased) {
-            friction++;
-            this.setSpeedx(getSpeedx() * 0.85);
-            this.setX(this.getX() + getSpeedx());
-            attackHitbox.x = (int) (this.getX() + gamePanel.tileSize);//moves the attack hitbox to follow players' hitbox
-            rightanimation.runAnimation();
-            if (friction == 17) {
-                System.out.println("im in");
-                friction = 0;
-                setSpeedx(0);
-                keyHandler.rightReleased = false;
-            }
-        }
-        if (keyHandler.leftReleased){
-            friction++;
-            this.setSpeedx(getSpeedx()*0.85);
-            this.setX(this.getX() - getSpeedx());
-            attackHitbox.x = (int) (this.getX() + gamePanel.tileSize);//moves the attack hitbox to follow players' hitbox
-            leftanimation.runAnimation();
-            if(friction == 17) {
-                friction = 0;
-                setSpeedx(0);
-                keyHandler.leftReleased = false;
-            }
         }
     }
 

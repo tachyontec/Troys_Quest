@@ -79,26 +79,35 @@ public class Handler {
 
             }
         }
-        for (Block block : blockArrayList) {
+        //this is used to check if plaayer has collided with the top of a block.
+        // if yes we dont check collision with the next block but we keep checking with the same block
+        boolean hascollided = false;
+        int i = 0;
+        while (i < blockArrayList.size() && hascollided == false) {
+            Block block = blockArrayList.get(i);
             //right collision with platform
             if (player.intersectsLine(block.rightLine) && player.counter < 1) {
+                hascollided = false;
                 player.counter++;
                 player.setSpeedy(0);
                 player.setSpeedx(0);
             }
             //left collision with platform
             if (player.intersectsLine(block.leftLine) && player.counter < 1) {
+                hascollided = false;
                 player.counter++;
                 player.setSpeedy(0);
                 player.setSpeedx(0);
             }
             //bottom collision with platform
             if (player.intersectsLine(block.bottomLine) && player.counter < 1) {
+                hascollided = false;
                 player.counter++;
                 player.setSpeedy(0);
             }
             //top collision with platform
             if (player.intersectsLine(block.topLine)) {
+                hascollided = true;
                 player.counter++;
                 player.floor = block.platformfloor - player.height;
                 player.worldY = block.platformfloor - player.height;
@@ -107,6 +116,7 @@ public class Handler {
             } else {
                 player.floor = player.gamePanel.floor;
             }
+            i++;
         }
 
         for (Enemy enemy : enemies) {
