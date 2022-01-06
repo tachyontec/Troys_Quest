@@ -1,9 +1,6 @@
 package objects;
 
-import main.Animation;
-import main.GamePanel;
-import main.KeyHandler;
-import main.Resource;
+import main.*;
 import sounds.Sound;
 
 import java.awt.*;
@@ -48,14 +45,14 @@ public class Player extends MovingObject {
     Animation deathanimation;
     Animation attackanimation;
 
-    //creating enumarition for player state
+    //creating enumeration for player state
     public enum State {ALIVE, DEAD, JUMP, RIGHT, ATTACK, LEFT}
 
     public State state = State.RIGHT;//state stores current player state
 
     public double deathTime = 0;//the time the player dies
 
-    public static final double GRAVITY = 0.3;
+    public static final double GRAVITY = 0.4;
 
 
     //Constructor using fields and initializing the animations objects
@@ -113,23 +110,23 @@ public class Player extends MovingObject {
     // the direction variable indicates which images are to be drawn for each animation of the player
     @Override
     public void render(Graphics2D g) {
-        super.render(g);
+        //super.render(g);
         g.drawRect(this.attackHitbox.x, this.attackHitbox.y, this.attackHitbox.width,
                 this.attackHitbox.height);
         //this if is in place so that when the player is hit ,
         // he is invulnerable and his body is shown blinking to indicate that state
         if (this.isCollidable() || this.state == State.DEAD) {//when a player is hit collision is turned off for some seconds so this.isCollision comes out false
             switch (state) {
-                case JUMP -> jumpinganimation.drawAnimation(g, screenX, screenY,
-                        gamePanel.tileSize, gamePanel.tileSize);
+                case JUMP -> jumpinganimation.drawAnimation(g, screenX, screenY ,
+                        gamePanel.tileSize , gamePanel.tileSize);
                 case DEAD -> deathanimation.drawAnimation(g, screenX, screenY,
                         gamePanel.tileSize + 24, gamePanel.tileSize + 24);
-                case LEFT -> leftanimation.drawAnimation(g, screenX, screenY,
-                        gamePanel.tileSize, gamePanel.tileSize);
-                case RIGHT -> rightanimation.drawAnimation(g, screenX, screenY,
-                        gamePanel.tileSize, gamePanel.tileSize);
-                case ALIVE -> idleanimation.drawAnimation(g, screenX, screenY,
-                        gamePanel.tileSize, gamePanel.tileSize);
+                case LEFT -> leftanimation.drawAnimation(g, screenX, screenY ,
+                        gamePanel.tileSize , gamePanel.tileSize);
+                case RIGHT -> rightanimation.drawAnimation(g, screenX, screenY
+                        , gamePanel.tileSize , gamePanel.tileSize);
+                case ALIVE -> idleanimation.drawAnimation(g, screenX, screenY
+                        , gamePanel.tileSize , gamePanel.tileSize);
                 case ATTACK -> attackanimation.drawAnimation(g, screenX, screenY,
                         gamePanel.tileSize + 50, gamePanel.tileSize);
             }
@@ -190,7 +187,7 @@ public class Player extends MovingObject {
         if (keyHandler.upPressed && !jumped) {
             jumped = true;
             state = State.JUMP;
-            this.setSpeedy(10);
+            this.setSpeedy(12);
             jumpinganimation.runAnimation();
             soundEffect.playSE(3);
         }
@@ -212,31 +209,6 @@ public class Player extends MovingObject {
             attackHitbox.x = (int) (this.getX() + gamePanel.tileSize);//moves the attack hitbox to follow players' hitbox
             //attackHitbox.y = (int) this.getY();//moves the attack hitbox to follow players' hitbox
             rightanimation.runAnimation();
-        }
-        if (keyHandler.rightReleased) {
-            friction++;
-            this.setSpeedx(getSpeedx() * 0.85);
-            this.setX(this.getX() + getSpeedx());
-            attackHitbox.x = (int) (this.getX() + gamePanel.tileSize);//moves the attack hitbox to follow players' hitbox
-            rightanimation.runAnimation();
-            if (friction == 17) {
-                System.out.println("im in");
-                friction = 0;
-                setSpeedx(0);
-                keyHandler.rightReleased = false;
-            }
-        }
-        if (keyHandler.leftReleased){
-            friction++;
-            this.setSpeedx(getSpeedx()*0.85);
-            this.setX(this.getX() - getSpeedx());
-            attackHitbox.x = (int) (this.getX() + gamePanel.tileSize);//moves the attack hitbox to follow players' hitbox
-            leftanimation.runAnimation();
-            if(friction == 17) {
-                friction = 0;
-                setSpeedx(0);
-                keyHandler.leftReleased = false;
-            }
         }
     }
 

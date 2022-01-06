@@ -140,7 +140,7 @@ public class Handler {
                 enemy.livesLeft -= 1;
                 enemy.setCollision(false);
                 enemy.colissionTime = this.timer;
-                System.out.println(enemy.livesLeft);
+                //System.out.println(enemy.livesLeft);
                 if (enemy.livesLeft == 0) {
                     this.enemyDeathTime = this.timer;
                     enemy.setCollision(false);

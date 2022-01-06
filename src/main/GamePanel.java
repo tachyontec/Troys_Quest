@@ -169,7 +169,7 @@ public class GamePanel extends JPanel implements Runnable {
                 frames++;
             }
             if (timer > 1000000000) {
-                System.out.println("FPS " + frames); //prints out our fps to check if it works
+                //System.out.println("FPS " + frames); //prints out our fps to check if it works
                 frames = 0;
                 timer = 0;
             }
@@ -200,7 +200,6 @@ public class GamePanel extends JPanel implements Runnable {
                 level3.addArrow();
             }
 
-
         } else if (gameState == MENU_STATE) {
             menu.textUpdate();
         }
@@ -216,13 +215,19 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     /**
-     * draws everything on our gamepanel
-     * hud/players/enemies/bounds all drawn here
-     * @param g graphics instance needed to paint our enviroment
+     * draws everything on our gamepanel depending on the game state
+     * hud/players/enemies/bounds are drawn here
+     * @param g graphics instance needed to paint our graphic environment
      */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+
+        //OPTIMIZATION
+        long drawStart = 0;
+        drawStart = System.nanoTime();
+
+
         if (gameState == MENU_STATE) {
             menu.drawMainMenu(g2);
         } else if (gameState == PAUSE_STATE) {
@@ -237,6 +242,12 @@ public class GamePanel extends JPanel implements Runnable {
             bound.render(g2);
             hud.render(g2);
         }
+
+        //OPTIMIZATION
+        long drawEnd = System.nanoTime();
+        long passed = drawEnd - drawStart;
+        //System.out.println("Draw Time for each frame: " + passed);
+        System.out.println(passed);
         g2.dispose();
     }
 

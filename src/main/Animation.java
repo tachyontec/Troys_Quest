@@ -50,5 +50,7 @@ public class Animation {
     public void drawAnimation(Graphics2D g, int x, int y, int scalex, int scaley) {
         g.drawImage(currentImg, x, y, scalex, scaley, null);
     }
-
+    public void drawAnimation(Graphics2D g, int x, int y) {
+        g.drawImage(currentImg, x, y, null);
+    }
 }

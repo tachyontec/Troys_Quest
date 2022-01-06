@@ -1,10 +1,12 @@
 package tiles;
 
 import main.GamePanel;
+import main.ImageScaler;
 import main.Resource;
 
 import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,7 +16,6 @@ import java.util.Objects;
 /**
  * This class manages Background Tiles by
  * initializing them and drawing them according to the mapLayout.
- *
  */
 
 public class TileManager {
@@ -51,9 +52,13 @@ public class TileManager {
         String[] tilename = new String[]{"sandRocksTop.png", "seaFull.png", "seaDown.png", "cloud1.png", "sky.png", "bush.png", "CrossBoxFill.png", "crossBox.png",
                 "RockGround.png", "rockBackground.png", "rockRedBG.png", "torch_bg.png", "RockCeiling.png", "gravelCeiling.png", "stalagmiteCeiling.png",
                 "CasteWallBg.png", "grillFireWallBg.png", "grillWallBg.png", "plankOnWaterGround.png", "WaterfallEnd.png", "CastleWallTop.png"};
-        int size = tilename.length;
-        for (int i = 1; i <= size; i++) {
-            tile[i].image = Resource.getResourceImage("tiles", tilename[i - 1]);
+        for (int i = 1; i <= tilename.length; i++) { //for every tile image
+            try {
+                tile[i].image = ImageIO.read(getClass().getResourceAsStream(tilename[i - 1])); //read the image
+                tile[i].image = ImageScaler.scaleImage(tile[i].image , gp.tileSize , gp.tileSize); //and then scale the image
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -150,8 +155,11 @@ public class TileManager {
                 g2.drawImage(tile[tileNum].image, (int) screenX, (int) screenY, gp.tileSize, gp.tileSize, null);
             }
 
-
-            g2.drawImage(tile[tileNum].image, (int) screenX, (int) screenY, gp.tileSize, gp.tileSize, null); //draws the tile in the specified screenX and screenY
+            //Optimization : we only draw the tiles located around the player and the left and right edge of the frame
+            if(worldX + gp.tileSize > gp.player.getX() - gp.player.screenX && //distance between player and left edge
+                    worldX - gp.tileSize  < gp.player.getX() + gp.player.screenX + 2 * gp.tileSize) { //distance between player and right edge
+                g2.drawImage(tile[tileNum].image, (int) screenX, (int) screenY, null); //draws the tile in the specified screenX and screenY
+            }
 
             worldCol++;
 
@@ -162,4 +170,5 @@ public class TileManager {
             }
         }
     }
+
 }
