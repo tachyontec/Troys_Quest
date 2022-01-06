@@ -79,7 +79,7 @@ public class Handler {
 
             }
         }
-        //this is used to check if plaayer has collided with the top of a block.
+        //this is used to check if player has collided with the top of a block.
         // if yes we dont check collision with the next block but we keep checking with the same block
         boolean hascollided = false;
         int i = 0;
