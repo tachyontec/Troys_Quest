@@ -74,9 +74,11 @@ public class Handler {
                 break;
             }
             if (object.intersects(player) && !object.getClass().equals(Bird.class)
-                    && !object.getClass().equals(MovingObstacle.class)) {
+                    && !object.getClass().equals(MovingObstacle.class) && player.state == Player.State.RIGHT) {
                 player.setX(player.getX() - 20);//so as not to go "into" obstacles
-
+            } else if (object.intersects(player) && !object.getClass().equals(Bird.class)
+                    && !object.getClass().equals(MovingObstacle.class) && player.state == Player.State.LEFT){
+                player.setX(player.getX() + 20);
             }
         }
         //this is used to check if plaayer has collided with the top of a block.

@@ -20,6 +20,7 @@ public class Menu {
     BufferedImage wreath;
     BufferedImage lv1Preview;
     BufferedImage lv2Preview;
+    BufferedImage lv3Preview;
     int dynamicTextX;
 
     public int choice = 0; //option selection default
@@ -46,6 +47,7 @@ public class Menu {
             this.wreath =  ImageIO.read(new File("res/menu/olive wreath.png"));
             this.lv1Preview = ImageIO.read(new File("res/menu/Level1Preview.png"));
             this.lv2Preview = ImageIO.read(new File("res/menu/Level2Preview.png"));
+            this.lv3Preview = ImageIO.read(new File("res/menu/Level3Preview.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -296,6 +298,7 @@ public class Menu {
         g2.drawString(option, defaultXs + shadowOffset, defaultYs + shadowOffset + 260);
         g2.setColor(new Color(181, 179, 92));
         g2.drawString(option, defaultXs , defaultYs + 260);
+        g2.drawImage(lv3Preview , defaultXs + 200 , defaultYs + 205 , gamepanel.tileSize * 3 , gamepanel.tileSize * 2 , null);
         g2.setColor(Color.BLACK);
         if (choice == 2) {
             g2.drawString(">", defaultXs -30, defaultYs + 260);
