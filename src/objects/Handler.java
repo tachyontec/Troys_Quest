@@ -26,6 +26,9 @@ public class Handler {
     double timer;
     double collisionTime = 0;
     double enemyDeathTime = 0;
+    int counter1;
+    int Counter2;
+
     /**
      * We only pass Player as a parameter because all the other objects
      * are added with the add() method in each Level class
@@ -46,7 +49,13 @@ public class Handler {
         g2.setColor(Color.RED);
         for (LinkedList l : all) {
             for (Object x : l) {
-                ((GameObject) x).render(g2);
+                GameObject k = ((GameObject) x);
+                boolean b = k.getX() + player.gamePanel.tileSize > player.getX() - player.screenX && //distance between player and left edge
+                        k.getX() - player.gamePanel.tileSize < player.getX() + player.screenX + 2 * player.gamePanel.tileSize;
+                if(b) {
+                    k.render(g2);
+                }
+
             }
         }
     }
@@ -59,14 +68,36 @@ public class Handler {
 
         decFormat.format(timer);
         timer += (double) 1 / 60;
-
         boolean b = false;
+
 
         if (timer - collisionTime > 2.00) {
             player.setCollision(true);
         }
 
+        if (checkObstacleCollision()) {
+            b = true;
+        }
+
+        checkPlatformCollision();
+
+        if (checkEnemyCollision()) {
+            b = true;
+        }
+
+        checkCoinCollision();
+
+        //handling the collision of all the coins in game
+
+        return b;
+    }
+
+    public boolean checkObstacleCollision() {
+        boolean b = false;
         for (GameObject object : obstacles) {
+            boolean b2 = object.getX() + player.gamePanel.tileSize > player.getX() - player.screenX && //distance between player and left edge
+                    object.getX() - player.gamePanel.tileSize < player.getX() + player.screenX + 2 * player.gamePanel.tileSize;
+
             if (object.intersects(player) && player.isCollidable() && !object.getClass().equals(Bird.class)) {
                 b = true;
                 player.setCollision(false);
@@ -77,14 +108,18 @@ public class Handler {
                     && !object.getClass().equals(MovingObstacle.class) && player.state == Player.State.RIGHT) {
                 player.setX(player.getX() - 20);//so as not to go "into" obstacles
             } else if (object.intersects(player) && !object.getClass().equals(Bird.class)
-                    && !object.getClass().equals(MovingObstacle.class) && player.state == Player.State.LEFT){
+                    && !object.getClass().equals(MovingObstacle.class) && player.state == Player.State.LEFT) {
                 player.setX(player.getX() + 20);
             }
         }
-        //this is used to check if player has collided with the top of a block.
-        // if yes we dont check collision with the next block but we keep checking with the same block
+        return b;
+    }
+
+    public void checkPlatformCollision() {
         boolean hascollided = false;
         int i = 0;
+        //this is used to check if player has collided with the top of a block.
+        // if yes we dont check collision with the next block but we keep checking with the same block
         while (i < blockArrayList.size() && hascollided == false) {
             Block block = blockArrayList.get(i);
             //right collision with platform
@@ -108,6 +143,7 @@ public class Handler {
                 player.setSpeedy(0);
             }
             //top collision with platform
+
             if (player.intersectsLine(block.topLine)) {
                 hascollided = true;
                 player.counter++;
@@ -120,7 +156,10 @@ public class Handler {
             }
             i++;
         }
+    }
 
+    public boolean checkEnemyCollision() {
+        boolean b = false;
         for (Enemy enemy : enemies) {
             if (enemy.intersects(player) && player.isCollidable() && enemy.isCollision()) {
                 b = true;
@@ -130,7 +169,10 @@ public class Handler {
                 break;
             }
         }
-        //handling the collision of all the coins in game
+        return b;
+    }
+
+    public void checkCoinCollision() {
         for (Coin coin : coinlist) {
             if (coin.checkCollision()) {
                 soundEffect.playSE(4);
@@ -138,11 +180,10 @@ public class Handler {
                 break;
             }
         }
-
-        return b;
     }
 
-    public void checkEnemyCollision() {
+
+    public void checkAttackCollision() {
         for (Enemy enemy : enemies) {
             if (this.timer - enemy.colissionTime > 1) {
                 enemy.setCollision(true);

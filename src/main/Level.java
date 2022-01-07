@@ -17,7 +17,7 @@ public class Level {
     public String[] obstacleName;
     public String[] enemyName;
     GamePanel gamePanel;
-    TileManager tileM;
+    public TileManager tileM;
     public int coinCounter;
     public boolean hasEnemies;
     public boolean hasFinalBoss;
@@ -67,7 +67,7 @@ public class Level {
      */
     public void update() {
         handler.update();
-        handler.checkEnemyCollision();
+        handler.checkAttackCollision();
         if (handler.checkPlayerCollision()) {
             if (gamePanel.player.getLivesLeft() > 0) {
                 gamePanel.player.setLivesLeft(gamePanel.player.getLivesLeft() - 1);

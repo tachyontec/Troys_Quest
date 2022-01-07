@@ -24,6 +24,8 @@ public class TileManager {
     Tile[] tile; // we create an array of tiles , where all the pngs which we use shall be stored
 
     int[][] mapTileNumber; //a 2D array that witch represents our mapLayout
+    public int worldx;
+    public int worldy;
 
     /**
      * Tile Manager Constructor
@@ -121,6 +123,8 @@ public class TileManager {
 
             int worldX = worldCol * gp.tileSize;
             int worldY = worldRow * gp.tileSize;
+            worldx = worldX;
+            worldy = worldY;
             double screenX = worldX - gp.player.getX() + gp.player.screenX; //centers the player in relation to the screen in x axis,gp.player.screenX is used to offset the difference
             double screenY = worldY;
 
