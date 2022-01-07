@@ -16,10 +16,11 @@ public class Handler {
     private LinkedList<GameObject> obstacles = new LinkedList<>();
     private LinkedList<Enemy> enemies = new LinkedList<>();
     private LinkedList<Coin> coinlist = new LinkedList<>();
-    private LinkedList<Block> blockArrayList = new LinkedList<>();
+    private LinkedList<Block> blockList = new LinkedList<>();
+    private LinkedList<Heart> heartlist = new LinkedList<>();
     //Create an Array to irretate over all lists at once
     private final LinkedList[] all = new LinkedList[]{obstacles, enemies,
-            coinlist, blockArrayList};
+            coinlist, blockList, heartlist};
     Player player;
     Sound soundEffect = new Sound();
     DecimalFormat decFormat = new DecimalFormat("#0.00");
@@ -86,6 +87,7 @@ public class Handler {
         }
 
         checkCoinCollision();
+        checkHeartCollision();
 
         //handling the collision of all the coins in game
 
@@ -120,8 +122,8 @@ public class Handler {
         int i = 0;
         //this is used to check if player has collided with the top of a block.
         // if yes we dont check collision with the next block but we keep checking with the same block
-        while (i < blockArrayList.size() && hascollided == false) {
-            Block block = blockArrayList.get(i);
+        while (i < blockList.size() && hascollided == false) {
+            Block block = blockList.get(i);
             //right collision with platform
             if (player.intersectsLine(block.rightLine) && player.counter < 1) {
                 hascollided = false;
@@ -182,6 +184,16 @@ public class Handler {
         }
     }
 
+    public void checkHeartCollision() {
+        for (Heart heart : heartlist) {
+            if (heart.checkcollision()) {
+                soundEffect.playSE(4);
+                heartlist.remove(heart);
+                break;
+            }
+        }
+    }
+
 
     public void checkAttackCollision() {
         for (Enemy enemy : enemies) {
@@ -218,7 +230,9 @@ public class Handler {
         } else if (x.getClass().equals(Enemy.class)) {
             enemies.add((Enemy) x);
         } else if (x.getClass().equals(Block.class)) {
-            blockArrayList.add((Block) x);
+            blockList.add((Block) x);
+        } else if (x.getClass().equals(Heart.class)){
+            heartlist.add((Heart) x);
         } else {
             obstacles.add(x);
         }
