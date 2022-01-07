@@ -157,6 +157,7 @@ public class Player extends MovingObject {
 
     public void gravity() {
         this.setY(this.getY() - getSpeedy());
+        attackHitbox.y = (int) (this.getY() - getSpeedy());//moves the attack hitbox to follow players' hitbox
         screenY -= getSpeedy();
         this.setSpeedy(this.getSpeedy() - GRAVITY);
         //collision with floors
@@ -165,6 +166,7 @@ public class Player extends MovingObject {
             counter = 0;
             jumped = false;
             this.setY(floor - 1);
+            attackHitbox.y = (int) (floor - 1);
             screenY = (int) floor;
             this.setSpeedy(0);
         }
@@ -199,7 +201,6 @@ public class Player extends MovingObject {
             state = State.LEFT;
             this.setX(this.getX() - this.getSpeedx());//moves the player along the x axis to the left
             attackHitbox.x = (int) (this.getX() + gamePanel.tileSize);//moves the attack hitbox to follow players' hitbox
-            // attackHitbox.y = (int) this.getY();//moves the attack hitbox to follow players' hitbox
             leftanimation.runAnimation();
         }
         if (keyHandler.rightPressed) {
@@ -207,7 +208,6 @@ public class Player extends MovingObject {
             state = State.RIGHT;
             this.setX(this.getX() + getSpeedx());//moves the player along the x axis to the right
             attackHitbox.x = (int) (this.getX() + gamePanel.tileSize);//moves the attack hitbox to follow players' hitbox
-            //attackHitbox.y = (int) this.getY();//moves the attack hitbox to follow players' hitbox
             rightanimation.runAnimation();
         }
         if (keyHandler.rightReleased) {
