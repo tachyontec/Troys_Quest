@@ -40,12 +40,7 @@ public class Handler {
     public void update() {
         for (LinkedList l : all) {
             for (Object x : l) {
-                GameObject k = ((GameObject) x);
-                boolean b = k.getX() + player.gamePanel.tileSize > player.getX() - player.screenX && //distance between player and left edge
-                        k.getX() - player.gamePanel.tileSize < player.getX() + player.screenX + 2 * player.gamePanel.tileSize;
-                if(b) {
-                    k.update();
-                }
+                ((GameObject) x).update();
             }
         }
     }
