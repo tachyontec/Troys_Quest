@@ -212,7 +212,7 @@ public class Level {
      * Calculates the score that a player has achieved when he finishes a level
      *
      * @param levelCompletionTime = the time that a player took to complete a level
-     * @param livesLeft = the numbers of lives left that the plyer had when level ended
+     * @param livesLeft = the numbers of lives left that the player had when level ended
      * @param coinsCollected = the number of coins player collected
      * @param enemiesKilled = the number of enemies player killed in the level
      * @return int value of the calculated score , computed in line @see 195
@@ -245,7 +245,7 @@ public class Level {
      * minor method that commences boss music when player meets final boss
      */
     public void checkForFinalBoss() {
-        if (gamePanel.player.getX() == 80 * gamePanel.tileSize) {
+        if (gamePanel.player.getX() > 80 * gamePanel.tileSize && gamePanel.player.getX() <= 80 * gamePanel.tileSize + 5) {
             gamePanel.music.stopMusic();
             gamePanel.music.playMusic(6);
         }

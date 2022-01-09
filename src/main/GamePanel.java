@@ -20,25 +20,25 @@ public class GamePanel extends JPanel implements Runnable {
     //Screen settings
     public final int originalTileSize = 16; // size of tile
     public final int scale = 3; // scaling size that will scale the tiles
-    public final int tileSize = originalTileSize * scale; //tile size after scaling 48
+    public final int tileSize = originalTileSize * scale; //tile size after scaling (48)
     public final int floor = 9 * tileSize; //Here is the floor level
     public final int maxScreenCol = 16; // how many tiles will be horizontally
     public final int maxScreenRow = 12; //how many tiles will be vertically
-    public final int maxWorldCol = 112;
-    public final int maxWorldRow = 12;
-    public final int worldWidth = tileSize * maxWorldCol;
-    public final int worldHeight = tileSize * maxWorldRow;
+    public final int maxWorldCol = 112; // total map tiles on x axis
+    public final int maxWorldRow = 12; // total map tiles on y axis
+    public final int worldWidth = tileSize * maxWorldCol; //total map width
+    public final int worldHeight = tileSize * maxWorldRow; //total map height
     public final int screenWidth = tileSize * maxScreenCol; // screen width 768
     public final int screenHeight = tileSize * maxScreenRow; // screen height 576
     public int deathCounter = 0;
-    public static int currentLevelNumber;
+    public static int currentLevelNumber; //saves the level number that is currently being processed
 
     //GAME STATES : Informs us about what is happening currently in the game
     public static final int PLAY_STATE = 0;//When game is running
     public static final int PAUSE_STATE = 1;//when game is paused
     public static final int MENU_STATE = 2;//when we are in the menu
     public static final int WIN_LOSE_STATE = 3;//when level is concluded , either in win or defeat
-    public static final int LEVEL_SELECTION_STATE = 4;
+    public static final int LEVEL_SELECTION_STATE = 4; //when we are in level selection menu
 
     public int gameState;
 
@@ -46,7 +46,7 @@ public class GamePanel extends JPanel implements Runnable {
     KeyHandler keyHandler = new KeyHandler(this);
     public Sound music = new Sound();// used for background music
     Sound se = new Sound();// created to have sound effects and at the same time music
-    Thread gameThread;
+    Thread gameThread; //Our main game thread
 
     public Player player = new Player(7 * tileSize, floor, 30, tileSize, "Greek_warrior",this,1,1,keyHandler);
     //public GameObjectSetter obstacleSetter = new GameObjectSetter(this);
@@ -79,7 +79,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     /**
-     * sets up our game , initialises it on Menu state
+     * sets up our game for the 1st time, initialises it on Menu state
      * plays menu music
      */
     public void setUpGame() {
@@ -148,7 +148,6 @@ public class GamePanel extends JPanel implements Runnable {
      * implements the game loop
      * counts framerate , time passed and other metrics
      * updates and repaints the gamepanel 60 times/sec (update() and repaint())
-     *
      */
     public void run() {
         long lastTime = System.nanoTime();
@@ -216,7 +215,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     /**
      * draws everything on our gamepanel depending on the game state
-     * hud/players/enemies/bounds are drawn here
+     * hud/players/enemies/bounds/menus are drawn here
      * @param g graphics instance needed to paint our graphic environment
      */
     public void paintComponent(Graphics g) {
@@ -246,7 +245,7 @@ public class GamePanel extends JPanel implements Runnable {
         //OPTIMIZATION
         long drawEnd = System.nanoTime();
         long passed = drawEnd - drawStart;
-        //System.out.println("Draw Time for each frame: " + passed);
+        //OPTIMIZATION
         System.out.println(passed);
         g2.dispose();
     }

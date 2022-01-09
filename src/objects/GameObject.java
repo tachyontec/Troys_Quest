@@ -50,8 +50,9 @@ public abstract class GameObject extends Rectangle {
         return worldX;
     }
 
-    /*on this method we also change the rectangle x,y cords
-     to make the collision rectangle follow along with the object*/
+    /**on this method we also change the rectangle x,y cords
+     * to make the collision rectangle follow along with the object
+     **/
     public void setX(double worldx) {
         this.worldX = (int) worldx;
         this.x = (int) worldX;
