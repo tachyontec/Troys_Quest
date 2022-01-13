@@ -8,8 +8,8 @@ import java.awt.Graphics2D;
 //class that will set the bound of the screen
 //it sets the starting point and ending point
 public class Bound {
-    public static Obstacle start;//obstacle that will be in the start of the screen
-    public static Obstacle end;////obstacle that will be in the end of the screen
+    static Obstacle start;//obstacle that will be in the start of the screen
+    static Obstacle end;////obstacle that will be in the end of the screen
     public Player player;
     public GamePanel gamepanel;
 

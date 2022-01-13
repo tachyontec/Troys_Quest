@@ -49,7 +49,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     KeyHandler keyHandler = new KeyHandler(this);
     public Sound music = new Sound();// used for background music
-    Sound se = new Sound();// created to have sound effects and at the same time music
+    public static Sound se = new Sound();// created to have sound effects and at the same time music
     Thread gameThread; //Our main game thread
 
     public Player player = new Player(7 * TILE_SIZE, FLOOR, 30, TILE_SIZE, "Greek_warrior", this, 1, 1, keyHandler);
@@ -111,6 +111,9 @@ public class GamePanel extends JPanel implements Runnable {
             case 3 -> {
                 level3.setupLevel();
                 currentLevel = level3;
+            } default -> {
+                level1.setupLevel();
+                currentLevel = level1;
             }
         }
         //player reset
@@ -228,12 +231,6 @@ public class GamePanel extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-
-        //OPTIMIZATION
-        long drawStart = 0;
-        drawStart = System.nanoTime();
-
-
         if (gameState == MENU_STATE) {
             menu.drawMainMenu(g2);
         } else if (gameState == PAUSE_STATE) {

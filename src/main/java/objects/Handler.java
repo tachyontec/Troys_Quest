@@ -43,6 +43,7 @@ public class Handler {
                 ((GameObject) x).update();
             }
         }
+        checkCollision();
     }
 
     public void render(Graphics2D g2) {
@@ -64,7 +65,6 @@ public class Handler {
      * if a player collides,he is invulnerable for a couple of seconds
      */
     public boolean checkPlayerCollision() {
-
         decFormat.format(timer);
         timer += (double) 1 / 60;
         boolean b = false;
@@ -78,18 +78,23 @@ public class Handler {
             b = true;
         }
 
-        checkPlatformCollision();
 
         if (checkEnemyCollision()) {
             b = true;
         }
-
+        return b;
+    }
+    public void checkCollision() {
+        checkPlatformCollision();
         checkCoinCollision();
         checkHeartCollision();
-
-        //handling the collision of all the coins in game
-
-        return b;
+        if (checkPlayerCollision()) {
+            if (player.getLivesLeft() > 0) {
+                player.setLivesLeft(player.getLivesLeft() - 1);
+                GamePanel.se.playSE(2);
+            }
+        }
+        checkAttackCollision();
     }
 
     public boolean checkObstacleCollision() {

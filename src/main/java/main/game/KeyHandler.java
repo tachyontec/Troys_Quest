@@ -11,11 +11,11 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener {
     //This class is referred only at a player
     //User will only be able to move its player
-    public boolean upPressed, downPressed, leftPressed, rightPressed, pausePressed, attackPressed;
+    public boolean upPressed, leftPressed, rightPressed, pausePressed, attackPressed;
     public boolean leftReleased = false;
-    public boolean rightReleased = false;
+    public  boolean rightReleased = false;
 
-    GamePanel gp;
+    private GamePanel gp;
 
     /**
      * Creates a keyhandler instance and the keys handled are used in the gamepanel
@@ -118,8 +118,6 @@ public class KeyHandler implements KeyListener {
                             gp.resetGame(3);
                             gp.gameState = GamePanel.PLAY_STATE;
                             switchSound(0);
-                        } else {
-                            System.exit(0);
                         }
                 }
             }

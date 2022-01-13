@@ -41,6 +41,7 @@ public class User {
         try {
             FileWriter writer = new FileWriter(file);
             writer.write(getName());
+            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -52,6 +53,7 @@ public class User {
                 File file = new File("src/main/resources/User/" + getName() + "/" + "Level_" + getLevel_passed() + ".txt");
                 DataOutputStream writer = new DataOutputStream(new FileOutputStream(file));
                 writer.write(getScore());
+                writer.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }

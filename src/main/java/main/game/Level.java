@@ -16,14 +16,13 @@ public class Level {
     public String txtPath;
     public String[] obstacleName;
     public String[] enemyName;
-    GamePanel gamePanel;
     public TileManager tileM;
-    public int coinCounter;
     public boolean hasEnemies;
     public boolean hasFinalBoss;
     public Handler handler;
     Random rand = new Random();
     public boolean hasBlocks;
+    public GamePanel gamePanel;
 
     /**
      * Creates instances for levels
@@ -70,13 +69,6 @@ public class Level {
      */
     public void update() {
         handler.update();
-        handler.checkAttackCollision();
-        if (handler.checkPlayerCollision()) {
-            if (gamePanel.player.getLivesLeft() > 0) {
-                gamePanel.player.setLivesLeft(gamePanel.player.getLivesLeft() - 1);
-                gamePanel.se.playSE(2);
-            }
-        }
     }
 
     /**
