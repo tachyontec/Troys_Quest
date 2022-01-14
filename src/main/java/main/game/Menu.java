@@ -3,8 +3,9 @@ package main.game;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.DecimalFormat;
 
 /**
@@ -14,7 +15,8 @@ public class Menu {
     GamePanel gamepanel;
     Font menuFont;
     BufferedImage helmetImage;
-    BufferedImage backgroundImage;
+    BufferedImage backgroundMenuImage;
+    BufferedImage backgroundIntroImage;
     BufferedImage buttonImage;
     BufferedImage tombImage;
     BufferedImage wreath;
@@ -22,6 +24,8 @@ public class Menu {
     BufferedImage lv2Preview;
     BufferedImage lv3Preview;
     int dynamicTextX;
+    double dynamicTextY = 600;
+    int menuCounter;
 
     public int choice = 0; //option selection default
     int defaultX = 200; //reference point used for drawing
@@ -42,7 +46,8 @@ public class Menu {
         this.dynamicTextX = gamePanel.TILE_SIZE * 16;
         try {
             this.helmetImage = ImageIO.read(new File("src/main/resources/menu/MenuHelmet.png"));
-            this.backgroundImage = ImageIO.read(new File("src/main/resources/Backgrounds/backgroundMenu.png"));
+            this.backgroundMenuImage = ImageIO.read(new File("src/main/resources/Backgrounds/backgroundMenu.png"));
+            this.backgroundIntroImage = ImageIO.read(new File("src/main/resources/Backgrounds/Background Intro.png"));
             this.buttonImage = ImageIO.read(new File("src/main/resources/Buttons/Button.png"));
             this.tombImage = ImageIO.read(new File("src/main/resources/menu/tombstone2.png"));
             this.wreath = ImageIO.read(new File("src/main/resources/menu/olive wreath.png"));
@@ -57,10 +62,18 @@ public class Menu {
     /**
      * Updates the moving text coordinates in main menu
      */
-    public void textUpdate() {
-        dynamicTextX -= 2;
-        if (dynamicTextX == -2000) {
-            dynamicTextX = GamePanel.TILE_SIZE * 16;
+    public void update() {
+
+        if(gamepanel.gameState == GamePanel.MENU_STATE) {
+            dynamicTextX -= 2;
+            if (dynamicTextX == -2000) {
+                dynamicTextX = GamePanel.TILE_SIZE * 16;
+            }
+        } else if (gamepanel.gameState == GamePanel.INTRO_STATE){
+            menuCounter++;
+            if(menuCounter < 950) {
+                dynamicTextY -= 0.5;
+            }
         }
     }
 
@@ -72,7 +85,7 @@ public class Menu {
     public void drawMainMenu(Graphics2D g2) {
         g2.setFont(menuFont);
         //Background
-        g2.drawImage(backgroundImage, 0, 0, GamePanel.TILE_SIZE * 16, GamePanel.TILE_SIZE * 12, null);
+        g2.drawImage(backgroundMenuImage, 0, 0, GamePanel.TILE_SIZE * 16, GamePanel.TILE_SIZE * 12, null);
         g2.drawImage(buttonImage, defaultX - 50, defaultY + 70, GamePanel.TILE_SIZE * 9, 60, null);
         g2.drawImage(buttonImage, defaultX - 50, defaultY + 10, GamePanel.TILE_SIZE * 9, 60, null);
         g2.drawImage(buttonImage, defaultX - 50, defaultY - 50, GamePanel.TILE_SIZE * 9, 60, null);
@@ -128,7 +141,7 @@ public class Menu {
     public void drawPauseMenu(Graphics2D g2) {
         g2.setFont(menuFont);
         //Background
-        g2.drawImage(backgroundImage, 0, 0, GamePanel.TILE_SIZE * 16, GamePanel.TILE_SIZE * 12, null);
+        g2.drawImage(backgroundMenuImage, 0, 0, GamePanel.TILE_SIZE * 16, GamePanel.TILE_SIZE * 12, null);
         g2.drawImage(buttonImage, defaultX - 50, defaultY + 70, GamePanel.TILE_SIZE * 9, 60, null);
         g2.drawImage(buttonImage, defaultX - 50, defaultY + 10, GamePanel.TILE_SIZE * 9, 60, null);
         g2.drawImage(buttonImage, defaultX - 50, defaultY - 50, GamePanel.TILE_SIZE * 9, 60, null);
@@ -179,7 +192,7 @@ public class Menu {
         //if he has lives left we draw the win menu
         g2.setFont(menuFont);
         //BACKGROUND
-        g2.drawImage(backgroundImage, 0, 0, GamePanel.TILE_SIZE * 16, GamePanel.TILE_SIZE * 12, null);
+        g2.drawImage(backgroundMenuImage, 0, 0, GamePanel.TILE_SIZE * 16, GamePanel.TILE_SIZE * 12, null);
         g2.drawImage(buttonImage, defaultX - 50, defaultY + 70, GamePanel.TILE_SIZE * 9, 60, null);
         g2.drawImage(buttonImage, defaultX - 50, defaultY + 10, GamePanel.TILE_SIZE * 9, 60, null);
         g2.drawImage(buttonImage, defaultX - 50, defaultY - 50, GamePanel.TILE_SIZE * 9, 60, null);
@@ -267,7 +280,7 @@ public class Menu {
         int defaultXs = 100; // change reference points to adjust to new menu environment
         int defaultYs = 200;
         //Background
-        g2.drawImage(backgroundImage, 0, 0, GamePanel.TILE_SIZE * 16, GamePanel.TILE_SIZE * 12, null);
+        g2.drawImage(backgroundMenuImage, 0, 0, GamePanel.TILE_SIZE * 16, GamePanel.TILE_SIZE * 12, null);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 80));
         String title = "Level Selection";
         //Title Shadow
@@ -309,6 +322,38 @@ public class Menu {
         if (choice == 2) {
             g2.drawString(">", defaultXs - 30, defaultYs + 260);
         }
+    }
+
+    /**
+     * Graphic drawing of game intro
+     *
+     * @param g2 main game graphics
+     */
+    public void drawIntroScreen(Graphics2D g2) {
+        g2.setFont(menuFont);
+        g2.setColor(Color.WHITE);
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20));
+        //Background
+        g2.drawImage(backgroundIntroImage, 0, 0, GamePanel.TILE_SIZE * 16, GamePanel.TILE_SIZE * 12, null);
+        //Press enter to skip
+        g2.drawString("Press ENTER to skip intro", 10, 25);
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 27));
+        int offset = 25; // each line is 25 pixels above the next
+        //we cut up the strings in order to fit the frame
+        g2.drawString("Menelaus is disgraced. He is the king of Mycenae, he has", 0 ,(int) dynamicTextY );
+        g2.drawString("fame and money, but something is more valuable than that." , 0 , (int) dynamicTextY + offset);
+        g2.drawString("His wife,Queen Helen.And someone stole her from him. " , 0 , (int) dynamicTextY + 2 * offset);
+        g2.drawString("After that there is nothing but war. " , 0 , (int) dynamicTextY + 3 * offset);
+        g2.drawString("He is forced to deal with and control the rage that has" , 0 , (int) dynamicTextY + 4 * offset );
+        g2.drawString("for some time now.His vengeance against the vilifier" , 0 , (int) dynamicTextY + 5 * offset );
+        g2.drawString("makes him fight, even with the gods." , 0 , (int) dynamicTextY + 6 * offset );
+        g2.drawString("It's in the harsh unforgiving world that he must fight to"  , 0 , (int) dynamicTextY + 7 * offset );
+        g2.drawString("survive and not only to reclaim his queen but also" , 0 , (int) dynamicTextY + 8 * offset );
+        g2.drawString("to remind his people who their king is. " , 0 , (int) dynamicTextY + 9 * offset );
+        g2.drawString("This staggering remaining journey, combines all" , 0 , (int) dynamicTextY + 10 * offset );
+        g2.drawString("the characteristics of a real war.Brutal combat, epic ", 0 , (int) dynamicTextY + 11 * offset );
+        g2.drawString("boss fights and symbolisms.Ideal for anyone" , 0 , (int) dynamicTextY + 12 * offset );
+        g2.drawString("who appreciates the value of a greater purpose..." , 0 , (int) dynamicTextY + 13 * offset );
     }
 
 }

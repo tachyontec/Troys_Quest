@@ -11,6 +11,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.io.IOException;
 
 /**
  * class GamePanel
@@ -43,9 +44,9 @@ public class GamePanel extends JPanel implements Runnable {
     public static final int MENU_STATE = 2; //when we are in the menu
     public static final int WIN_LOSE_STATE = 3; //when level is concluded , either in win or defeat
     public static final int LEVEL_SELECTION_STATE = 4; //when we are in level selection menu
+    public static final int INTRO_STATE = 5; //when we are in level selection menu
 
     public int gameState;
-
 
     KeyHandler keyHandler = new KeyHandler(this);
     public Sound music = new Sound();// used for background music
@@ -87,8 +88,9 @@ public class GamePanel extends JPanel implements Runnable {
      * plays menu music
      */
     public void setUpGame() {
-        gameState = MENU_STATE;
-        music.playMusic(5, true);// we play the 5th sound file which is the starting menu music
+        //default game state
+        gameState = INTRO_STATE; //each time our game starts , the intro is displayed first
+        music.playMusic(10, true);// we play the 10th sound file which is the intro music
     }
 
     /**
@@ -209,8 +211,15 @@ public class GamePanel extends JPanel implements Runnable {
             }
 
         } else if (gameState == MENU_STATE) {
-            menu.textUpdate();
-        }
+            menu.update();
+        }  else if (gameState == INTRO_STATE) {
+            menu.update();
+            if(menu.menuCounter == 1700){ //after ~28secs we move automatically from intro state to menu state
+                gameState = MENU_STATE;
+                music.stopMusic();
+                music.playMusic(5);
+            }
+    }
         if (player.getLivesLeft() == 0) {
             if (i == 0) {
                 player.deathTime = hud.levelTimer;
@@ -239,6 +248,8 @@ public class GamePanel extends JPanel implements Runnable {
             menu.drawWinLoseMenu(g2);
         } else if (gameState == LEVEL_SELECTION_STATE) {
             menu.drawLevelSelectionMenu(g2);
+        } else if (gameState == INTRO_STATE) {
+            menu.drawIntroScreen(g2);
         } else {
             currentLevel.render(g2);
             player.render(g2);

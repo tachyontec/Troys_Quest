@@ -41,7 +41,7 @@ public class KeyHandler implements KeyListener {
     @Override
     public void keyPressed(KeyEvent k) {
         int key = k.getKeyCode(); //get the code of key pressed
-        //MENU_STATE and PAUSE_STATE KEY INPUT
+        //MENU_STATE AND MENU STYLE ENVIRONMENT KEY INPUT
         //Each key has a different function in each game state
         if (gp.gameState == GamePanel.MENU_STATE || gp.gameState == GamePanel.PAUSE_STATE
                 || gp.gameState == GamePanel.WIN_LOSE_STATE || gp.gameState == GamePanel.LEVEL_SELECTION_STATE) {
@@ -62,6 +62,7 @@ public class KeyHandler implements KeyListener {
             }
 
             if (key == KeyEvent.VK_ENTER) { //if enter is pressed to select a choice //ENTER
+
                 switch (gp.menu.choice) {
                     case 0: //FIRST CHOICE
                         if (gp.gameState == GamePanel.MENU_STATE) { //NEW GAME
@@ -123,6 +124,13 @@ public class KeyHandler implements KeyListener {
             }
         }
 
+        //INTRO STATE KEY INPUT
+        if (key == KeyEvent.VK_ENTER) { //if ENTER is pressed the intro is skipped
+            if (gp.gameState == GamePanel.INTRO_STATE) {
+                gp.gameState = GamePanel.MENU_STATE; // and we move immediately to menu state
+                switchSound(5);  //Menu song
+            }
+        }
 
         //GAME STATE KEY INPUT
         //The speed that we will be moving objects.Player
