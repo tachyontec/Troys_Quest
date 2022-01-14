@@ -119,6 +119,8 @@ public class KeyHandler implements KeyListener {
                             gp.resetGame(3);
                             gp.gameState = GamePanel.PLAY_STATE;
                             switchSound(0);
+                        } else {
+                            System.exit(0); // EXIT (Default 3rd option for all other game states)
                         }
                 }
             }
