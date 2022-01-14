@@ -1,4 +1,4 @@
-package Tiles;
+package tiles;
 
 import main.game.GamePanel;
 import main.game.ImageScaler;

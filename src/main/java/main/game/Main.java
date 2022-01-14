@@ -1,5 +1,7 @@
 package main.game;
 
+import tiles.TileManager;
+
 import javax.swing.*;
 
 public class Main {
@@ -16,7 +18,8 @@ public class Main {
         window.setLocationRelativeTo(null);
         window.setVisible(true);
         gamePanel.gameState = GamePanel.MENU_STATE;
-        gamePanel.setUpGame();
+        TileManager tileManager = new TileManager(gamePanel);
+        gamePanel.setUpGame(tileManager);
         gamePanel.startGameThread();
     }
 }

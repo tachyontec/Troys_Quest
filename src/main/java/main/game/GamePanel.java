@@ -1,6 +1,6 @@
 package main.game;
 
-import Tiles.TileManager;
+import tiles.TileManager;
 import objects.Bound;
 import objects.Handler;
 import objects.Player;
@@ -11,7 +11,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.io.IOException;
 
 /**
  * class GamePanel
@@ -63,12 +62,7 @@ public class GamePanel extends JPanel implements Runnable {
     //Level initialization
     String[] enemies = {"Minotaur", "FinalBoss"};
     String[] obstacle = {"spikesRoller", "Fire"};
-    public Level level1 = new Level(this, "/maps/Level1Layout.txt",
-            new TileManager(this), obstacle, enemies, false, false, true);
-    public Level level2 = new Level(this, "/maps/Level2Layout.txt",
-            new TileManager(this), obstacle, enemies, true, false, true);
-    public Level level3 = new Level(this, "/maps/Level3Layout.txt",
-            new TileManager(this), obstacle, enemies, true, true, true);
+    public Level level1 ,level2,level3;
 
     public Level currentLevel; // stores the Level that player has chosen
 
@@ -87,8 +81,14 @@ public class GamePanel extends JPanel implements Runnable {
      * sets up our game for the 1st time, initialises it on Menu state
      * plays menu music
      */
-    public void setUpGame() {
+    public void setUpGame(TileManager tileManager) {
         //default game state
+        level1 = new Level(this, "/maps/Level1Layout.txt",
+                tileManager, obstacle, enemies, false, false, true);
+        level2 = new Level(this, "/maps/Level2Layout.txt",
+                tileManager, obstacle, enemies, true, false, true);
+        level3 = new Level(this, "/maps/Level3Layout.txt",
+                tileManager, obstacle, enemies, true, true, true);
         gameState = INTRO_STATE; //each time our game starts , the intro is displayed first
         music.playMusic(10, true);// we play the 10th sound file which is the intro music
     }

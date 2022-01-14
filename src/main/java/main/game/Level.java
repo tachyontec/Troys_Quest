@@ -1,7 +1,7 @@
 package main.game;
 
 import objects.*;
-import Tiles.TileManager;
+import tiles.TileManager;
 
 import java.awt.*;
 import java.util.Random;

@@ -90,12 +90,12 @@ public class Player extends MovingObject {
     //this needs to be implemented in another class named Resources later
     @Override
     public void getMovingObjectImage() {
-        right = Resource.getFilesInDir("src/main/resources/Player/Walk/Right");
-        left = Resource.getFilesInDir("src/main/resources/Player/Walk/Left");
-        jump = Resource.getFilesInDir("src/main/resources/Player/Jump");
-        idle = Resource.getFilesInDir("src/main/resources/Player/Idle");
-        death = Resource.getFilesInDir("src/main/resources/Player/Die");
-        attack = Resource.getFilesInDir("src/main/resources/Player/Attack");
+        right = Resource.getFilesInDir("src/main/resources/player/Walk/Right");
+        left = Resource.getFilesInDir("src/main/resources/player/Walk/Left");
+        jump = Resource.getFilesInDir("src/main/resources/player/Jump");
+        idle = Resource.getFilesInDir("src/main/resources/player/Idle");
+        death = Resource.getFilesInDir("src/main/resources/player/Die");
+        attack = Resource.getFilesInDir("src/main/resources/player/Attack");
     }
 
     //moves the player by altering the x,y coordinates with keyboard arrows
