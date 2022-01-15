@@ -123,13 +123,24 @@ public class Level {
                         GamePanel.TILE_SIZE / 2, GamePanel.TILE_SIZE / 2, "Coin", gamePanel));
             }
             if (this.hasBlocks) {
-                if(rand.nextInt(100) < 75) {//75% chance of a block spawning in between 2 blocks, a bit higher up
-                    handler.add(new Block(spawnX + 3 * GamePanel.TILE_SIZE, 6.5 * GamePanel.TILE_SIZE,
+                if(rand.nextInt(100) < 60) {
+                    handler.add(new Block(spawnX, 5.5 * GamePanel.TILE_SIZE,
                             GamePanel.TILE_SIZE, GamePanel.TILE_SIZE, "platform" + GamePanel.currentLevelNumber, gamePanel));
-                }
-                if(rand.nextInt(100) < 25 * GamePanel.currentLevelNumber) {
-                    handler.add(new Obstacle(spawnX + 2 * GamePanel.TILE_SIZE ,3.5 * GamePanel.TILE_SIZE, 30, GamePanel.TILE_SIZE,
-                            obstacleName[GamePanel.currentLevelNumber == 3 ? rand.nextInt(2) : 0], gamePanel));
+                    if (rand.nextInt(100) < 60 - GamePanel.currentLevelNumber * 10) {
+                        handler.add(new Coin(spawnX, 4.5 * GamePanel.TILE_SIZE,
+                                GamePanel.TILE_SIZE / 2, GamePanel.TILE_SIZE / 2, "Coin", gamePanel));
+                    } else {
+                        handler.add(new Obstacle(spawnX, 4.5 * GamePanel.TILE_SIZE, 30, GamePanel.TILE_SIZE,
+                                obstacleName[GamePanel.currentLevelNumber == 3 ? rand.nextInt(2) : 0], gamePanel));
+                    }
+                    if(rand.nextInt(100) < 65) {
+                        handler.add(new Block(spawnX + 3 * GamePanel.TILE_SIZE, 3.5 * GamePanel.TILE_SIZE,
+                                GamePanel.TILE_SIZE, GamePanel.TILE_SIZE, "platform" + GamePanel.currentLevelNumber, gamePanel));
+                        if(rand.nextInt(100) < 70 - GamePanel.currentLevelNumber * 15) {
+                            handler.add(new Heart(spawnX + 3 * GamePanel.TILE_SIZE, 1.5 * GamePanel.TILE_SIZE,
+                                    GamePanel.TILE_SIZE / 2, GamePanel.TILE_SIZE / 2, "Heart", gamePanel));
+                        }
+                    }
                 }
             }
             // we spawn coins after an obstacle or enemy for reward
