@@ -194,7 +194,7 @@ public class Level {
             } else if (gamePanel.player.getX() < 95 * GamePanel.TILE_SIZE) { //4th area
                 MovingObstacle arrow = new MovingObstacle(115 * GamePanel.TILE_SIZE,
                         GamePanel.FLOOR - rand.nextInt(6) * GamePanel.TILE_SIZE,
-                        4, 4, GamePanel.TILE_SIZE, GamePanel.TILE_SIZE, "arrow", gamePanel);
+                        4, 4, GamePanel.TILE_SIZE, GamePanel.TILE_SIZE, "Arrow", gamePanel);
                 arrow.height -= 30;
                 arrow.y += 14;
                 handler.add(arrow);

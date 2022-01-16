@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="Troys_Quest:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/Troys_Quest_jar</output-path>
+    <output-path>$PROJECT_DIR$/run</output-path>
     <root id="archive" name="Troys_Quest.jar">
       <element id="module-output" name="Troys_Quest" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/github/spotbugs/spotbugs-annotations/4.5.3/spotbugs-annotations-4.5.3.jar" path-in-jar="/" />
