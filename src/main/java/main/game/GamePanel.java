@@ -44,7 +44,7 @@ public class GamePanel extends JPanel implements Runnable {
     public static final int WIN_LOSE_STATE = 3; //when level is concluded , either in win or defeat
     public static final int LEVEL_SELECTION_STATE = 4; //when we are in level selection menu
     public static final int INTRO_STATE = 5; //when we are in level selection menu
-
+    public static final int END_STATE = 6; //when we have beat the game
     public int gameState;
 
     KeyHandler keyHandler = new KeyHandler(this);
@@ -120,6 +120,7 @@ public class GamePanel extends JPanel implements Runnable {
         }
         //player reset
         player.setLivesLeft(3);
+        player.state = Player.State.ALIVE;
         player.setCoinsCollected(0);
         player.setEnemiesKilled(0);
         player.setCollision(true);
@@ -134,6 +135,11 @@ public class GamePanel extends JPanel implements Runnable {
         GamePanel.i = 0;
         hud.levelTimer = 0;
         hud.counter = 0;
+        //menu resets
+        menu.endMenuCounter = 0;
+        menu.introMenuCounter = 0;
+        menu.dynamicTextY = 600;
+        menu.dynamicTextYEnd = 700;
     }
 
 
@@ -212,20 +218,23 @@ public class GamePanel extends JPanel implements Runnable {
 
         } else if (gameState == MENU_STATE) {
             menu.update();
-        }  else if (gameState == INTRO_STATE) {
+        } else if (gameState == INTRO_STATE) {
             menu.update();
-            if(menu.menuCounter == 1700){ //after ~28secs we move automatically from intro state to menu state
+            if (menu.introMenuCounter == 1700) { //after ~28secs we move automatically from intro state to menu state
                 gameState = MENU_STATE;
                 music.stopMusic();
                 music.playMusic(5);
             }
-    }
+        } else if (gameState == END_STATE) {
+            menu.update();
+        }
         if (player.getLivesLeft() == 0) {
             if (i == 0) {
                 player.deathTime = hud.levelTimer;
                 i++;
+                keyHandler.forceReleaseKeys();
             }
-            if (hud.levelTimer - player.deathTime > 1) {
+            if (hud.levelTimer - player.deathTime > 0.8) {
                 gameState = WIN_LOSE_STATE;
             }
         }
@@ -250,6 +259,8 @@ public class GamePanel extends JPanel implements Runnable {
             menu.drawLevelSelectionMenu(g2);
         } else if (gameState == INTRO_STATE) {
             menu.drawIntroScreen(g2);
+        } else if (gameState == END_STATE) {
+            menu.drawEndingScreen(g2);
         } else {
             currentLevel.render(g2);
             player.render(g2);

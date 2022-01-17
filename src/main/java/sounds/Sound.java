@@ -9,7 +9,7 @@ public class Sound {
 
 
     Clip clip; //used to open sound file
-    URL[] musicURL = new URL[11];     //we store the sound file path
+    URL[] musicURL = new URL[12];     //we store the sound file path
 
     public Sound() {
         //in each url of the array we store each sound, we will have to remember the index of each sound, it does not bother us for this many sounds
@@ -24,6 +24,7 @@ public class Sound {
         musicURL[8] = getClass().getResource("/Sound/SWORD HIT.wav");
         musicURL[9] = getClass().getResource("/Sound/YOU LOSE.wav");
         musicURL[10] = getClass().getResource("/Sound/Dramatic Intro music.wav");
+        musicURL[11] = getClass().getResource("/Sound/Victory music.wav");
     }
 
     //setFile is used to signal which sound is going to be played, that's why we have an index as an argument

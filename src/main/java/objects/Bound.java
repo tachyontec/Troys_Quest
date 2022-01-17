@@ -43,10 +43,17 @@ public class Bound {
             }
             if (end.worldX - player.getX() <= 10) {
                 if (end.intersects(player)) {
-                    gamepanel.music.stopMusic();
-                    gamepanel.music.playMusic(7, false);
-                    gamepanel.player.setCollision(false);
-                    gamepanel.gameState = GamePanel.WIN_LOSE_STATE;
+                    if(gamepanel.currentLevelNumber == 3){
+                        gamepanel.music.stopMusic();
+                        gamepanel.music.playMusic(11, false);
+                        gamepanel.player.setCollision(false);
+                        gamepanel.gameState = GamePanel.END_STATE;
+                    } else{
+                        gamepanel.music.stopMusic();
+                        gamepanel.music.playMusic(7, false);
+                        gamepanel.player.setCollision(false);
+                        gamepanel.gameState = GamePanel.WIN_LOSE_STATE;
+                    }
                 }
             }
         }

@@ -216,13 +216,13 @@ public class Level {
         //As we move up in time , points from completing the level in each time zone decrease
         //rewarding the player for making it to the end faster
         int pointsFromTime;
-        if (levelCompletionTime <= 25) {
+        if (levelCompletionTime <= 35) {
             pointsFromTime = 800;
-        } else if (levelCompletionTime <= 35) {
-            pointsFromTime = 600;
         } else if (levelCompletionTime <= 45) {
+            pointsFromTime = 600;
+        } else if (levelCompletionTime <= 55) {
             pointsFromTime = 400;
-        } else if (levelCompletionTime <= 60) {
+        } else if (levelCompletionTime <= 65) {
             pointsFromTime = 200;
         } else {
             pointsFromTime = 100;

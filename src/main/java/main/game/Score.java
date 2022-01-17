@@ -1,4 +1,4 @@
-package main.game;
+/*package main.game;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -69,7 +69,7 @@ public class Score {
      * @param name     :Given name
      * @param password :Given password
      * @return true or false depend on details given
-     */
+
     public static boolean check(String name, String password) {
         boolean ok = false; //result
         BufferedReader br;
@@ -105,7 +105,7 @@ public class Score {
      *
      * @param name
      * @param password
-     */
+
     public static void createUser(String name, String password) {
         try (FileWriter file = new FileWriter(dir + "All.txt", true)) {
             file.append(name).append(",").append(password).append("\n");//Save name and password
@@ -126,3 +126,6 @@ public class Score {
         }
     }
 }
+
+ */
+
