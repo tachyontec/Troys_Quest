@@ -192,7 +192,7 @@ public class Player extends MovingObject {
         if (keyHandler.upPressed && !jumped) {
             this.jumped = true;
             state = State.JUMP;
-            this.setSpeedy(12);
+            this.setSpeedy(13);
             jumpinganimation.runAnimation();
             soundEffect.playSE(3);
         }

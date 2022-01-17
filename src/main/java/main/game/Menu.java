@@ -7,6 +7,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.DecimalFormat;
+import java.util.Random;
 
 /**
  * Implements menu system screens
@@ -20,12 +21,16 @@ public class Menu {
     BufferedImage buttonImage;
     BufferedImage tombImage;
     BufferedImage wreath;
+    BufferedImage fireworks;
     BufferedImage lv1Preview;
     BufferedImage lv2Preview;
     BufferedImage lv3Preview;
     int dynamicTextX;
     double dynamicTextY = 600;
-    int menuCounter;
+    double dynamicTextYEnd = 700;
+    int lineOffset = 25; // each line is 25 pixels above the next
+    int introMenuCounter;
+    int endMenuCounter;
 
     public int choice = 0; //option selection default
     int defaultX = 200; //reference point used for drawing
@@ -64,16 +69,19 @@ public class Menu {
      */
     public void update() {
 
-        if(gamepanel.gameState == GamePanel.MENU_STATE) {
+        if (gamepanel.gameState == GamePanel.MENU_STATE) {
             dynamicTextX -= 2;
             if (dynamicTextX == -2000) {
                 dynamicTextX = GamePanel.TILE_SIZE * 16;
             }
-        } else if (gamepanel.gameState == GamePanel.INTRO_STATE){
-            menuCounter++;
-            if(menuCounter < 950) {
+        } else if (gamepanel.gameState == GamePanel.INTRO_STATE) {
+            introMenuCounter++;
+            if (introMenuCounter < 950) {
                 dynamicTextY -= 0.5;
             }
+        } else if (gamepanel.gameState == GamePanel.END_STATE) {
+            endMenuCounter++;
+            dynamicTextYEnd -= 0.5;
         }
     }
 
@@ -336,24 +344,89 @@ public class Menu {
         //Background
         g2.drawImage(backgroundIntroImage, 0, 0, GamePanel.TILE_SIZE * 16, GamePanel.TILE_SIZE * 12, null);
         //Press enter to skip
-        g2.drawString("Press ENTER to skip intro", 10, 25);
+        g2.setColor(Color.BLACK);
+        g2.drawString("Press ENTER to skip", 10 + shadowOffset, 25 + shadowOffset);
+        g2.setColor(Color.WHITE);
+        g2.drawString("Press ENTER to skip", 10, 25);
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 27));
         int offset = 25; // each line is 25 pixels above the next
         //we cut up the strings in order to fit the frame
+        //not elegant but works
         g2.drawString("Menelaus is disgraced. He is the king of Mycenae, he has", 0 ,(int) dynamicTextY );
-        g2.drawString("fame and money, but something is more valuable than that." , 0 , (int) dynamicTextY + offset);
-        g2.drawString("His wife,Queen Helen.And someone stole her from him. " , 0 , (int) dynamicTextY + 2 * offset);
-        g2.drawString("After that there is nothing but war. " , 0 , (int) dynamicTextY + 3 * offset);
-        g2.drawString("He is forced to deal with and control the rage that has" , 0 , (int) dynamicTextY + 4 * offset );
-        g2.drawString("for some time now.His vengeance against the vilifier" , 0 , (int) dynamicTextY + 5 * offset );
-        g2.drawString("makes him fight, even with the gods." , 0 , (int) dynamicTextY + 6 * offset );
-        g2.drawString("It's in the harsh unforgiving world that he must fight to"  , 0 , (int) dynamicTextY + 7 * offset );
-        g2.drawString("survive and not only to reclaim his queen but also" , 0 , (int) dynamicTextY + 8 * offset );
-        g2.drawString("to remind his people who their king is. " , 0 , (int) dynamicTextY + 9 * offset );
-        g2.drawString("This staggering remaining journey, combines all" , 0 , (int) dynamicTextY + 10 * offset );
-        g2.drawString("the characteristics of a real war.Brutal combat, epic ", 0 , (int) dynamicTextY + 11 * offset );
-        g2.drawString("boss fights and symbolisms.Ideal for anyone" , 0 , (int) dynamicTextY + 12 * offset );
-        g2.drawString("who appreciates the value of a greater purpose..." , 0 , (int) dynamicTextY + 13 * offset );
+        g2.drawString("fame and money, but something is more valuable than that." , 0 , (int) dynamicTextY + lineOffset);
+        g2.drawString("His wife,Queen Helen.And someone stole her from him. " , 0 , (int) dynamicTextY + 2 * lineOffset);
+        g2.drawString("After that there is nothing but war. " , 0 , (int) dynamicTextY + 3 * lineOffset);
+        g2.drawString("He is forced to deal with and control the rage that has" , 0 , (int) dynamicTextY + 4 * lineOffset );
+        g2.drawString("for some time now.His vengeance against the vilifier" , 0 , (int) dynamicTextY + 5 * lineOffset );
+        g2.drawString("makes him fight, even with the gods." , 0 , (int) dynamicTextY + 6 * lineOffset );
+        g2.drawString("It's in the harsh unforgiving world that he must fight to"  , 0 , (int) dynamicTextY + 7 * lineOffset );
+        g2.drawString("survive and not only to reclaim his queen but also" , 0 , (int) dynamicTextY + 8 * lineOffset );
+        g2.drawString("to remind his people who their king is. " , 0 , (int) dynamicTextY + 9 * lineOffset );
+        g2.drawString("This staggering remaining journey, combines all" , 0 , (int) dynamicTextY + 10 * lineOffset );
+        g2.drawString("the characteristics of a real war.Brutal combat, epic ", 0 , (int) dynamicTextY + 11 * lineOffset );
+        g2.drawString("boss fights and symbolisms.Ideal for anyone" , 0 , (int) dynamicTextY + 12 * lineOffset );
+        g2.drawString("who appreciates the value of a greater purpose..." , 0 , (int) dynamicTextY + 13 * lineOffset );
+    }
+
+    /**
+     * Graphic drawing of game ending and credits
+     *
+     * @param g2 main game graphics
+     */
+    public void drawEndingScreen(Graphics2D g2){
+        g2.setFont(menuFont);
+        g2.setColor(Color.WHITE);
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20));
+        //Background
+        g2.drawImage(backgroundIntroImage, 0, 0, GamePanel.TILE_SIZE * 16, GamePanel.TILE_SIZE * 12, null);
+        //Press enter to skip
+        g2.setColor(Color.BLACK);
+        g2.drawString("Press ENTER to skip", 10 + shadowOffset, 25 + shadowOffset);
+        g2.setColor(Color.WHITE);
+        g2.drawString("Press ENTER to skip", 10, 25);
+        if(endMenuCounter <= 30){
+            g2.drawImage(fireworks , 100 , 200 , 6 * GamePanel.TILE_SIZE  ,  6 * GamePanel.TILE_SIZE , null);
+        } else if (endMenuCounter <= 60){
+            g2.drawImage(fireworks , 300 , 200  , 6 * GamePanel.TILE_SIZE  ,  6 * GamePanel.TILE_SIZE , null);
+        } else if (endMenuCounter <= 90){
+            g2.drawImage(fireworks , 500 , 200 , 6 * GamePanel.TILE_SIZE  ,  6 * GamePanel.TILE_SIZE , null);
+        }
+        //fireworks and congratulations
+        if(endMenuCounter < 240){ // for 6 secs
+            g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 50));
+            g2.setColor(Color.BLACK);
+            g2.drawString("Congratulations!", 200 + shadowOffset, 100 + shadowOffset);
+            g2.setColor(Color.WHITE);
+            g2.drawString("Congratulations!", 200, 100);
+            g2.setColor(Color.BLACK);
+            g2.drawString("You saved Queen Helen!", 100 + shadowOffset, 180 + shadowOffset);
+            g2.setColor(Color.WHITE);
+            g2.drawString("You saved Queen Helen!", 100 , 180);
+        } else { // then ending story rolls
+            g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 27));
+            g2.drawString("At last, relief. Order was restored. The queen is back.", 10 ,(int) dynamicTextYEnd );
+            g2.drawString("The king fought everyone and everything, yet he succeeded.", 10 ,(int) dynamicTextYEnd + lineOffset);
+            g2.drawString("He proved  what a true fighter really is, the one who", 10 ,(int) dynamicTextYEnd + 2 * lineOffset);
+            g2.drawString("is not afraid of death, when he has nothing to lose.", 10 ,(int) dynamicTextYEnd + 3 * lineOffset);
+            g2.drawString("He showed the people that true war has nothing to do", 10 ,(int) dynamicTextYEnd + 4 * lineOffset);
+            g2.drawString("with weapons and killings but with self-denial", 10 ,(int) dynamicTextYEnd + 5 * lineOffset);
+            g2.drawString("for a greater ideal.That's why he once again managed to", 10 ,(int) dynamicTextYEnd + 6 * lineOffset);
+            g2.drawString("receive the respect of everyone, even the gods’", 10 ,(int) dynamicTextYEnd + 7 * lineOffset);
+            //and finally team credits
+            g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 50));
+            g2.setColor(Color.BLACK);
+            g2.drawString("A game by,", 250 + shadowOffset, (int) dynamicTextYEnd + 15 * lineOffset + shadowOffset);
+            g2.setColor(Color.WHITE);
+            g2.drawString("A game by,", 250, (int) dynamicTextYEnd + 15 * lineOffset);
+            g2.setColor(Color.BLACK);
+            g2.drawString("Bitheads dev team", 150 + shadowOffset, (int) dynamicTextYEnd + 18 * lineOffset + shadowOffset);
+            g2.setColor(Color.WHITE);
+            g2.drawString("Bitheads dev team", 150 , (int) dynamicTextYEnd + 18 * lineOffset);
+
+
+        }
+
+
     }
 
 }

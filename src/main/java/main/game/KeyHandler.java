@@ -1,5 +1,7 @@
 package main.game;
 
+import objects.Player;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -40,6 +42,7 @@ public class KeyHandler implements KeyListener {
      */
     @Override
     public void keyPressed(KeyEvent k) {
+
         int key = k.getKeyCode(); //get the code of key pressed
         //MENU_STATE AND MENU STYLE ENVIRONMENT KEY INPUT
         //Each key has a different function in each game state
@@ -132,6 +135,10 @@ public class KeyHandler implements KeyListener {
                 gp.gameState = GamePanel.MENU_STATE; // and we move immediately to menu state
                 switchSound(5);  //Menu song
             }
+            if (gp.gameState == GamePanel.END_STATE) {
+                gp.gameState = GamePanel.MENU_STATE; // and we move immediately to menu state
+                switchSound(5);  //Menu song
+            }
         }
 
         //GAME STATE KEY INPUT
@@ -180,9 +187,21 @@ public class KeyHandler implements KeyListener {
     }
 
     /**
-     * switches between the sounds we want played
+     * Force releases all keys that are pressed
+     * Used to make player stay still while dead
+     */
+    public void forceReleaseKeys(){
+        rightPressed = false;
+        rightReleased = true;
+        leftPressed = false;
+        leftReleased = true;
+        upPressed = false;
+        attackPressed = false;
+    }
+    /**
+     * switches between the sounds we want to play
      *
-     * @param soundNumber the number of the sound file we want played
+     * @param soundNumber the number of the sound file we want to play
      */
     public void switchSound(int soundNumber) {
         gp.music.stopMusic();
