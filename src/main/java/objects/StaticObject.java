@@ -10,17 +10,18 @@ import java.awt.image.BufferedImage;
 public abstract class StaticObject extends GameObject {
     BufferedImage[] images;
     Animation animation;
+    int numofImages;
 
     public StaticObject(double worldX, double worldY,
-                        int width, int height, String name, GamePanel gamePanel) {
+                        int width, int height, String name, GamePanel gamePanel, int numofImages) {
         super(worldX, worldY, width, height, name, gamePanel);
+        this.numofImages = numofImages;
         getStaticObjectImage();
     }
 
-    public void getStaticObjectImage() {
-        images = Resource.getFilesInDir("src/main/resources/objects/" + name);
-        animation = new Animation(0, images);
-    }
+    public abstract void getStaticObjectImage();
+
+
 
     public void update() {
         if (images.length != 1) {

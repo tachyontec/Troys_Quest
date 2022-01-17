@@ -1,7 +1,9 @@
 package main.game;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.text.DecimalFormat;
 
 /**
@@ -33,10 +35,15 @@ public class HUD {
     public HUD(GamePanel gamepanel) {
         this.gamepanel = gamepanel;
         this.gameFont = new Font("MV Boli", Font.PLAIN, 35);
-        this.heartImage = Resource.getResourceImage("HUD", "pixelated-heart.png");
-        this.coinImage = Resource.getResourceImage("objects/Coin", "tile000.png");
-        this.buttons = Resource.getResourceImage("HUD", "arrowKeysTransparent.png");
-        this.spaceBar = Resource.getResourceImage("HUD", "SpaceInstructions .png");
+        try {
+            System.out.println(getClass().getResourceAsStream("Hud_Heart_0.png"));
+            this.heartImage = ImageIO.read(getClass().getResourceAsStream("Hud_Heart_0.png"));
+            this.coinImage = ImageIO.read(getClass().getResourceAsStream("Coin_Idle_0.png"));
+            this.buttons = ImageIO.read(getClass().getResourceAsStream("arrowKeysTransparent.png"));
+            this.spaceBar = ImageIO.read(getClass().getResourceAsStream("SpaceInstructions.png"));;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -80,4 +87,8 @@ public class HUD {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Hud";
+    }
 }

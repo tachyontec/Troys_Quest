@@ -52,7 +52,7 @@ public class GamePanel extends JPanel implements Runnable {
     public static Sound se = new Sound();// created to have sound effects and at the same time music
     Thread gameThread; //Our main game thread
 
-    public Player player = new Player(7 * TILE_SIZE, FLOOR, 30, TILE_SIZE, "Greek_warrior", this, 1, 1, keyHandler);
+    public Player player = new Player(7 * TILE_SIZE, FLOOR, 30, TILE_SIZE, "GreekBasic", this, 1, 1, keyHandler);
     //public GameObjectSetter obstacleSetter = new GameObjectSetter(this);
     public HUD hud = new HUD(this);
     public Menu menu = new Menu(this);

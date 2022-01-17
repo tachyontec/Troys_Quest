@@ -2,6 +2,7 @@ package objects;
 
 import main.game.Animation;
 import main.game.GamePanel;
+import main.game.Resource;
 //import sounds.Sound;
 
 import java.awt.Graphics2D;
@@ -25,12 +26,17 @@ public class Coin extends StaticObject {
     Boolean collision;
 
     public Coin(double worldX, double worldY,
-                int width, int height, String name, GamePanel gamePanel) {
-        super(worldX, worldY, width, height, name, gamePanel);
+                int width, int height, String name, GamePanel gamePanel, int numofimages) {
+        super(worldX, worldY, width, height, name, gamePanel, numofimages);
         this.gamePanel = gamePanel;
         this.collision = true;
     }
 
+    @Override
+    public void getStaticObjectImage() {
+        images = Resource.getAnimationimages(this,"Idle",numofImages).toArray(new BufferedImage[0]);
+        animation = new Animation(0, images);
+    }
 
     @Override
     public void render(Graphics2D g2) {

@@ -6,8 +6,10 @@ import main.game.KeyHandler;
 import main.game.Resource;
 import sounds.Sound;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 //Subclass of Game Object responsible for the moving and drawing the character of the game
 public class Player extends MovingObject {
@@ -89,13 +91,13 @@ public class Player extends MovingObject {
     // in this method we are loading the images for each animation from resources folder res
     //this needs to be implemented in another class named Resources later
     @Override
-    public void getMovingObjectImage() {
-        right = Resource.getFilesInDir("src/main/resources/player/Walk/Right");
-        left = Resource.getFilesInDir("src/main/resources/player/Walk/Left");
-        jump = Resource.getFilesInDir("src/main/resources/player/Jump");
-        idle = Resource.getFilesInDir("src/main/resources/player/Idle");
-        death = Resource.getFilesInDir("src/main/resources/player/Die");
-        attack = Resource.getFilesInDir("src/main/resources/player/Attack");
+    public void getMovingObjectImage()  {
+        right = Resource.getAnimationimages(this, "WalkRight", 12).toArray(new BufferedImage[0]);
+        left = Resource.getAnimationimages(this, "WalkLeft", 12).toArray(new BufferedImage[0]);
+        jump = Resource.getAnimationimages(this,"Jump",14).toArray(new BufferedImage[0]);
+        idle = Resource.getAnimationimages(this, "Idle", 18).toArray(new BufferedImage[0]);
+        death = Resource.getAnimationimages(this, "Die", 12).toArray(new BufferedImage[0]);
+        attack = Resource.getAnimationimages(this, "Attack", 8).toArray(new BufferedImage[0]);
     }
 
     //moves the player by altering the x,y coordinates with keyboard arrows

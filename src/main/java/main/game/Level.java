@@ -115,37 +115,48 @@ public class Level {
                 // used to choose randomly
                 // one of the 2 obstacles(Fire or spikesRoller)
                 handler.add(new Obstacle(spawnX, GamePanel.FLOOR, 30, GamePanel.TILE_SIZE,
-                        obstacleName[GamePanel.currentLevelNumber == 3 ? rand.nextInt(2) : 0], gamePanel));
+                        "spikesRoller", gamePanel, 3));
                 /* we spawn a coin above an obstacle with a random way to make player
                 jump a little or a lot to reach it and also make game harder*/
-                int randomY = (rand.nextInt(3) + 1);
+                int randomY = (rand.nextInt(2) + 1);
                 handler.add(new Coin(spawnX, GamePanel.FLOOR - (randomY * GamePanel.TILE_SIZE),
-                        GamePanel.TILE_SIZE / 2, GamePanel.TILE_SIZE / 2, "Coin", gamePanel));
+                        GamePanel.TILE_SIZE / 2, GamePanel.TILE_SIZE / 2, "Coin", gamePanel, 4));
             }
             if (this.hasBlocks) {
-                if(rand.nextInt(100) < 60) {
+                if (rand.nextInt(100) < 60) {
                     handler.add(new Block(spawnX, 5.5 * GamePanel.TILE_SIZE,
-                            GamePanel.TILE_SIZE, GamePanel.TILE_SIZE, "platform" + GamePanel.currentLevelNumber, gamePanel));
+                            GamePanel.TILE_SIZE, GamePanel.TILE_SIZE, ("Level" + GamePanel.currentLevelNumber + "plat"), gamePanel, 1));
                     if (rand.nextInt(100) < 60 - GamePanel.currentLevelNumber * 10) {
                         handler.add(new Coin(spawnX, 4.5 * GamePanel.TILE_SIZE,
-                                GamePanel.TILE_SIZE / 2, GamePanel.TILE_SIZE / 2, "Coin", gamePanel));
+                                GamePanel.TILE_SIZE / 2, GamePanel.TILE_SIZE / 2, "Coin", gamePanel, 4));
                     } else {
-                        handler.add(new Obstacle(spawnX, 4.5 * GamePanel.TILE_SIZE, 30, GamePanel.TILE_SIZE,
-                                obstacleName[GamePanel.currentLevelNumber == 3 ? rand.nextInt(2) : 0], gamePanel));
+                        if (GamePanel.currentLevelNumber == 3) {
+                            int randomobj = rand.nextInt(2);
+                            if (randomobj == 0) {
+                                handler.add(new Obstacle(spawnX, 4.5 * GamePanel.TILE_SIZE, 30, GamePanel.TILE_SIZE,
+                                        obstacleName[0], gamePanel, 3));
+                            } else {
+                                handler.add(new Obstacle(spawnX, 4.5 * GamePanel.TILE_SIZE, 30, GamePanel.TILE_SIZE,
+                                        obstacleName[1], gamePanel, 5));
+                            }
+                        } else {
+                            handler.add(new Obstacle(spawnX, 4.5 * GamePanel.TILE_SIZE, 30, GamePanel.TILE_SIZE,
+                                    obstacleName[0], gamePanel, 3));
+                        }
                     }
-                    if(rand.nextInt(100) < 65) {
+                    if (rand.nextInt(100) < 65) {
                         handler.add(new Block(spawnX + 3 * GamePanel.TILE_SIZE, 3.5 * GamePanel.TILE_SIZE,
-                                GamePanel.TILE_SIZE, GamePanel.TILE_SIZE, "platform" + GamePanel.currentLevelNumber, gamePanel));
-                        if(rand.nextInt(100) < 70 - GamePanel.currentLevelNumber * 15) {
-                            handler.add(new Heart(spawnX + 3 * GamePanel.TILE_SIZE, 1.5 * GamePanel.TILE_SIZE,
-                                    GamePanel.TILE_SIZE / 2, GamePanel.TILE_SIZE / 2, "Heart", gamePanel));
+                                GamePanel.TILE_SIZE, GamePanel.TILE_SIZE, "Level" + GamePanel.currentLevelNumber + "plat", gamePanel, 1));
+                        if (rand.nextInt(100) < 70 - GamePanel.currentLevelNumber * 15) {
+                            Heart heart = new Heart(spawnX + 3 * GamePanel.TILE_SIZE, 1.5 * GamePanel.TILE_SIZE,
+                                    GamePanel.TILE_SIZE, GamePanel.TILE_SIZE, "Heart", gamePanel, 1);
+                            heart.y += GamePanel.TILE_SIZE;
+                            handler.add(heart);
                         }
                     }
                 }
             }
-            // we spawn coins after an obstacle or enemy for reward
-            handler.add(new Coin(spawnX + 2 * GamePanel.TILE_SIZE, GamePanel.FLOOR,
-                    GamePanel.TILE_SIZE / 2, GamePanel.TILE_SIZE / 2, "Coin", gamePanel));
+
             startingpoint += 5 * GamePanel.TILE_SIZE;
             if (GamePanel.currentLevelNumber == 3 && i == 18) {
                 break;
@@ -156,7 +167,8 @@ public class Level {
         handler.add(bird);
         if (this.hasFinalBoss) {
             Enemy enemy = new Enemy((GamePanel.MAX_WORLD_COL - 10) * GamePanel.TILE_SIZE,
-                    7 * GamePanel.TILE_SIZE, 3 * GamePanel.TILE_SIZE, 3 * GamePanel.TILE_SIZE, enemyName[1], gamePanel, 1, 0, 3);
+                    7 * GamePanel.TILE_SIZE, 3 * GamePanel.TILE_SIZE, 3 * GamePanel.TILE_SIZE,
+                    enemyName[1], gamePanel, 1, 0, 3);
             handler.add(enemy);
         }
     }

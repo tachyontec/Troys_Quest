@@ -1,9 +1,12 @@
 package objects;
 
 
+import main.game.Animation;
 import main.game.GamePanel;
+import main.game.Resource;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 /**
  * public class Heart
@@ -11,8 +14,14 @@ import java.awt.*;
  */
 public class Heart extends StaticObject {
 
-    public Heart(double worldX, double worldY, int width, int height, String name, GamePanel gamePanel) {
-        super(worldX, worldY, width, height, name, gamePanel);
+    public Heart(double worldX, double worldY, int width, int height, String name, GamePanel gamePanel, int numofimages) {
+        super(worldX, worldY, width, height, name, gamePanel, numofimages);
+    }
+
+    @Override
+    public void getStaticObjectImage() {
+        images = Resource.getAnimationimages(this,"Idle",numofImages).toArray(new BufferedImage[0]);
+        animation = new Animation(0, images);
     }
 
     @Override
@@ -29,7 +38,6 @@ public class Heart extends StaticObject {
         boolean collision = false;
         if (gamePanel.player.intersects(this)) {
             collision = true;
-            System.out.println("picked");
             gamePanel.player.setLivesLeft(gamePanel.player.getLivesLeft() + 1);
         }
         return collision;

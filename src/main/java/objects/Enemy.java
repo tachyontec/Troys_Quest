@@ -44,12 +44,17 @@ public class Enemy extends MovingObject {
 
     @Override
     public void getMovingObjectImage() {
-        //get all Images with the animation from the relevant folder
-        run = Resource.getFilesInDir("src/main/resources/Enemies/" + this.name + "/Run");
-        attack = Resource.getFilesInDir("src/main/resources/Enemies/" + this.name + "/Attack");
-        idle = Resource.getFilesInDir("src/main/resources/Enemies/" + this.name + "/Idle");
-        death = Resource.getFilesInDir("src/main/resources/Enemies/" + this.name + "/Death");
-        //Create the animations
+        if (this.name.equals("FinalBoss")) {
+            run = Resource.getAnimationimages(this, "Run", 8).toArray(new BufferedImage[0]);
+            attack = Resource.getAnimationimages(this, "Attack", 9).toArray(new BufferedImage[0]);
+            idle = Resource.getAnimationimages(this, "Idle", 8).toArray(new BufferedImage[0]);
+            death = Resource.getAnimationimages(this, "Death", 10).toArray(new BufferedImage[0]);
+        } else {
+            run = Resource.getAnimationimages(this, "Run", 8).toArray(new BufferedImage[0]);
+            attack = Resource.getAnimationimages(this, "Attack", 9).toArray(new BufferedImage[0]);
+            idle = Resource.getAnimationimages(this, "Idle", 5).toArray(new BufferedImage[0]);
+            death = Resource.getAnimationimages(this, "Death", 8).toArray(new BufferedImage[0]);
+        }
         walkingAnimation = new Animation(0, run);
         idleAnimation = new Animation(-3, idle);
         attackAnimation = new Animation(3, attack);
@@ -59,8 +64,12 @@ public class Enemy extends MovingObject {
     //renders the animations of the enemy
     @Override
     public void render(Graphics2D g) {
-        double screenX = this.getX() - gamePanel.player.getX() + gamePanel.player.screenX; //centers the player in relation to the screen in x axis,gp.player.screenX is used to offset the difference
-        double screenY = this.getY(); //centers the player in relation to the screen in y axis,gp.player.screenY is used to offset the difference
+        double
+                screenX =
+                this.getX() - gamePanel.player.getX() + gamePanel.player.screenX; //centers the player in relation to the screen in x axis,gp.player.screenX is used to offset the difference
+        double
+                screenY =
+                this.getY(); //centers the player in relation to the screen in y axis,gp.player.screenY is used to offset the difference
 
         switch (state) {
             case DEAD -> deathAnimation.drawAnimation(g, (int) screenX, (int) screenY,
@@ -78,7 +87,6 @@ public class Enemy extends MovingObject {
     //determines what our enemy does at any given moment
     @Override
     public void update() {
-        //System.out.println(this.enemyDeathTime);
         if (this.livesLeft <= 0) {
             this.state = State.DEAD;
             deathAnimation.runAnimation();

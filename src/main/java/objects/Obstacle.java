@@ -1,8 +1,11 @@
 package objects;
 
+import main.game.Animation;
 import main.game.GamePanel;
+import main.game.Resource;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 /**
  * public class Obstacle
@@ -13,11 +16,15 @@ import java.awt.*;
  */
 public class Obstacle extends StaticObject {
     boolean collision;
-
     //Constructor to initiate x,y,speed of the x and y axis and the sprites width,height
-    public Obstacle(double worldX, double worldY, int width, int height, String name, GamePanel gamePanel) {
-        super(worldX, worldY, width, height, name, gamePanel);
+    public Obstacle(double worldX, double worldY, int width, int height, String name, GamePanel gamePanel, int numofimages) {
+        super(worldX, worldY, width, height, name, gamePanel,numofimages);
         collision = false;
+    }
+    @Override
+    public void getStaticObjectImage() {
+        images = Resource.getAnimationimages(this,"Idle",numofImages).toArray(new BufferedImage[0]);
+        animation = new Animation(0, images);
     }
 
     /**

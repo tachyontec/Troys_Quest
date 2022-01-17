@@ -45,15 +45,15 @@ public class Menu {
         this.menuFont = new Font("MV Boli", Font.PLAIN, 35);
         this.dynamicTextX = gamePanel.TILE_SIZE * 16;
         try {
-            this.helmetImage = ImageIO.read(new File("src/main/resources/menu/MenuHelmet.png"));
-            this.backgroundMenuImage = ImageIO.read(new File("src/main/resources/Backgrounds/backgroundMenu.png"));
-            this.backgroundIntroImage = ImageIO.read(new File("src/main/resources/Backgrounds/Background Intro.png"));
-            this.buttonImage = ImageIO.read(new File("src/main/resources/Buttons/Button.png"));
-            this.tombImage = ImageIO.read(new File("src/main/resources/menu/tombstone2.png"));
-            this.wreath = ImageIO.read(new File("src/main/resources/menu/olive wreath.png"));
-            this.lv1Preview = ImageIO.read(new File("src/main/resources/menu/Level1Preview.png"));
-            this.lv2Preview = ImageIO.read(new File("src/main/resources/menu/Level2Preview.png"));
-            this.lv3Preview = ImageIO.read(new File("src/main/resources/menu/Level3Preview.png"));
+            this.helmetImage = ImageIO.read(getClass().getResourceAsStream("MenuHelmet.png"));
+            this.backgroundMenuImage = ImageIO.read(getClass().getResourceAsStream("backgroundMenu.png"));
+            this.backgroundIntroImage = ImageIO.read(getClass().getResourceAsStream("Background Intro.png"));
+            this.buttonImage = ImageIO.read(getClass().getResourceAsStream("Button.png"));
+            this.tombImage = ImageIO.read(getClass().getResourceAsStream("tombstone2.png"));
+            this.wreath = ImageIO.read(getClass().getResourceAsStream("olivewreath.png"));
+            this.lv1Preview = ImageIO.read(getClass().getResourceAsStream("Level1Preview.png"));
+            this.lv2Preview = ImageIO.read(getClass().getResourceAsStream("Level2Preview.png"));
+            this.lv3Preview = ImageIO.read(getClass().getResourceAsStream("Level3Preview.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

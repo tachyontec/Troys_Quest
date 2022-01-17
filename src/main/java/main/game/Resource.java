@@ -1,8 +1,15 @@
 package main.game;
 
+import objects.GameObject;
+import objects.Obstacle;
+import objects.Player;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Objects;
 import javax.imageio.ImageIO;
 
 /**
@@ -11,37 +18,37 @@ import javax.imageio.ImageIO;
  */
 public class Resource {
     /**
-     * @param folder : Name of folder in "res/" where image is located
-     * @param name   : Name of file
+     * @param gameObject : the object that we want to take images
+     * @param image   : Name of file
      * @return The final image we Need
      */
-    public static BufferedImage getResourceImage(String folder, String name) {
+    public static BufferedImage getResourceImage(Object gameObject,String image) {
         BufferedImage img = null;
         try {
-            img = ImageIO.read(new File("src/main/resources/" + folder + "/" + name));
+            img = ImageIO.read(Objects.requireNonNull(gameObject.getClass().getResourceAsStream(gameObject + "_" + image + "_0.png")));
         } catch (IOException e) {
             e.printStackTrace();
         }
         return img;
     }
 
+
     /**
-     * @param dir : Full directory of the folder which contains the photos we want
-     *            Directory starting from "res/" folder
-     * @return All pictures in the requested folder
+     * @return All pictures in the animation
      */
-    public static BufferedImage[] getFilesInDir(String dir) {
-        File path1 = new File(dir);
-        File[] all = path1.listFiles();
-        assert all != null;//Make sure directory is not empty, or we will have NullPointerException
-        BufferedImage[] images = new BufferedImage[(all.length)];
-        for (int i = 0; i < all.length; i++) {
-            try {
-                images[i] = ImageIO.read(all[i]);
-            } catch (IOException e) {
-                e.printStackTrace();
+    public static ArrayList<BufferedImage> getAnimationimages(final Object gameObject,final String animation,final int numofimages) {
+
+        ArrayList<BufferedImage> imageArrayList = new ArrayList();
+        try {
+            for (int i = 0; i < numofimages; i++) {
+                imageArrayList.add(ImageIO.read(gameObject.getClass().getResourceAsStream(gameObject + "_" + animation +"_" + i + ".png")));
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return images;
+
+        return imageArrayList;
     }
+
+
 }

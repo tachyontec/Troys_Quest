@@ -4,10 +4,13 @@ import main.game.GamePanel;
 import main.game.ImageScaler;
 import main.game.Resource;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
 
 /**
  * This class manages Background Tiles by
@@ -76,8 +79,13 @@ public class TileManager {
                 "WaterfallEnd.png", "CastleWallTop.png"};
         for (int i = 1; i <= tilename.length; i++) { //for every tile image
 
-            tile[i].image = Resource.getResourceImage("tiles", tilename[i - 1]); //read the image
-            tile[i].image = ImageScaler.scaleImage(tile[i].image, GamePanel.TILE_SIZE, GamePanel.TILE_SIZE); //and then scale the image
+            try {
+                tile[i].image = ImageIO.read(getClass().getResourceAsStream(tilename[i - 1]));
+                tile[i].image = ImageScaler.scaleImage(tile[i].image, GamePanel.TILE_SIZE, GamePanel.TILE_SIZE); //and then scale the image
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
 
         }
     }

@@ -7,6 +7,7 @@ import main.game.Resource;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
+import java.awt.image.BufferedImage;
 
 public class Block extends StaticObject {
     public Line2D rightLine;
@@ -16,8 +17,8 @@ public class Block extends StaticObject {
     public double platformfloor;
 
     public Block(double worldX, double worldY,
-                 int width, int height, String name, GamePanel gamePanel) {
-        super(worldX, worldY, width, height, name, gamePanel);
+                 int width, int height, String name, GamePanel gamePanel, int numofimages) {
+        super(worldX, worldY, width, height, name, gamePanel , numofimages);
         rightLine = new Line2D.Double();
         leftLine = new Line2D.Double();
         topLine = new Line2D.Double();
@@ -28,7 +29,7 @@ public class Block extends StaticObject {
 
     @Override
     public void getStaticObjectImage() {
-        images = Resource.getFilesInDir("src/main/resources/Platforms/" + name);
+        images = Resource.getAnimationimages(this,"Idle", 1).toArray(new BufferedImage[0]);
         animation = new Animation(0, images);
     }
 

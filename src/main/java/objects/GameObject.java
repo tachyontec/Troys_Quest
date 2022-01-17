@@ -8,7 +8,6 @@ import java.awt.*;
 public abstract class GameObject extends Rectangle {
     final String name;
     public boolean collision = false;
-    public Rectangle area; //creating invisible rectangle to store data
     /**
      * this method extends Rectangle class from java.awt to implement collision
      * what all the objects have in common
@@ -61,4 +60,12 @@ public abstract class GameObject extends Rectangle {
         this.y = (int) worldY;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }
