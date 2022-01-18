@@ -41,7 +41,7 @@ public class Resource {
         ArrayList<BufferedImage> imageArrayList = new ArrayList();
         try {
             for (int i = 0; i < numofimages; i++) {
-                imageArrayList.add(ImageIO.read(gameObject.getClass().getResourceAsStream(gameObject + "_" + animation +"_" + i + ".png")));
+                imageArrayList.add(ImageIO.read(Objects.requireNonNull(gameObject.getClass().getResourceAsStream(gameObject + "_" + animation + "_" + i + ".png"))));
             }
         } catch (IOException e) {
             e.printStackTrace();
