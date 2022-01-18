@@ -6,7 +6,7 @@ import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) {
-        JFrame window = new JFrame();
+        /*JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
         window.setTitle("Troy's Quest");
@@ -20,6 +20,7 @@ public class Main {
         gamePanel.gameState = GamePanel.MENU_STATE;
         TileManager tileManager = new TileManager(gamePanel);
         gamePanel.setUpGame(tileManager);
-        gamePanel.startGameThread();
+        gamePanel.startGameThread();*/
+        Score.writeScore("aris",5,1);
     }
 }
