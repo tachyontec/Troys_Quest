@@ -83,33 +83,28 @@ public class Score {
      * @return true or false depend on details given
      */
 
-    public static boolean check(String name, String password) {
-        boolean ok = false; //result
+    public static String check(String name, String password) {
+        String message = "User not found"; //message returned
         BufferedReader br;
         try {
             br = new BufferedReader(new FileReader(dir + "All.txt"));
             String line;
-            boolean userfound = false;
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
                 if (values[0].equals(name)) {
                     if (values[1].equals(password)) {
-                        ok = true;
+                        message = "Hello";
                     } else {
-                        //To be implemented with graphics
-                        System.out.println("Wrong password");
+                        message = "Wrong password";
                     }
                     break;
                 }
-            }
-            if (!userfound) {
-                System.out.println("User does not exists");
             }
             br.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return ok;
+        return message;
     }
 
     /**
@@ -119,24 +114,31 @@ public class Score {
      * @param name
      * @param password
     */
-    public static void createUser(String name, String password) {
-        try (FileWriter file = new FileWriter(dir + "All.txt", true)) {
-            file.append(name).append(",").append(password).append("\n");//Save name and password
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        //Initialize the .json file with 0s
-        try (FileWriter file = new FileWriter(dir + name + ".json")) {
-            JSONObject levels_json = new JSONObject();
-            for (int i = 1; i <= n_levels; i++) {
-                levels_json.put(i, 0);
+    public static String createUser(String name, String password) {
+        //Check if user exists
+        String message = "User created";
+        if (check(name,password).equals("Wrong password") || check(name,password).equals("Hello")){
+            message = "User already exists";
+        }else {
+            try (FileWriter file = new FileWriter(dir + "All.txt", true)) {
+                file.append(name).append(",").append(password).append("\n");//Save name and password
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            //We can write any JSONArray or JSONObject instance to the file
-            file.write(levels_json.toJSONString());
-        } catch (IOException e) {
-            System.out.println("User file couldn't be created");
-            e.printStackTrace();
+            //Initialize the .json file with 0s
+            try (FileWriter file = new FileWriter(dir + name + ".json")) {
+                JSONObject levels_json = new JSONObject();
+                for (int i = 1; i <= n_levels; i++) {
+                    levels_json.put(i, 0);
+                }
+                //We can write any JSONArray or JSONObject instance to the file
+                file.write(levels_json.toJSONString());
+            } catch (IOException e) {
+                System.out.println("User file couldn't be created");
+                e.printStackTrace();
+            }
         }
+        return message;
     }
 }
 
