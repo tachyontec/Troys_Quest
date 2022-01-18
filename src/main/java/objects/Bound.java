@@ -3,7 +3,7 @@ package objects;
 
 import main.game.GamePanel;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 
 //class that will set the bound of the screen
 //it sets the starting point and ending point
@@ -18,7 +18,7 @@ public class Bound {
         this.player = player;
         this.gamepanel = gamePanel;
         start = new Obstacle(5 * GamePanel.TILE_SIZE, GamePanel.TILE_SIZE * 5,
-                GamePanel.TILE_SIZE, GamePanel.TILE_SIZE * 5, "Bound", gamepanel,5);
+                GamePanel.TILE_SIZE, GamePanel.TILE_SIZE * 5, "Bound", gamepanel, 5);
         /*we change start worldX because we need tha flag
         to spawn down next to the player but the rectangle to be taller */
         start.worldY = (9 * GamePanel.TILE_SIZE);
@@ -43,12 +43,12 @@ public class Bound {
             }
             if (end.worldX - player.getX() <= 10) {
                 if (end.intersects(player)) {
-                    if(gamepanel.currentLevelNumber == 3){
+                    if (GamePanel.currentLevelNumber == 3) {
                         gamepanel.music.stopMusic();
                         gamepanel.music.playMusic(11, false);
                         gamepanel.player.setCollision(false);
                         gamepanel.gameState = GamePanel.END_STATE;
-                    } else{
+                    } else {
                         gamepanel.music.stopMusic();
                         gamepanel.music.playMusic(7, false);
                         gamepanel.player.setCollision(false);

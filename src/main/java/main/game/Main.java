@@ -6,6 +6,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Objects;
 
 public class Main {
     public static void main(String[] args) {
@@ -16,7 +17,7 @@ public class Main {
         GamePanel gamePanel = new GamePanel();
         BufferedImage icon = null;
         try {
-            icon = ImageIO.read(gamePanel.getClass().getResourceAsStream("Troys_quest_logo.png"));
+            icon = ImageIO.read(Objects.requireNonNull(gamePanel.getClass().getResourceAsStream("Troys_quest_logo.png")));
         } catch (IOException e) {
             e.printStackTrace();
         }

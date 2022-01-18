@@ -1,1 +1,0 @@
-java -jar Troys_Quest.jar

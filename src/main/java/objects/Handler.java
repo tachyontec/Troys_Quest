@@ -14,11 +14,11 @@ import java.util.LinkedList;
  * for the next level and save RAM space
  */
 public class Handler {
-    private LinkedList<GameObject> obstacles = new LinkedList<>();
-    private LinkedList<Enemy> enemies = new LinkedList<>();
-    private LinkedList<Coin> coinlist = new LinkedList<>();
-    private LinkedList<Block> blockList = new LinkedList<>();
-    private LinkedList<Heart> heartlist = new LinkedList<>();
+    private final LinkedList<GameObject> obstacles = new LinkedList<>();
+    private final LinkedList<Enemy> enemies = new LinkedList<>();
+    private final LinkedList<Coin> coinlist = new LinkedList<>();
+    private final LinkedList<Block> blockList = new LinkedList<>();
+    private final LinkedList<Heart> heartlist = new LinkedList<>();
     //Create an Array to irretate over all lists at once
     private final LinkedList[] all = new LinkedList[]{obstacles, enemies,
             coinlist, blockList, heartlist};
@@ -84,6 +84,7 @@ public class Handler {
         }
         return b;
     }
+
     public void checkCollision() {
         checkPlatformCollision();
         checkCoinCollision();
@@ -125,21 +126,18 @@ public class Handler {
             Block block = blockList.get(i);
             //right collision with platform
             if (player.intersectsLine(block.rightLine) && player.counter < 1) {
-                hascollided = false;
                 player.counter++;
                 player.setSpeedy(0);
                 player.setSpeedx(0);
             }
             //left collision with platform
             if (player.intersectsLine(block.leftLine) && player.counter < 1) {
-                hascollided = false;
                 player.counter++;
                 player.setSpeedy(0);
                 player.setSpeedx(0);
             }
             //bottom collision with platform
             if (player.intersectsLine(block.bottomLine) && player.counter < 1) {
-                hascollided = false;
                 player.counter++;
                 player.setSpeedy(0);
             }

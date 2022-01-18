@@ -1,16 +1,10 @@
 package main.game;
 
-import objects.GameObject;
-import objects.Obstacle;
-import objects.Player;
-
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
-import javax.imageio.ImageIO;
 
 /**
  * This class is used for all images that we load for the game
@@ -19,10 +13,10 @@ import javax.imageio.ImageIO;
 public class Resource {
     /**
      * @param gameObject : the object that we want to take images
-     * @param image   : Name of file
+     * @param image      : Name of file
      * @return The final image we Need
      */
-    public static BufferedImage getResourceImage(Object gameObject,String image) {
+    public static BufferedImage getResourceImage(Object gameObject, String image) {
         BufferedImage img = null;
         try {
             img = ImageIO.read(Objects.requireNonNull(gameObject.getClass().getResourceAsStream(gameObject + "_" + image + "_0.png")));
@@ -36,7 +30,7 @@ public class Resource {
     /**
      * @return All pictures in the animation
      */
-    public static ArrayList<BufferedImage> getAnimationimages(final Object gameObject,final String animation,final int numofimages) {
+    public static ArrayList<BufferedImage> getAnimationimages(final Object gameObject, final String animation, final int numofimages) {
 
         ArrayList<BufferedImage> imageArrayList = new ArrayList();
         try {

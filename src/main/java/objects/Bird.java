@@ -41,8 +41,8 @@ public class Bird extends MovingObject {
 
     @Override
     public void getMovingObjectImage() {
-        left = Resource.getAnimationimages(this,"FlyingLeft",8).toArray(new BufferedImage[0]);
-        right = Resource.getAnimationimages(this,"FlyingRight",8).toArray(new BufferedImage[0]);
+        left = Resource.getAnimationimages(this, "FlyingLeft", 8).toArray(new BufferedImage[0]);
+        right = Resource.getAnimationimages(this, "FlyingRight", 8).toArray(new BufferedImage[0]);
         rightanimation = new Animation(0, right);
         leftanimation = new Animation(0, left);
     }

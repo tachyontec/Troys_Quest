@@ -1,16 +1,13 @@
 package main.game;
 
-import tiles.TileManager;
 import objects.Bound;
 import objects.Handler;
 import objects.Player;
 import sounds.Sound;
+import tiles.TileManager;
 
-import javax.swing.JPanel;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * class GamePanel
@@ -62,7 +59,7 @@ public class GamePanel extends JPanel implements Runnable {
     //Level initialization
     String[] enemies = {"Minotaur", "FinalBoss"};
     String[] obstacle = {"spikesRoller", "Fire"};
-    public Level level1 ,level2,level3;
+    public Level level1, level2, level3;
 
     public Level currentLevel; // stores the Level that player has chosen
 
@@ -102,10 +99,6 @@ public class GamePanel extends JPanel implements Runnable {
     public void resetGame(int levelNumber) {
         //level reset
         switch (levelNumber) {
-            case 1 -> {
-                level1.setupLevel();
-                currentLevel = level1;
-            }
             case 2 -> {
                 level2.setupLevel();
                 currentLevel = level2;
@@ -113,7 +106,8 @@ public class GamePanel extends JPanel implements Runnable {
             case 3 -> {
                 level3.setupLevel();
                 currentLevel = level3;
-            } default -> {
+            }
+            default -> {
                 level1.setupLevel();
                 currentLevel = level1;
             }
@@ -159,12 +153,12 @@ public class GamePanel extends JPanel implements Runnable {
         gameThread = null;
     }
 
-    @Override
     /**
      * implements the game loop
      * counts framerate , time passed and other metrics
      * updates and repaints the gamepanel 60 times/sec (update() and repaint())
      */
+    @Override
     public void run() {
         long lastTime = System.nanoTime();
         double amountOfTicks = 60.0;
@@ -210,7 +204,7 @@ public class GamePanel extends JPanel implements Runnable {
             if (currentLevelNumber == 1) { //LEVEL1
                 level1.addArrow();
             } else if (currentLevelNumber == 2) { //LEVEL2
-
+                //to be added later
             } else if (currentLevelNumber == 3) { //LEVEL 3
                 level3.checkForFinalBoss();
                 level3.addArrow();

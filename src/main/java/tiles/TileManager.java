@@ -2,7 +2,6 @@ package tiles;
 
 import main.game.GamePanel;
 import main.game.ImageScaler;
-import main.game.Resource;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -10,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Objects;
 
 
 /**
@@ -24,7 +24,7 @@ public class TileManager {
      */
     GamePanel gp;
     /**
-     *  tile: we create an array of tiles for all pngs.
+     * tile: we create an array of tiles for all pngs.
      */
     Tile[] tile;
     /**
@@ -80,7 +80,7 @@ public class TileManager {
         for (int i = 1; i <= tilename.length; i++) { //for every tile image
 
             try {
-                tile[i].image = ImageIO.read(getClass().getResourceAsStream(tilename[i - 1]));
+                tile[i].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(tilename[i - 1])));
                 tile[i].image = ImageScaler.scaleImage(tile[i].image, GamePanel.TILE_SIZE, GamePanel.TILE_SIZE); //and then scale the image
             } catch (IOException e) {
                 e.printStackTrace();

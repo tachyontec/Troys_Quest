@@ -18,7 +18,7 @@ public class Block extends StaticObject {
 
     public Block(double worldX, double worldY,
                  int width, int height, String name, GamePanel gamePanel, int numofimages) {
-        super(worldX, worldY, width, height, name, gamePanel , numofimages);
+        super(worldX, worldY, width, height, name, gamePanel, numofimages);
         rightLine = new Line2D.Double();
         leftLine = new Line2D.Double();
         topLine = new Line2D.Double();
@@ -29,7 +29,7 @@ public class Block extends StaticObject {
 
     @Override
     public void getStaticObjectImage() {
-        images = Resource.getAnimationimages(this,"Idle", 1).toArray(new BufferedImage[0]);
+        images = Resource.getAnimationimages(this, "Idle", 1).toArray(new BufferedImage[0]);
         animation = new Animation(0, images);
     }
 

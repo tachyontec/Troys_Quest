@@ -20,7 +20,7 @@ public class Heart extends StaticObject {
 
     @Override
     public void getStaticObjectImage() {
-        images = Resource.getAnimationimages(this,"Idle",numofImages).toArray(new BufferedImage[0]);
+        images = Resource.getAnimationimages(this, "Idle", numofImages).toArray(new BufferedImage[0]);
         animation = new Animation(0, images);
     }
 

@@ -29,15 +29,11 @@ public class Sound {
 
     //setFile is used to signal which sound is going to be played, that's why we have an index as an argument
     public void setFile(int i) {
-
         try {
-
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(musicURL[i]);
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
-
         } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
-
             e.printStackTrace();
         }
     }
@@ -60,7 +56,6 @@ public class Sound {
 
     //we shut it up
     public void stopMusic() {
-
         clip.stop();
     }
 

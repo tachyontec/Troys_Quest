@@ -9,7 +9,5 @@ import java.awt.image.BufferedImage;
  */
 
 public class Tile {
-
     public BufferedImage image; //we need the image of the tile
-
 }

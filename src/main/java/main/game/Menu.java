@@ -3,11 +3,9 @@ package main.game;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.Random;
+import java.util.Objects;
 
 /**
  * Implements menu system screens
@@ -48,17 +46,17 @@ public class Menu {
     public Menu(GamePanel gamePanel) {
         this.gamepanel = gamePanel;
         this.menuFont = new Font("MV Boli", Font.PLAIN, 35);
-        this.dynamicTextX = gamePanel.TILE_SIZE * 16;
+        this.dynamicTextX = GamePanel.TILE_SIZE * 16;
         try {
-            this.helmetImage = ImageIO.read(getClass().getResourceAsStream("MenuHelmet.png"));
-            this.backgroundMenuImage = ImageIO.read(getClass().getResourceAsStream("backgroundMenu.png"));
-            this.backgroundIntroImage = ImageIO.read(getClass().getResourceAsStream("Background Intro.png"));
-            this.buttonImage = ImageIO.read(getClass().getResourceAsStream("Button.png"));
-            this.tombImage = ImageIO.read(getClass().getResourceAsStream("tombstone2.png"));
-            this.wreath = ImageIO.read(getClass().getResourceAsStream("olivewreath.png"));
-            this.lv1Preview = ImageIO.read(getClass().getResourceAsStream("Level1Preview.png"));
-            this.lv2Preview = ImageIO.read(getClass().getResourceAsStream("Level2Preview.png"));
-            this.lv3Preview = ImageIO.read(getClass().getResourceAsStream("Level3Preview.png"));
+            this.helmetImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("MenuHelmet.png")));
+            this.backgroundMenuImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("backgroundMenu.png")));
+            this.backgroundIntroImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("Background Intro.png")));
+            this.buttonImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("Button.png")));
+            this.tombImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("tombstone2.png")));
+            this.wreath = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("olivewreath.png")));
+            this.lv1Preview = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("Level1Preview.png")));
+            this.lv2Preview = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("Level2Preview.png")));
+            this.lv3Preview = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("Level3Preview.png")));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -352,20 +350,20 @@ public class Menu {
         int offset = 25; // each line is 25 pixels above the next
         //we cut up the strings in order to fit the frame
         //not elegant but works
-        g2.drawString("Menelaus is disgraced. He is the king of Mycenae, he has", 0 ,(int) dynamicTextY );
-        g2.drawString("fame and money, but something is more valuable than that." , 0 , (int) dynamicTextY + lineOffset);
-        g2.drawString("His wife,Queen Helen.And someone stole her from him. " , 0 , (int) dynamicTextY + 2 * lineOffset);
-        g2.drawString("After that there is nothing but war. " , 0 , (int) dynamicTextY + 3 * lineOffset);
-        g2.drawString("He is forced to deal with and control the rage that has" , 0 , (int) dynamicTextY + 4 * lineOffset );
-        g2.drawString("for some time now.His vengeance against the vilifier" , 0 , (int) dynamicTextY + 5 * lineOffset );
-        g2.drawString("makes him fight, even with the gods." , 0 , (int) dynamicTextY + 6 * lineOffset );
-        g2.drawString("It's in the harsh unforgiving world that he must fight to"  , 0 , (int) dynamicTextY + 7 * lineOffset );
-        g2.drawString("survive and not only to reclaim his queen but also" , 0 , (int) dynamicTextY + 8 * lineOffset );
-        g2.drawString("to remind his people who their king is. " , 0 , (int) dynamicTextY + 9 * lineOffset );
-        g2.drawString("This staggering remaining journey, combines all" , 0 , (int) dynamicTextY + 10 * lineOffset );
-        g2.drawString("the characteristics of a real war.Brutal combat, epic ", 0 , (int) dynamicTextY + 11 * lineOffset );
-        g2.drawString("boss fights and symbolisms.Ideal for anyone" , 0 , (int) dynamicTextY + 12 * lineOffset );
-        g2.drawString("who appreciates the value of a greater purpose..." , 0 , (int) dynamicTextY + 13 * lineOffset );
+        g2.drawString("Menelaus is disgraced. He is the king of Mycenae, he has", 0, (int) dynamicTextY);
+        g2.drawString("fame and money, but something is more valuable than that.", 0, (int) dynamicTextY + lineOffset);
+        g2.drawString("His wife,Queen Helen.And someone stole her from him. ", 0, (int) dynamicTextY + 2 * lineOffset);
+        g2.drawString("After that there is nothing but war. ", 0, (int) dynamicTextY + 3 * lineOffset);
+        g2.drawString("He is forced to deal with and control the rage that has", 0, (int) dynamicTextY + 4 * lineOffset);
+        g2.drawString("for some time now.His vengeance against the vilifier", 0, (int) dynamicTextY + 5 * lineOffset);
+        g2.drawString("makes him fight, even with the gods.", 0, (int) dynamicTextY + 6 * lineOffset);
+        g2.drawString("It's in the harsh unforgiving world that he must fight to", 0, (int) dynamicTextY + 7 * lineOffset);
+        g2.drawString("survive and not only to reclaim his queen but also", 0, (int) dynamicTextY + 8 * lineOffset);
+        g2.drawString("to remind his people who their king is. ", 0, (int) dynamicTextY + 9 * lineOffset);
+        g2.drawString("This staggering remaining journey, combines all", 0, (int) dynamicTextY + 10 * lineOffset);
+        g2.drawString("the characteristics of a real war.Brutal combat, epic ", 0, (int) dynamicTextY + 11 * lineOffset);
+        g2.drawString("boss fights and symbolisms.Ideal for anyone", 0, (int) dynamicTextY + 12 * lineOffset);
+        g2.drawString("who appreciates the value of a greater purpose...", 0, (int) dynamicTextY + 13 * lineOffset);
     }
 
     /**
@@ -373,7 +371,7 @@ public class Menu {
      *
      * @param g2 main game graphics
      */
-    public void drawEndingScreen(Graphics2D g2){
+    public void drawEndingScreen(Graphics2D g2) {
         g2.setFont(menuFont);
         g2.setColor(Color.WHITE);
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20));
@@ -384,15 +382,15 @@ public class Menu {
         g2.drawString("Press ENTER to skip", 10 + shadowOffset, 25 + shadowOffset);
         g2.setColor(Color.WHITE);
         g2.drawString("Press ENTER to skip", 10, 25);
-        if(endMenuCounter <= 30){
-            g2.drawImage(fireworks , 100 , 200 , 6 * GamePanel.TILE_SIZE  ,  6 * GamePanel.TILE_SIZE , null);
-        } else if (endMenuCounter <= 60){
-            g2.drawImage(fireworks , 300 , 200  , 6 * GamePanel.TILE_SIZE  ,  6 * GamePanel.TILE_SIZE , null);
-        } else if (endMenuCounter <= 90){
-            g2.drawImage(fireworks , 500 , 200 , 6 * GamePanel.TILE_SIZE  ,  6 * GamePanel.TILE_SIZE , null);
+        if (endMenuCounter <= 30) {
+            g2.drawImage(fireworks, 100, 200, 6 * GamePanel.TILE_SIZE, 6 * GamePanel.TILE_SIZE, null);
+        } else if (endMenuCounter <= 60) {
+            g2.drawImage(fireworks, 300, 200, 6 * GamePanel.TILE_SIZE, 6 * GamePanel.TILE_SIZE, null);
+        } else if (endMenuCounter <= 90) {
+            g2.drawImage(fireworks, 500, 200, 6 * GamePanel.TILE_SIZE, 6 * GamePanel.TILE_SIZE, null);
         }
         //fireworks and congratulations
-        if(endMenuCounter < 240){ // for 6 secs
+        if (endMenuCounter < 240) { // for 6 secs
             g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 50));
             g2.setColor(Color.BLACK);
             g2.drawString("Congratulations!", 200 + shadowOffset, 100 + shadowOffset);
@@ -401,17 +399,17 @@ public class Menu {
             g2.setColor(Color.BLACK);
             g2.drawString("You saved Queen Helen!", 100 + shadowOffset, 180 + shadowOffset);
             g2.setColor(Color.WHITE);
-            g2.drawString("You saved Queen Helen!", 100 , 180);
+            g2.drawString("You saved Queen Helen!", 100, 180);
         } else { // then ending story rolls
             g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 27));
-            g2.drawString("At last, relief. Order was restored. The queen is back.", 10 ,(int) dynamicTextYEnd );
-            g2.drawString("The king fought everyone and everything, yet he succeeded.", 10 ,(int) dynamicTextYEnd + lineOffset);
-            g2.drawString("He proved  what a true fighter really is, the one who", 10 ,(int) dynamicTextYEnd + 2 * lineOffset);
-            g2.drawString("is not afraid of death, when he has nothing to lose.", 10 ,(int) dynamicTextYEnd + 3 * lineOffset);
-            g2.drawString("He showed the people that true war has nothing to do", 10 ,(int) dynamicTextYEnd + 4 * lineOffset);
-            g2.drawString("with weapons and killings but with self-denial", 10 ,(int) dynamicTextYEnd + 5 * lineOffset);
-            g2.drawString("for a greater ideal.That's why he once again managed to", 10 ,(int) dynamicTextYEnd + 6 * lineOffset);
-            g2.drawString("receive the respect of everyone, even the gods’", 10 ,(int) dynamicTextYEnd + 7 * lineOffset);
+            g2.drawString("At last, relief. Order was restored. The queen is back.", 10, (int) dynamicTextYEnd);
+            g2.drawString("The king fought everyone and everything, yet he succeeded.", 10, (int) dynamicTextYEnd + lineOffset);
+            g2.drawString("He proved  what a true fighter really is, the one who", 10, (int) dynamicTextYEnd + 2 * lineOffset);
+            g2.drawString("is not afraid of death, when he has nothing to lose.", 10, (int) dynamicTextYEnd + 3 * lineOffset);
+            g2.drawString("He showed the people that true war has nothing to do", 10, (int) dynamicTextYEnd + 4 * lineOffset);
+            g2.drawString("with weapons and killings but with self-denial", 10, (int) dynamicTextYEnd + 5 * lineOffset);
+            g2.drawString("for a greater ideal.That's why he once again managed to", 10, (int) dynamicTextYEnd + 6 * lineOffset);
+            g2.drawString("receive the respect of everyone, even the gods’", 10, (int) dynamicTextYEnd + 7 * lineOffset);
             //and finally team credits
             g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 50));
             g2.setColor(Color.BLACK);
@@ -421,7 +419,7 @@ public class Menu {
             g2.setColor(Color.BLACK);
             g2.drawString("Bitheads dev team", 150 + shadowOffset, (int) dynamicTextYEnd + 18 * lineOffset + shadowOffset);
             g2.setColor(Color.WHITE);
-            g2.drawString("Bitheads dev team", 150 , (int) dynamicTextYEnd + 18 * lineOffset);
+            g2.drawString("Bitheads dev team", 150, (int) dynamicTextYEnd + 18 * lineOffset);
 
 
         }

@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.Objects;
 
 /**
  * This class Implements the in-game Heads-Up Display Graphics (HUD for short)
@@ -36,11 +37,10 @@ public class HUD {
         this.gamepanel = gamepanel;
         this.gameFont = new Font("MV Boli", Font.PLAIN, 35);
         try {
-            System.out.println(getClass().getResourceAsStream("Hud_Heart_0.png"));
-            this.heartImage = ImageIO.read(getClass().getResourceAsStream("Hud_Heart_0.png"));
-            this.coinImage = ImageIO.read(getClass().getResourceAsStream("Coin_Idle_0.png"));
-            this.buttons = ImageIO.read(getClass().getResourceAsStream("arrowKeysTransparent.png"));
-            this.spaceBar = ImageIO.read(getClass().getResourceAsStream("SpaceInstructions.png"));;
+            this.heartImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("Hud_Heart_0.png")));
+            this.coinImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("Coin_Idle_0.png")));
+            this.buttons = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("arrowKeysTransparent.png")));
+            this.spaceBar = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("SpaceInstructions.png")));
         } catch (IOException e) {
             e.printStackTrace();
         }

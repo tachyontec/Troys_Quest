@@ -5,7 +5,6 @@ import main.game.GamePanel;
 import main.game.Resource;
 
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 public abstract class MovingObject extends GameObject {
     //MovingObject needs Game Panel to spawn on it
@@ -20,7 +19,7 @@ public abstract class MovingObject extends GameObject {
     //they look when they move left,right etc.
 
     public MovingObject(double worldX, double worldY, int width, int height, String name,
-                        GamePanel gamePanel, double speedx, double speedy)  {
+                        GamePanel gamePanel, double speedx, double speedy) {
         super(worldX, worldY, width, height, name, gamePanel);
         this.speedx = speedx;
         this.speedy = speedy;
@@ -28,9 +27,9 @@ public abstract class MovingObject extends GameObject {
         getMovingObjectImage();
     }
 
-    public void getMovingObjectImage()  {
-        left = Resource.getAnimationimages(this,"Left",1).toArray(new BufferedImage[0]);
-        right = Resource.getAnimationimages(this,"Right",1).toArray(new BufferedImage[0]);
+    public void getMovingObjectImage() {
+        left = Resource.getAnimationimages(this, "Left", 1).toArray(new BufferedImage[0]);
+        right = Resource.getAnimationimages(this, "Right", 1).toArray(new BufferedImage[0]);
         leftanimation = new Animation(0, left);
         rightanimation = new Animation(0, right);
     }

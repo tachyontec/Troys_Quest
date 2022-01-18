@@ -1,7 +1,5 @@
 package main.game;
 
-import objects.Player;
-
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -15,9 +13,9 @@ public class KeyHandler implements KeyListener {
     //User will only be able to move its player
     public boolean upPressed, leftPressed, rightPressed, pausePressed, attackPressed;
     public boolean leftReleased = false;
-    public  boolean rightReleased = false;
+    public boolean rightReleased = false;
 
-    private GamePanel gp;
+    private final GamePanel gp;
 
     /**
      * Creates a keyhandler instance and the keys handled are used in the gamepanel
@@ -34,11 +32,11 @@ public class KeyHandler implements KeyListener {
 
     /**
      * This method receives key inputs and translates them into readable code , then treats them accordingly
-     * @param k the key input received
-     * int key then receives the value of key pressed
-     * in this method the menu options are handled as well , depending on the user key input
-     * main menu , pause menu and death menu handled here
      *
+     * @param k the key input received
+     *          int key then receives the value of key pressed
+     *          in this method the menu options are handled as well , depending on the user key input
+     *          main menu , pause menu and death menu handled here
      */
     @Override
     public void keyPressed(KeyEvent k) {
@@ -92,7 +90,7 @@ public class KeyHandler implements KeyListener {
                                 switchSound(0);
                                 gp.gameState = GamePanel.PLAY_STATE;
                             }
-                        } else if (gp.gameState == GamePanel.LEVEL_SELECTION_STATE) { //LEVEL 1 SELECTED
+                        } else { //LEVEL 1 SELECTED
                             GamePanel.currentLevelNumber = 1;
                             gp.resetGame(1);
                             switchSound(0);
@@ -109,7 +107,7 @@ public class KeyHandler implements KeyListener {
                             switchSound(5);  //INTRO SONG
                             gp.resetGame(GamePanel.currentLevelNumber);
                             gp.gameState = GamePanel.MENU_STATE;
-                        } else if (gp.gameState == GamePanel.LEVEL_SELECTION_STATE) { //LEVEL 2 SELECTED
+                        } else { //LEVEL 2 SELECTED
                             GamePanel.currentLevelNumber = 2;
                             gp.resetGame(2);
                             gp.gameState = GamePanel.PLAY_STATE;
@@ -190,7 +188,7 @@ public class KeyHandler implements KeyListener {
      * Force releases all keys that are pressed
      * Used to make player stay still while dead
      */
-    public void forceReleaseKeys(){
+    public void forceReleaseKeys() {
         rightPressed = false;
         rightReleased = true;
         leftPressed = false;
@@ -198,6 +196,7 @@ public class KeyHandler implements KeyListener {
         upPressed = false;
         attackPressed = false;
     }
+
     /**
      * switches between the sounds we want to play
      *
