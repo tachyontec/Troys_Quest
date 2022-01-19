@@ -2,7 +2,7 @@
 <p>
 Retro-Style 2D game based on the Trojan War. </p>
 
-![LOGO](https://github.com/tachyontec/Troys_Quest/blob/test1/src/main/resources/main/game/Troys_quest_logo.png)
+![Troys Quest logo remove bg](https://user-images.githubusercontent.com/92880222/150108243-f9064311-de29-4448-91e4-8a76bbe6ecd5.png)
 
 <h1>About</h1>
 Made by BitHeads dev team based at the Department of Management and Technology in
