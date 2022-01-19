@@ -6,7 +6,7 @@ Retro-Style 2D game based on the Trojan War. </p>
 
 <h1>About</h1>
 Made by BitHeads dev team based at the Department of Management and Technology in
-Athens University of Economic and Buisness.
+Athens University of Economics and Business.
 
 <h1>System Requirements</h1>
 <ul> <li> Java Version 17 or newer </li>
