@@ -28,7 +28,7 @@ Athens University of Economics and Business.
     
 <h1>Repo Contents</h1>    
  <ul>
-  <li>/play:
+  <li>/run:
     Contains everything that you need to play the game 
     <ol><li>run.bat</li><li>Troys_Quest.jar</li></ol>
   <li>/src/main/java</li>
