@@ -85,6 +85,7 @@ public class Enemy extends MovingObject {
 
 
     //determines what our enemy does at any given moment
+    // determines state
     @Override
     public void update() {
         if (this.livesLeft <= 0) {
@@ -104,6 +105,7 @@ public class Enemy extends MovingObject {
         }
     }
 
+    
     public boolean isCollision() {
         return collision;
     }
